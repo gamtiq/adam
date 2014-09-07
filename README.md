@@ -3,6 +3,7 @@
 Functions to create and process objects.
 
 [![NPM version](https://badge.fury.io/js/adam.png)](http://badge.fury.io/js/adam)
+[![Build Status](https://secure.travis-ci.org/gamtiq/adam.png?branch=master)](http://travis-ci.org/gamtiq/adam)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 ## Installation
