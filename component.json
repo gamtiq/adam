@@ -1,0 +1,23 @@
+{
+  "name": "adam",
+  "repo": "gamtiq/adam",
+  "description": "Functions to process objects",
+  "version": "0.1.0",
+  "keywords": [
+    "object",
+    "process",
+    "create",
+    "field",
+    "value",
+    "size",
+    "split",
+    "filter"
+  ],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "main": "src/adam.js",
+  "scripts": [
+    "src/adam.js"
+  ]
+}

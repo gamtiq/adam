@@ -1,0 +1,32 @@
+{
+  "name": "adam",
+  "main": [
+    "dist/adam.js", 
+    "dist/adam.min.js"
+  ],
+  "version": "0.1.0",
+  "homepage": "https://github.com/gamtiq/adam",
+  "authors": [
+    "Denis Sikuler"
+  ],
+  "description": "Functions to process objects",
+  "keywords": [
+    "object",
+    "process",
+    "create",
+    "field",
+    "value",
+    "size",
+    "split",
+    "filter"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "sea-modules",
+    "test",
+    "tests"
+  ]
+}
