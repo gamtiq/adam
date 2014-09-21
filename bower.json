@@ -9,7 +9,7 @@
   "authors": [
     "Denis Sikuler"
   ],
-  "description": "Functions to process objects",
+  "description": "Functions to create, process and test objects",
   "keywords": [
     "object",
     "process",

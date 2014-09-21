@@ -64,7 +64,7 @@
 
     
         
-            <div class="description"><p>Functions to create and process objects.</p></div>
+            <div class="description"><p>Functions to create, process and test objects.</p></div>
         
 
         
@@ -119,6 +119,290 @@
         <h3 class="subsection-title">Methods</h3>
 
         <dl>
+            
+<dt>
+    <h4 class="name" id="checkField"><span class="type-signature">&lt;static> </span>checkField<span class="signature">(obj, field, filter, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Check whether the field of given object corresponds to specified condition(s) or filter(s).</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Object to be processed.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>field</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Name of the field that should be checked.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>filter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>A filter or array of filters specifying conditions that should be checked. A filter can be:</p>
+<ul>
+<li>a function; if the function returns a true value it means that the field corresponds to this filter;
+the following parameters will be passed into the function: field value, field name and reference to the object</li>
+<li>a regular expression; if the field value (converted to string) matches the regular expression it means
+that the field corresponds to this filter</li>
+<li>a string; value can be one of the following:<ul>
+<li><code>own</code> - if the field is own property of the object it means that the field corresponds to this filter</li>
+<li><code>!own</code> - if the field is not own property of the object it means that the field corresponds to this filter</li>
+<li>any other value - is used as the check when calling <a href="module-adam.html#isKindOf">isKindOf</a>;
+if <a href="module-adam.html#isKindOf">isKindOf</a> returns <code>true</code> for the given field value and the filter
+it means that the field corresponds to this filter</li>
+</ul>
+</li>
+<li>an object;<ul>
+<li>if the object has <code>and</code> or <code>or</code> field, its value is used as subfilter and will be passed in recursive call of <code>checkField</code>
+as value of <code>filter</code> parameter; the field name (<code>and</code> or <code>or</code>) will be used as value of <code>filterConnect</code> setting (see below);
+if the result of the recursive call is <code>true</code> it means that the field corresponds to this filter</li>
+<li>if the object has <code>field</code> field, its value is used as filter; if the filter is a regular expression
+and the field name matches the regular expression it means that the field corresponds to this filter;
+otherwise the field corresponds to this filter when the filed name strictly equals to the filter (converted to string)</li>
+<li>if the object has <code>value</code> field, its value is used as filter; if the field value strictly equals to the filter value
+it means that the field corresponds to this filter</li>
+<li>in any other case if the field value strictly equals to the object it means that the field corresponds to this filter</li>
+</ul>
+</li>
+<li>any other value; if the field value strictly equals to the filter value it means that the field corresponds to this filter</li>
+</ul></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
+    The following settings are supported (setting's default value is specified in parentheses):</p>
+<ul>
+<li><code>filterConnect</code>: <code>String</code> (<code>and</code>) - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> parameter; valid values are the following: <code>and</code>, <code>or</code> (case-insensitive); any other value is treated as <code>and</code></li>
+</ul></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#getClass">getClass</a></li>
+			
+			<li><a href="module-adam.html#isKindOf">isKindOf</a></li>
+			</ul>
+	</dd>
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p><code>true</code> if the field corresponds to specified filter(s), otherwise <code>false</code>.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Boolean</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
             
 <dt>
     <h4 class="name" id="fromArray"><span class="type-signature">&lt;static> </span>fromArray<span class="signature">(list, <span class="optional">keyField</span>, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
@@ -335,6 +619,144 @@ should be deleted from the source object (an item of the list)</li>
 	<dd>
 		
 <span class="param-type">Object</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getClass"><span class="type-signature">&lt;static> </span>getClass<span class="signature">(value)</span><span class="type-signature"> &rarr; {String}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Return class of given value (namely value of internal property <code>[[Class]]</code>).</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Value whose class should be determined.</p></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>String indicating value class.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">String</span>
 
 
 	</dd>
@@ -814,6 +1236,144 @@ should be deleted from the source object (an item of the list)</li>
         
             
 <dt>
+    <h4 class="name" id="getType"><span class="type-signature">&lt;static> </span>getType<span class="signature">(value)</span><span class="type-signature"> &rarr; {String}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Return type of given value.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Value whose type should be determined.</p></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>For <code>NaN</code> - <code>'nan'</code>, for <code>null</code> - <code>'null'</code>, otherwise - result of <code>typeof</code> operator.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">String</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
     <h4 class="name" id="getValueKey"><span class="type-signature">&lt;static> </span>getValueKey<span class="signature">(obj, value, <span class="optional">bAll</span>)</span><span class="type-signature"> &rarr; {Array|String|null}</span></h4>
     
     
@@ -1158,6 +1718,343 @@ should be deleted from the source object (an item of the list)</li>
 	<dd>
 		
 <span class="param-type">Array</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="isEmpty"><span class="type-signature">&lt;static> </span>isEmpty<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Check whether given value is an empty value i.e. <code>null</code>, <code>undefined</code>, empty object, empty array or empty string.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Value to be checked.</p></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#getClass">getClass</a></li>
+			
+			<li><a href="module-adam.html#isSizeMore">isSizeMore</a></li>
+			</ul>
+	</dd>
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p><code>true</code> if the value is an empty value, otherwise <code>false</code>.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Boolean</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="isKindOf"><span class="type-signature">&lt;static> </span>isKindOf<span class="signature">(value, sKind)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Check whether given value has (or does not have) specified kind (type or class).</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Value to be checked.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>sKind</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Type or class for check. Can be any value that is returned by <a href="module-adam.html#getType">getType</a> 
+     and <a href="module-adam.html#getClass">getClass</a>, or one of the following:</p>
+<ul>
+<li><code>empty</code> - check whether the value is empty (see <a href="module-adam.html#isEmpty">isEmpty</a>)</li>
+<li><code>even</code> - check whether the value is an even integer</li>
+<li><code>false</code> - check whether the value is a false value</li>
+<li><code>infinity</code> - check whether the value is a number representing positive or negative infinity</li>
+<li><code>integer</code> - check whether the value is an integer number</li>
+<li><code>negative</code> - check whether the value is a negative number</li>
+<li><code>odd</code> - check whether the value is an odd integer</li>
+<li><code>positive</code> - check whether the value is a positive number</li>
+<li><code>real</code> - check whether the value is a real number</li>
+<li><code>true</code> - check whether the value is a true value</li>
+<li><p><code>zero</code> - check whether the value is <code>0</code></p>
+<p>If exclamation mark (<code>!</code>) is set before the kind, it means that the check should be negated
+i.e. check whether given value does not have the specified kind.
+For example, <code>!real</code> means: check whether the value is not a real number.</p>
+</li>
+</ul></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#getClass">getClass</a></li>
+			
+			<li><a href="module-adam.html#getType">getType</a></li>
+			
+			<li><a href="module-adam.html#isEmpty">isEmpty</a></li>
+			</ul>
+	</dd>
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p><code>true</code> if value has the specified kind (or does not have when the check is negated), otherwise <code>false</code>.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Boolean</span>
 
 
 	</dd>
@@ -1521,7 +2418,7 @@ should be deleted from the source object (an item of the list)</li>
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on 2014-09-07T21:23:55+04:00 using the <a
+		on 2014-09-21T18:15:09+04:00 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>

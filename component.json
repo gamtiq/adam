@@ -1,7 +1,7 @@
 {
   "name": "adam",
   "repo": "gamtiq/adam",
-  "description": "Functions to process objects",
+  "description": "Functions to create, process and test objects",
   "version": "0.1.0",
   "keywords": [
     "object",

@@ -42,175 +42,100 @@ describe("adam", function() {
     }
     
     
-    describe(".getFreeField", function() {
-        var getFreeField = adam.getFreeField,
-            obj = {a5: 5, a2: "adfs", a3: "---", b3: 3, b4: "some", b0: "build best", b: "To be, or not to be: that's the question", c: 0, d1: 120, d2: new Date()};
+    describe(".getClass(value)", function() {
+        var getClass = adam.getClass;
         
-        describe("getFreeField() / getFreeField(null) / getFreeField(<false value>)" + 
-                 " / getFreeField(<false value>, {prefix: <not string>})" + 
-                 " / getFreeField(<false value>, {prefix: <not string>, startNum: <false value>})", function() {
-            it("should return 'f0'", function() {
-                expect( getFreeField() )
-                    .equal("f0");
-                expect( getFreeField(null) )
-                    .equal("f0");
-                expect( getFreeField(0) )
-                    .equal("f0");
-                expect( getFreeField("") )
-                    .equal("f0");
-                expect( getFreeField(false) )
-                    .equal("f0");
-                expect( getFreeField(null, {prefix: null}) )
-                    .equal("f0");
-                expect( getFreeField(null, {prefix: 10}) )
-                    .equal("f0");
-                expect( getFreeField(null, {prefix: 10, startNum: 0}) )
-                    .equal("f0");
-                expect( getFreeField("", {prefix: new Date(), startNum: null}) )
-                    .equal("f0");
-                /*jshint ignore:start*/
-                expect( getFreeField(undef, {prefix: new String("something wrong"), startNum: ""}) )
-                    .equal("f0");
-                /*jshint ignore:end*/
-            });
+        it("should return value class", function() {
+            /*jshint supernew:true*/
+            expect( getClass(false) )
+                .equal("Boolean");
+            /*jshint ignore:start*/
+            expect( getClass(new Boolean(true)) )
+                .equal("Boolean");
+            /*jshint ignore:end*/
+            
+            expect( getClass("abc") )
+                .equal("String");
+            /*jshint ignore:start*/
+            expect( getClass(new String("s")) )
+                .equal("String");
+            /*jshint ignore:end*/
+            
+            expect( getClass(8) )
+                .equal("Number");
+            /*jshint ignore:start*/
+            expect( getClass(new Number(0)) )
+                .equal("Number");
+            /*jshint ignore:end*/
+            expect( getClass(NaN) )
+                .equal("Number");
+            
+            expect( getClass(null) )
+                .equal("Null");
+            expect( getClass(undef) )
+                .equal("Undefined");
+            
+            expect( getClass({}) )
+                .equal("Object");
+            expect( getClass([2, 0, 1, 4]) )
+                .equal("Array");
+            expect( getClass(new Date()) )
+                .equal("Date");
+            expect( getClass(/\d+/) )
+                .equal("RegExp");
+            expect( getClass(getClass) )
+                .equal("Function");
+            expect( getClass(Math) )
+                .equal("Math");
+            expect( getClass(new Error("test")) )
+                .equal("Error");
+            
+            expect( getClass(parent) )
+                .equal("Object");
+            expect( getClass(child) )
+                .equal("Object");
+            expect( getClass(grandchild) )
+                .equal("Object");
+        });
+    });
+
+    
+    describe(".getType(value)", function() {
+        var getType = adam.getType;
+        
+        it("should return value of typeof operator", function() {
+            function check(value) {
+                expect( getType(value) )
+                    .equal(typeof value);
+            }
+            
+            check(true);
+            check(false);
+            check(undef);
+            check(-946);
+            check(71);
+            check(102030);
+            check(Number.POSITIVE_INFINITY);
+            check(Number.NEGATIVE_INFINITY);
+            check("abc");
+            check({});
+            check(adam);
+            check([1, 2, 3]);
+            check(new Date());
+            check(/\w/);
         });
         
-        describe("getFreeField(<false value>, {prefix: sPrefix})" + 
-                 " / getFreeField(<false value>, {prefix: sPrefix, startNum: <false value>})", function() {
-            it("should return sPrefix + '0'", function() {
-                expect( getFreeField(null, {prefix: "abc"}) )
-                    .equal("abc0");
-                expect( getFreeField(null, {prefix: "abc", startNum: 0}) )
-                    .equal("abc0");
-                expect( getFreeField(null, {prefix: "+++", startNum: undef}) )
-                    .equal("+++0");
-                expect( getFreeField(false, {prefix: String(5)}) )
-                    .equal("50");
-                expect( getFreeField(undef, {prefix: "Zero is ", startNum: 0}) )
-                    .equal("Zero is 0");
-                expect( getFreeField("", {prefix: "-"}) )
-                    .equal("-0");
-                expect( getFreeField("", {prefix: "GROT", startNum: Number.NaN}) )
-                    .equal("GROT0");
-            });
+        it("should return null", function() {
+            expect( getType(null) )
+                .equal("null");
         });
         
-        describe("getFreeField(<false value>, {prefix: sPrefix, startNum: nStartNum})", function() {
-            it("should return sPrefix + nStartNum", function() {
-                expect( getFreeField(null, {prefix: "d", startNum: 5}) )
-                    .equal("d5");
-                expect( getFreeField(null, {prefix: "100", startNum: 500}) )
-                    .equal("100500");
-                expect( getFreeField(0, {prefix: "max number - ", startNum: Number.MAX_VALUE}) )
-                    .equal("max number - " + Number.MAX_VALUE);
-                expect( getFreeField(0, {prefix: "-infinity = ", startNum: Number.NEGATIVE_INFINITY}) )
-                    .equal("-infinity = " + Number.NEGATIVE_INFINITY);
-            });
+        it("should return nan", function() {
+            expect( getType(NaN) )
+                .equal("nan");
+            expect( getType(Number("abcdef")) )
+                .equal("nan");
         });
-        
-        describe("getFreeField(obj) / getFreeField(obj, {prefix: <not string>})" + 
-                 " / getFreeField(obj, {prefix: <not string>, startNum: <false value>})", function() {
-            it("should return field name 'f<number>' so that there are no such field in obj", function() {
-                expect( getFreeField({f5: 5}) )
-                    .equal("f0");
-                expect( getFreeField({f0: 0, f1: 1, f2: 2}, {prefix: null}) )
-                    .equal("f3");
-                expect( getFreeField({a: 1, b: 2, f2: 2, f0: 0}, {prefix: {}, startNum: false}) )
-                    .equal("f1");
-            });
-        });
-        
-        describe("getFreeField(obj, {prefix: sPrefix}) / getFreeField(obj, {prefix: sPrefix, startNum: <false value>})", function() {
-            it("should return field name sPrefix + '<number>' so that there are no such field in obj", function() {
-                expect( getFreeField({f5: 5}, {prefix: "abc"}) )
-                    .equal("abc0");
-                expect( getFreeField({f5: 5}, {prefix: "f"}) )
-                    .equal("f0");
-                expect( getFreeField({f0: 0, "$$$0": 1, "$$$12": 12}, {prefix: "$$$"}) )
-                    .equal("$$$1");
-                expect( getFreeField(adam, {prefix: "abc", startNum: false}) )
-                    .equal("abc0");
-                expect( getFreeField({"0": "a", "1": "b"}, {prefix: ""}) )
-                    .equal("2");
-                expect( getFreeField(new Date(), {prefix: "getTime", startNum: null}) )
-                    .equal("getTime0");
-                expect( getFreeField(["a", new Date(), true, 111], {prefix: "", startNum: 0}) )
-                    .equal("4");
-            });
-        });
-        
-        describe("getFreeField(obj, {prefix: sPrefix, startNum: nStartNum})", function() {
-            it("should return field name sPrefix + '<number>' so that there are no such field in obj (search is started from sPrefix + nStartNum)", function() {
-                expect( getFreeField(obj, {prefix: "a", startNum: 5}) )
-                    .equal("a6");
-                expect( getFreeField(obj, {prefix: "a", startNum: 1}) )
-                    .equal("a1");
-                expect( getFreeField(obj, {prefix: "a", startNum: 2}) )
-                    .equal("a4");
-                expect( getFreeField(obj, {prefix: "b", startNum: 1}) )
-                    .equal("b1");
-                expect( getFreeField(obj, {prefix: "b", startNum: 3}) )
-                    .equal("b5");
-                expect( getFreeField(obj, {prefix: "c", startNum: 0}) )
-                    .equal("c0");
-                expect( getFreeField(obj, {prefix: "c", startNum: 8}) )
-                    .equal("c8");
-                expect( getFreeField(obj, {prefix: "d", startNum: 1}) )
-                    .equal("d3");
-                expect( getFreeField(obj, {prefix: "d", startNum: 100}) )
-                    .equal("d100");
-            });
-        });
-        
-        describe("getFreeField(obj, {prefix: sPrefix, startNum: nStartNum | <false value>, checkPrefix: true})", function() {
-            it("should return field name <sPrefix>[<number>] so that there are no such field in obj (search is started from sPrefix)", function() {
-                expect( getFreeField(obj, {prefix: "", startNum: false, checkPrefix: true}) )
-                    .equal("");
-                expect( getFreeField(obj, {prefix: "", startNum: 0, checkPrefix: true}) )
-                    .equal("");
-                expect( getFreeField(obj, {prefix: "", startNum: 1, checkPrefix: true}) )
-                    .equal("");
-                expect( getFreeField(obj, {prefix: "", startNum: 10, checkPrefix: true}) )
-                    .equal("");
-                expect( getFreeField(obj, {prefix: "a", startNum: false, checkPrefix: true}) )
-                    .equal("a");
-                expect( getFreeField(obj, {prefix: "a", startNum: 0, checkPrefix: true}) )
-                    .equal("a");
-                expect( getFreeField(obj, {prefix: "a", startNum: 1, checkPrefix: true}) )
-                    .equal("a");
-                expect( getFreeField(obj, {prefix: "a", startNum: 100, checkPrefix: true}) )
-                    .equal("a");
-                expect( getFreeField(obj, {prefix: "b", startNum: null, checkPrefix: true}) )
-                    .equal("b1");
-                expect( getFreeField(obj, {prefix: "b", startNum: 0, checkPrefix: true}) )
-                    .equal("b1");
-                expect( getFreeField(obj, {prefix: "b", startNum: 1, checkPrefix: true}) )
-                    .equal("b1");
-                expect( getFreeField(obj, {prefix: "b", startNum: 2, checkPrefix: true}) )
-                    .equal("b2");
-                expect( getFreeField(obj, {prefix: "b", startNum: 3, checkPrefix: true}) )
-                    .equal("b5");
-                expect( getFreeField(obj, {prefix: "b", startNum: 100, checkPrefix: true}) )
-                    .equal("b100");
-                expect( getFreeField(obj, {prefix: "c", startNum: "", checkPrefix: true}) )
-                    .equal("c0");
-                expect( getFreeField(obj, {prefix: "c", startNum: 0, checkPrefix: true}) )
-                    .equal("c0");
-                expect( getFreeField(obj, {prefix: "c", startNum: 1, checkPrefix: true}) )
-                    .equal("c1");
-                expect( getFreeField(obj, {prefix: "c", startNum: 7, checkPrefix: true}) )
-                    .equal("c7");
-                expect( getFreeField(obj, {prefix: "d", startNum: undef, checkPrefix: true}) )
-                    .equal("d");
-                expect( getFreeField(obj, {prefix: "d", startNum: 0, checkPrefix: true}) )
-                    .equal("d");
-                expect( getFreeField(obj, {prefix: "d", startNum: 1, checkPrefix: true}) )
-                    .equal("d");
-                expect( getFreeField(obj, {prefix: "d", startNum: 2, checkPrefix: true}) )
-                    .equal("d");
-            });
-        });
-        
     });
 
     
@@ -302,6 +227,351 @@ describe("adam", function() {
                 .be["false"];
             expect( isSizeMore(grandchild, 7) )
                 .be["false"];
+        });
+    });
+
+    
+    describe(".isEmpty(value)", function() {
+        var isEmpty = adam.isEmpty;
+        
+        it("should return true", function() {
+            function check(value) {
+                expect( isEmpty(value) )
+                    .equal(true);
+            }
+            
+            check("");
+            check(null);
+            check(undef);
+            check([]);
+            check({});
+        });
+        
+        it("should return false", function() {
+            function check(value) {
+                expect( isEmpty(value) )
+                    .equal(false);
+            }
+            
+            check(true);
+            check(false);
+            check(" ");
+            check("a b");
+            check(0);
+            check(1);
+            check(NaN);
+            check([null]);
+            check({a: 9});
+            check(adam);
+            check(check);
+        });
+    });
+
+    
+    describe(".isKindOf(value, sKind)", function() {
+        var isKindOf = adam.isKindOf;
+        
+        it("should return true", function() {
+            function check(value, sKind) {
+                expect( isKindOf(value, sKind) )
+                    .equal(true);
+            }
+            
+            check(true, "true");
+            check(1, "true");
+            check(check, "true");
+            check("js", "true");
+            check(adam, "true");
+            check(false, "false");
+            check(null, "false");
+            check(undef, "false");
+            check(0, "false");
+            check("", "false");
+            check(true, "boolean");
+            check(false, "boolean");
+            check(0, "zero");
+            check(73, "number");
+            check(73, "integer");
+            check(73, "odd");
+            check(74, "even");
+            check(73.05673, "real");
+            check(Math.PI, "real");
+            check(Math.PI, "positive");
+            check(-74994.393405, "negative");
+            check(Number.POSITIVE_INFINITY, "infinity");
+            check(Number.NEGATIVE_INFINITY, "infinity");
+            check(Number.POSITIVE_INFINITY, "positive");
+            check(Number.NEGATIVE_INFINITY, "negative");
+            check(NaN, "nan");
+            check(null, "null");
+            check("abc", "string");
+            check(check, "function");
+            check(adam, "object");
+            check([], "object");
+            check(null, "empty");
+            check(undef, "empty");
+            check("", "empty");
+            check([], "empty");
+            check({}, "empty");
+            
+            check(check, "Function");
+            check(adam, "Object");
+            check(/\d/, "RegExp");
+            check(new Date(), "Date");
+            
+            check(null, "!object");
+            check(1, "!string");
+            check(1, "!even");
+            check(2, "!odd");
+            check(Math.E, "!integer");
+            check(Math.E, "!negative");
+            check(0, "!real");
+            check(0, "!positive");
+            check(-0.00000000001, "!zero");
+            check(true, "!number");
+            check(NaN, "!number");
+            check({}, "!null");
+            check({a: check}, "!empty");
+            check(undef, "!null");
+            check(check, "!Object");
+            check(adam, "!Array");
+        });
+        
+        it("should return false", function() {
+            function check(value, sKind) {
+                expect( isKindOf(value, sKind) )
+                    .equal(false);
+            }
+            
+            check(1, "false");
+            check(check, "false");
+            check("", "true");
+            check(null, "true");
+            check(1, "boolean");
+            check(1, "negative");
+            check(0, "real");
+            check(0.00000001, "zero");
+            check(1.2, "integer");
+            check(-2.8, "positive");
+            check(4.2, "even");
+            check(5.1, "odd");
+            check(-10000000, "infinity");
+            check(null, "object");
+            check(NaN, "number");
+            check("abc", "number");
+            check(NaN, "empty");
+            check(adam, "empty");
+            check("adam", "empty");
+            check([1, 2, 3], "Object");
+            check(Math, "Object");
+            
+            check(1, "!integer");
+            check(Math.PI, "!real");
+            check(0, "!number");
+            check("", "!empty");
+            check(undef, "!false");
+        });
+    });
+
+    
+    describe(".checkField", function() {
+        var checkField = adam.checkField;
+        
+        function checkTrue(obj, field, filter, settings) {
+            /*jshint unused:vars*/
+            expect( checkField.apply(null, arguments) )
+                .equal(true);
+        }
+        
+        function checkFalse(obj, field, filter, settings) {
+            /*jshint unused:vars*/
+            expect( checkField.apply(null, arguments) )
+                .equal(false);
+        }
+        
+        describe("checkField(obj, field, function)", function() {
+            it("should return true", function() {
+                checkTrue({a: null, b: 4}, "a", adam.isEmpty);
+                checkTrue(adam, "isEmpty", function(value, field, obj) {
+                    /*jshint unused:vars*/
+                    return /^is/i.test(field);
+                });
+                checkTrue({a: 1, b: 2, c: 3}, "b", function(value, field, obj) {
+                    return adam.isSizeMore(obj, value);
+                });
+            });
+            
+            it("should return false", function() {
+                checkFalse({a: null, b: 4}, "b", adam.isEmpty);
+                checkFalse(adam, "getSize", function(value, field, obj) {
+                    /*jshint unused:vars*/
+                    return /^is/i.test(field);
+                });
+                checkFalse({a: 1, b: 2, c: 3}, "c", function(value, field, obj) {
+                    return adam.isSizeMore(obj, value);
+                });
+            });
+        });
+        
+        describe("checkField(obj, field, regexp)", function() {
+            var obj = {a: null, b: 4};
+            
+            it("should return true", function() {
+                checkTrue(obj, "a", /^nu/);
+                checkTrue(obj, "b", /\d/);
+            });
+            
+            it("should return false", function() {
+                checkFalse(obj, "a", /^\s/);
+                checkFalse(obj, "b", /[a-z]/);
+            });
+        });
+        
+        describe("checkField(obj, field, string)", function() {
+            var obj = {a: null, b: 4, check: checkField};
+            
+            it("should return true", function() {
+                checkTrue(child, "c", "own");
+                checkTrue(obj, "check", "own");
+                checkTrue(obj, "toString", "!own");
+                checkTrue(obj, "check", "function");
+                checkTrue(obj, "a", "null");
+                checkTrue(obj, "b", "integer");
+            });
+            
+            it("should return false", function() {
+                checkFalse(child, "a", "own");
+                checkFalse(obj, "toString", "own");
+                checkFalse(obj, "b", "!own");
+                checkFalse(obj, "a", "object");
+            });
+        });
+        
+        describe("checkField(obj, field, {field: ...})", function() {
+            var obj = {a: null, b: 4, check: checkField};
+            
+            it("should return true", function() {
+                checkTrue(obj, "check", {field: /^che/});
+                checkTrue(obj, "b", {field: "b"});
+            });
+            
+            it("should return false", function() {
+                checkFalse(obj, "a", {field: /\d/});
+                checkFalse(obj, "b", {field: "c"});
+            });
+        });
+        
+        describe("checkField(obj, field, {value: ...})", function() {
+            var obj = {a: adam, b: [1, 2], check: checkTrue};
+            
+            it("should return true", function() {
+                checkTrue(obj, "check", {value: checkTrue});
+                checkTrue(obj, "a", {value: obj.a});
+                checkTrue(obj, "b", {value: obj.b});
+            });
+            
+            it("should return false", function() {
+                checkFalse(obj, "a", {value: 1});
+                checkFalse(obj, "b", {value: adam});
+            });
+        });
+        
+        describe("checkField(obj, field, {and: ...})", function() {
+            var obj = {a: 1, b: 2, c: -3};
+            
+            it("should return true", function() {
+                checkTrue(obj, "a", {and: ["positive", "odd"]});
+                checkTrue(obj, "b", {and: ["positive", "even"]});
+            });
+            
+            it("should return false", function() {
+                checkFalse(obj, "a", {and: ["positive", "even"]});
+                checkFalse(obj, "b", {and: ["negative", "odd"]});
+            });
+        });
+        
+        describe("checkField(obj, field, {or: ...})", function() {
+            var obj = {a: 1, b: 2, c: -3, d: "data"};
+            
+            it("should return true", function() {
+                checkTrue(obj, "a", {or: ["real", "positive"]});
+                checkTrue(obj, "b", {or: ["negative", "integer"]});
+            });
+            
+            it("should return false", function() {
+                checkFalse(obj, "c", {or: ["positive", "real"]});
+                checkFalse(obj, "d", {or: ["number", "empty"]});
+            });
+        });
+        
+        describe("checkField(obj, field, {...})", function() {
+            var filter = {f: 1},
+                obj = {a: filter, b: adam};
+            
+            it("should return true", function() {
+                checkTrue(obj, "a", filter);
+            });
+            
+            it("should return false", function() {
+                checkFalse(obj, "b", filter);
+            });
+        });
+        
+        describe("checkField(obj, field, value)", function() {
+            var date = new Date(),
+                obj = {a: 1, b: false, c: null, d: date, e: undef};
+            
+            it("should return true", function() {
+                checkTrue(obj, "a", 1);
+                checkTrue(obj, "b", false);
+                checkTrue(obj, "c", null);
+                checkTrue(obj, "d", date);
+                checkTrue(obj, "e", undef);
+            });
+            
+            it("should return false", function() {
+                checkFalse(obj, "a", 2);
+                checkFalse(obj, "b", 1);
+                checkFalse(obj, "c", false);
+                checkFalse(obj, "d", obj);
+                checkFalse(obj, "e", null);
+            });
+        });
+        
+        describe("checkField(obj, field, [list, of, filters])", function() {
+            var obj = {a: "1812", b: 123, c: Math.PI};
+            
+            it("should return true", function() {
+                checkTrue(obj, "a", ["own", "string", /\d/, {or: [/5$/, /1/, /7/]}]);
+                checkTrue(obj, "b", ["integer", /3$/]);
+                checkTrue(obj, "c", ["Number", "!integer", /^3/]);
+            });
+            
+            it("should return false", function() {
+                checkFalse(obj, "a", ["own", "string", /^5/]);
+                checkFalse(obj, "b", [/2/, "real"]);
+                checkFalse(child, "a", [/\d/, "number", "own"]);
+                checkFalse(obj, "c", ["number", {or: ["integer", "negative"]}]);
+            });
+        });
+        
+        describe("checkField(obj, field, [list, of, filters], {filterConnect: 'or'})", function() {
+            var obj = {a: "field value", b: 123, c: null, d: ""},
+                settings = {filterConnect: "or"};
+            
+            it("should return true", function() {
+                checkTrue(obj, "a", ["!own", "number", /a/], settings);
+                checkTrue(obj, "b", ["real", /2/], settings);
+                checkTrue(obj, "c", ["integer", "false"], settings);
+                checkTrue(obj, "d", [0, null, "empty"], settings);
+            });
+            
+            it("should return false", function() {
+                checkFalse(obj, "a", ["!own", "!string", /^\d/], settings);
+                checkFalse(obj, "b", [/777/, "nan"], settings);
+                checkFalse(obj, "c", [/nil/, "true", "!null"], settings);
+                checkFalse(obj, "d", ["object", /\w/, "!empty"], settings);
+            });
         });
     });
 
@@ -546,6 +816,178 @@ describe("adam", function() {
     });
 
     
+    describe(".getFreeField", function() {
+        var getFreeField = adam.getFreeField,
+            obj = {a5: 5, a2: "adfs", a3: "---", b3: 3, b4: "some", b0: "build best", b: "To be, or not to be: that's the question", c: 0, d1: 120, d2: new Date()};
+        
+        describe("getFreeField() / getFreeField(null) / getFreeField(<false value>)" + 
+                 " / getFreeField(<false value>, {prefix: <not string>})" + 
+                 " / getFreeField(<false value>, {prefix: <not string>, startNum: <false value>})", function() {
+            it("should return 'f0'", function() {
+                expect( getFreeField() )
+                    .equal("f0");
+                expect( getFreeField(null) )
+                    .equal("f0");
+                expect( getFreeField(0) )
+                    .equal("f0");
+                expect( getFreeField("") )
+                    .equal("f0");
+                expect( getFreeField(false) )
+                    .equal("f0");
+                expect( getFreeField(null, {prefix: null}) )
+                    .equal("f0");
+                expect( getFreeField(null, {prefix: 10}) )
+                    .equal("f0");
+                expect( getFreeField(null, {prefix: 10, startNum: 0}) )
+                    .equal("f0");
+                expect( getFreeField("", {prefix: new Date(), startNum: null}) )
+                    .equal("f0");
+                /*jshint ignore:start*/
+                expect( getFreeField(undef, {prefix: new String("something wrong"), startNum: ""}) )
+                    .equal("f0");
+                /*jshint ignore:end*/
+            });
+        });
+        
+        describe("getFreeField(<false value>, {prefix: sPrefix})" + 
+                 " / getFreeField(<false value>, {prefix: sPrefix, startNum: <false value>})", function() {
+            it("should return sPrefix + '0'", function() {
+                expect( getFreeField(null, {prefix: "abc"}) )
+                    .equal("abc0");
+                expect( getFreeField(null, {prefix: "abc", startNum: 0}) )
+                    .equal("abc0");
+                expect( getFreeField(null, {prefix: "+++", startNum: undef}) )
+                    .equal("+++0");
+                expect( getFreeField(false, {prefix: String(5)}) )
+                    .equal("50");
+                expect( getFreeField(undef, {prefix: "Zero is ", startNum: 0}) )
+                    .equal("Zero is 0");
+                expect( getFreeField("", {prefix: "-"}) )
+                    .equal("-0");
+                expect( getFreeField("", {prefix: "GROT", startNum: Number.NaN}) )
+                    .equal("GROT0");
+            });
+        });
+        
+        describe("getFreeField(<false value>, {prefix: sPrefix, startNum: nStartNum})", function() {
+            it("should return sPrefix + nStartNum", function() {
+                expect( getFreeField(null, {prefix: "d", startNum: 5}) )
+                    .equal("d5");
+                expect( getFreeField(null, {prefix: "100", startNum: 500}) )
+                    .equal("100500");
+                expect( getFreeField(0, {prefix: "max number - ", startNum: Number.MAX_VALUE}) )
+                    .equal("max number - " + Number.MAX_VALUE);
+                expect( getFreeField(0, {prefix: "-infinity = ", startNum: Number.NEGATIVE_INFINITY}) )
+                    .equal("-infinity = " + Number.NEGATIVE_INFINITY);
+            });
+        });
+        
+        describe("getFreeField(obj) / getFreeField(obj, {prefix: <not string>})" + 
+                 " / getFreeField(obj, {prefix: <not string>, startNum: <false value>})", function() {
+            it("should return field name 'f<number>' so that there are no such field in obj", function() {
+                expect( getFreeField({f5: 5}) )
+                    .equal("f0");
+                expect( getFreeField({f0: 0, f1: 1, f2: 2}, {prefix: null}) )
+                    .equal("f3");
+                expect( getFreeField({a: 1, b: 2, f2: 2, f0: 0}, {prefix: {}, startNum: false}) )
+                    .equal("f1");
+            });
+        });
+        
+        describe("getFreeField(obj, {prefix: sPrefix}) / getFreeField(obj, {prefix: sPrefix, startNum: <false value>})", function() {
+            it("should return field name sPrefix + '<number>' so that there are no such field in obj", function() {
+                expect( getFreeField({f5: 5}, {prefix: "abc"}) )
+                    .equal("abc0");
+                expect( getFreeField({f5: 5}, {prefix: "f"}) )
+                    .equal("f0");
+                expect( getFreeField({f0: 0, "$$$0": 1, "$$$12": 12}, {prefix: "$$$"}) )
+                    .equal("$$$1");
+                expect( getFreeField(adam, {prefix: "abc", startNum: false}) )
+                    .equal("abc0");
+                expect( getFreeField({"0": "a", "1": "b"}, {prefix: ""}) )
+                    .equal("2");
+                expect( getFreeField(new Date(), {prefix: "getTime", startNum: null}) )
+                    .equal("getTime0");
+                expect( getFreeField(["a", new Date(), true, 111], {prefix: "", startNum: 0}) )
+                    .equal("4");
+            });
+        });
+        
+        describe("getFreeField(obj, {prefix: sPrefix, startNum: nStartNum})", function() {
+            it("should return field name sPrefix + '<number>' so that there are no such field in obj (search is started from sPrefix + nStartNum)", function() {
+                expect( getFreeField(obj, {prefix: "a", startNum: 5}) )
+                    .equal("a6");
+                expect( getFreeField(obj, {prefix: "a", startNum: 1}) )
+                    .equal("a1");
+                expect( getFreeField(obj, {prefix: "a", startNum: 2}) )
+                    .equal("a4");
+                expect( getFreeField(obj, {prefix: "b", startNum: 1}) )
+                    .equal("b1");
+                expect( getFreeField(obj, {prefix: "b", startNum: 3}) )
+                    .equal("b5");
+                expect( getFreeField(obj, {prefix: "c", startNum: 0}) )
+                    .equal("c0");
+                expect( getFreeField(obj, {prefix: "c", startNum: 8}) )
+                    .equal("c8");
+                expect( getFreeField(obj, {prefix: "d", startNum: 1}) )
+                    .equal("d3");
+                expect( getFreeField(obj, {prefix: "d", startNum: 100}) )
+                    .equal("d100");
+            });
+        });
+        
+        describe("getFreeField(obj, {prefix: sPrefix, startNum: nStartNum | <false value>, checkPrefix: true})", function() {
+            it("should return field name <sPrefix>[<number>] so that there are no such field in obj (search is started from sPrefix)", function() {
+                expect( getFreeField(obj, {prefix: "", startNum: false, checkPrefix: true}) )
+                    .equal("");
+                expect( getFreeField(obj, {prefix: "", startNum: 0, checkPrefix: true}) )
+                    .equal("");
+                expect( getFreeField(obj, {prefix: "", startNum: 1, checkPrefix: true}) )
+                    .equal("");
+                expect( getFreeField(obj, {prefix: "", startNum: 10, checkPrefix: true}) )
+                    .equal("");
+                expect( getFreeField(obj, {prefix: "a", startNum: false, checkPrefix: true}) )
+                    .equal("a");
+                expect( getFreeField(obj, {prefix: "a", startNum: 0, checkPrefix: true}) )
+                    .equal("a");
+                expect( getFreeField(obj, {prefix: "a", startNum: 1, checkPrefix: true}) )
+                    .equal("a");
+                expect( getFreeField(obj, {prefix: "a", startNum: 100, checkPrefix: true}) )
+                    .equal("a");
+                expect( getFreeField(obj, {prefix: "b", startNum: null, checkPrefix: true}) )
+                    .equal("b1");
+                expect( getFreeField(obj, {prefix: "b", startNum: 0, checkPrefix: true}) )
+                    .equal("b1");
+                expect( getFreeField(obj, {prefix: "b", startNum: 1, checkPrefix: true}) )
+                    .equal("b1");
+                expect( getFreeField(obj, {prefix: "b", startNum: 2, checkPrefix: true}) )
+                    .equal("b2");
+                expect( getFreeField(obj, {prefix: "b", startNum: 3, checkPrefix: true}) )
+                    .equal("b5");
+                expect( getFreeField(obj, {prefix: "b", startNum: 100, checkPrefix: true}) )
+                    .equal("b100");
+                expect( getFreeField(obj, {prefix: "c", startNum: "", checkPrefix: true}) )
+                    .equal("c0");
+                expect( getFreeField(obj, {prefix: "c", startNum: 0, checkPrefix: true}) )
+                    .equal("c0");
+                expect( getFreeField(obj, {prefix: "c", startNum: 1, checkPrefix: true}) )
+                    .equal("c1");
+                expect( getFreeField(obj, {prefix: "c", startNum: 7, checkPrefix: true}) )
+                    .equal("c7");
+                expect( getFreeField(obj, {prefix: "d", startNum: undef, checkPrefix: true}) )
+                    .equal("d");
+                expect( getFreeField(obj, {prefix: "d", startNum: 0, checkPrefix: true}) )
+                    .equal("d");
+                expect( getFreeField(obj, {prefix: "d", startNum: 1, checkPrefix: true}) )
+                    .equal("d");
+                expect( getFreeField(obj, {prefix: "d", startNum: 2, checkPrefix: true}) )
+                    .equal("d");
+            });
+        });
+        
+    });
+
+    
     describe(".split(obj, firstObjFields)", function() {
         var split = adam.split,
             date = new Date(),
@@ -569,6 +1011,7 @@ describe("adam", function() {
                       {b: 2, first: "first", d: date, func: method}]);
         });
     });
+
     
     describe(".fromArray", function() {
         var fromArray = adam.fromArray,
