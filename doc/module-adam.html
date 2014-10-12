@@ -316,6 +316,7 @@ it means that the field corresponds to this filter</li>
 <ul>
 <li><code>filterConnect</code>: <code>String</code> (<code>and</code>) - a boolean connector that should be used when array of filters is specified
  in <code>filter</code> parameter; valid values are the following: <code>and</code>, <code>or</code> (case-insensitive); any other value is treated as <code>and</code></li>
+<li><code>value</code>: <code>Any</code> - a value that should be used for check instead of field's value</li>
 </ul></td>
         </tr>
 
@@ -553,6 +554,10 @@ values of the created object are corresponding items of the list.</p>
 <ul>
 <li><code>deleteKeyField</code>: <code>Boolean</code> (<code>false</code>) - specifies whether key field (whose value is field name of the created object)
 should be deleted from the source object (an item of the list)</li>
+<li><code>filter</code> - a filter specifying objects that should be included into result (see <a href="module-adam.html#checkField">checkField</a>);
+an item of the list will be used as value for check</li>
+<li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
 </ul></td>
         </tr>
 
@@ -588,6 +593,13 @@ should be deleted from the source object (an item of the list)</li>
 
 	
 
+	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#checkField">checkField</a></li>
+			</ul>
+	</dd>
 	
 
 	
@@ -771,7 +783,7 @@ should be deleted from the source object (an item of the list)</li>
         
             
 <dt>
-    <h4 class="name" id="getFields"><span class="type-signature">&lt;static> </span>getFields<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    <h4 class="name" id="getFields"><span class="type-signature">&lt;static> </span>getFields<span class="signature">(obj, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
     
 </dt>
@@ -779,7 +791,7 @@ should be deleted from the source object (an item of the list)</li>
     
     
     <div class="description">
-        <p>Return list of fields of specified object.</p>
+        <p>Return list of all or filtered fields of specified object.</p>
     </div>
     
 
@@ -800,6 +812,8 @@ should be deleted from the source object (an item of the list)</li>
 
 		<th>Type</th>
 
+		
+		<th>Argument</th>
 		
 
 		
@@ -826,10 +840,57 @@ should be deleted from the source object (an item of the list)</li>
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last"><p>Object to be processed.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
+    The following settings are supported:</p>
+<ul>
+<li><code>filter</code> - a filter specifying fields that should be selected (see <a href="module-adam.html#checkField">checkField</a>)</li>
+<li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+</ul></td>
         </tr>
 
 	
@@ -865,6 +926,13 @@ should be deleted from the source object (an item of the list)</li>
 	
 
 	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#checkField">checkField</a></li>
+			</ul>
+	</dd>
+	
 
 	
 </dl>
@@ -883,7 +951,7 @@ should be deleted from the source object (an item of the list)</li>
     
             
 <div class="param-desc">
-    <p>List of fields of specified object.</p>
+    <p>List of all or filtered fields of specified object.</p>
 </div>
 
 
@@ -1098,7 +1166,7 @@ should be deleted from the source object (an item of the list)</li>
         
             
 <dt>
-    <h4 class="name" id="getSize"><span class="type-signature">&lt;static> </span>getSize<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Integer}</span></h4>
+    <h4 class="name" id="getSize"><span class="type-signature">&lt;static> </span>getSize<span class="signature">(obj, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Integer}</span></h4>
     
     
 </dt>
@@ -1106,7 +1174,7 @@ should be deleted from the source object (an item of the list)</li>
     
     
     <div class="description">
-        <p>Return number of fields of specified object.</p>
+        <p>Return number of all or filtered fields of specified object.</p>
     </div>
     
 
@@ -1127,6 +1195,8 @@ should be deleted from the source object (an item of the list)</li>
 
 		<th>Type</th>
 
+		
+		<th>Argument</th>
 		
 
 		
@@ -1153,10 +1223,57 @@ should be deleted from the source object (an item of the list)</li>
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last"><p>Object to be processed.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
+    The following settings are supported:</p>
+<ul>
+<li><code>filter</code> - a filter specifying fields that should be counted (see <a href="module-adam.html#checkField">checkField</a>)</li>
+<li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+</ul></td>
         </tr>
 
 	
@@ -1192,6 +1309,13 @@ should be deleted from the source object (an item of the list)</li>
 	
 
 	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#checkField">checkField</a></li>
+			</ul>
+	</dd>
+	
 
 	
 </dl>
@@ -1210,7 +1334,7 @@ should be deleted from the source object (an item of the list)</li>
     
             
 <div class="param-desc">
-    <p>Number of fields of specified object.</p>
+    <p>Number of all or filtered fields of specified object.</p>
 </div>
 
 
@@ -1594,7 +1718,7 @@ should be deleted from the source object (an item of the list)</li>
         
             
 <dt>
-    <h4 class="name" id="getValues"><span class="type-signature">&lt;static> </span>getValues<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    <h4 class="name" id="getValues"><span class="type-signature">&lt;static> </span>getValues<span class="signature">(obj, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
     
 </dt>
@@ -1602,7 +1726,7 @@ should be deleted from the source object (an item of the list)</li>
     
     
     <div class="description">
-        <p>Return list of field values of specified object.</p>
+        <p>Return list of all or filtered field values of specified object.</p>
     </div>
     
 
@@ -1623,6 +1747,8 @@ should be deleted from the source object (an item of the list)</li>
 
 		<th>Type</th>
 
+		
+		<th>Argument</th>
 		
 
 		
@@ -1649,10 +1775,57 @@ should be deleted from the source object (an item of the list)</li>
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last"><p>Object to be processed.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
+    The following settings are supported:</p>
+<ul>
+<li><code>filter</code> - a filter specifying fields that should be selected (see <a href="module-adam.html#checkField">checkField</a>)</li>
+<li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+</ul></td>
         </tr>
 
 	
@@ -1688,6 +1861,13 @@ should be deleted from the source object (an item of the list)</li>
 	
 
 	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#checkField">checkField</a></li>
+			</ul>
+	</dd>
+	
 
 	
 </dl>
@@ -1706,7 +1886,7 @@ should be deleted from the source object (an item of the list)</li>
     
             
 <div class="param-desc">
-    <p>List of field values of specified object.</p>
+    <p>List of all or filtered field values of specified object.</p>
 </div>
 
 
@@ -2069,7 +2249,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
         
             
 <dt>
-    <h4 class="name" id="isSizeMore"><span class="type-signature">&lt;static> </span>isSizeMore<span class="signature">(obj, nValue)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="isSizeMore"><span class="type-signature">&lt;static> </span>isSizeMore<span class="signature">(obj, nValue, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
     
 </dt>
@@ -2077,7 +2257,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
     
     
     <div class="description">
-        <p>Check whether number of fields of specified object is more than the given value.</p>
+        <p>Check whether number of all or filtered fields of specified object is more than the given value.</p>
     </div>
     
 
@@ -2098,6 +2278,8 @@ For example, <code>!real</code> means: check whether the value is not a real num
 
 		<th>Type</th>
 
+		
+		<th>Argument</th>
 		
 
 		
@@ -2124,6 +2306,14 @@ For example, <code>!real</code> means: check whether the value is not a real num
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
@@ -2147,10 +2337,57 @@ For example, <code>!real</code> means: check whether the value is not a real num
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last"><p>Value that should be used for comparison with number of fields.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
+    The following settings are supported:</p>
+<ul>
+<li><code>filter</code> - a filter specifying fields that should be counted (see <a href="module-adam.html#checkField">checkField</a>)</li>
+<li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+</ul></td>
         </tr>
 
 	
@@ -2186,6 +2423,13 @@ For example, <code>!real</code> means: check whether the value is not a real num
 	
 
 	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#checkField">checkField</a></li>
+			</ul>
+	</dd>
+	
 
 	
 </dl>
@@ -2204,7 +2448,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
     
             
 <div class="param-desc">
-    <p><code>true</code>, when number of fields is more than the given value, otherwise <code>false</code>.</p>
+    <p><code>true</code>, when number of all or filtered fields is more than the given value, otherwise <code>false</code>.</p>
 </div>
 
 
@@ -2230,7 +2474,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
         
             
 <dt>
-    <h4 class="name" id="split"><span class="type-signature">&lt;static> </span>split<span class="signature">(obj, firstObjFields)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    <h4 class="name" id="split"><span class="type-signature">&lt;static> </span>split<span class="signature">(obj, firstObjFields, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
     
 </dt>
@@ -2260,6 +2504,8 @@ For example, <code>!real</code> means: check whether the value is not a real num
 		<th>Type</th>
 
 		
+		<th>Argument</th>
+		
 
 		
 
@@ -2285,6 +2531,14 @@ For example, <code>!real</code> means: check whether the value is not a real num
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
@@ -2305,17 +2559,70 @@ For example, <code>!real</code> means: check whether the value is not a real num
 |
 
 <span class="param-type">Object</span>
+|
+
+<span class="param-type">null</span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last"><p>List of names of fields that should be included in the first part,
-     or an object defining those fields.</p></td>
+     or an object defining those fields.
+     If value is not specified (<code>null</code> or <code>undefined</code>), <code>filter</code> setting should be used to divide fields into parts.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
+    The following settings are supported:</p>
+<ul>
+<li><code>filter</code> - a filter that should be used to divide fields into parts (see <a href="module-adam.html#checkField">checkField</a>);
+ fields conforming to the filter will be included in the first part,
+ fields that do not conform to the filter will be included in the second part</li>
+<li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+</ul></td>
         </tr>
 
 	
@@ -2350,6 +2657,13 @@ For example, <code>!real</code> means: check whether the value is not a real num
 
 	
 
+	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#checkField">checkField</a></li>
+			</ul>
+	</dd>
 	
 
 	
@@ -2418,7 +2732,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on 2014-09-21T18:15:09+04:00 using the <a
+		on 2014-10-12T19:24:24+04:00 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>

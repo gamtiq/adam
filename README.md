@@ -73,27 +73,36 @@ define(["path/to/dist/adam.js"], function(adam) {
 ### Examples
 
 ```js
-var obj = {a: 1, b: 2, c: 3};
+var obj = {a: 1, b: 2, c: 3, d: 4, e: 5};
 
-adam.getClass([8]);   // Array
-adam.getType(null);   // null
+adam.getClass([8]);   // "Array"
+adam.getType(null);   // "null"
 adam.isKindOf(17, "integer");   // true
 adam.isKindOf(NaN, "!number");   // true
+
 adam.checkField(obj, "c", ["positive", "odd"]);   // true
 adam.checkField(obj, "b", ["real", /^7/], {filterConnect: "or"});   // false
 
-adam.getFreeField({a5: 5, a2: 2, a7: 7, a3: 3}, {prefix: "a", startNum: 2});   // a4
+adam.getFreeField({a5: 5, a2: 2, a7: 7, a3: 3}, {prefix: "a", startNum: 2});   // "a4"
 
-adam.getSize(obj);   // 3
+adam.getSize(obj);   // 5
+adam.getSize(obj, {filter: "even"});   // 2
 adam.isSizeMore(obj, 5);   // false
 adam.isEmpty({});   // true
 
-adam.getFields(obj);   // ["a", "b", "c"]
-adam.getValues(obj);   // [1, 2, 3]
-adam.getValueKey({a: 1, b: 2, c: 3, d: 4}, 3);   // c
+adam.getFields(obj);   // ["a", "b", "c", "d", "e"]
+adam.getFields(obj, {filter: function(value) {return value > 3;}});   // ["d", "e"]
+adam.getFields(adam, {filter: {field: /^is/}});   // ["isEmpty", "isKindOf", "isSizeMore"]
+
+adam.getValues(obj);   // [1, 2, 3, 4, 5]
+adam.getValues(obj, {filter: {field: /a|c/}});   // [1, 3]
+adam.getValueKey(obj, 3);   // "c"
 
 adam.fromArray([{id: "a", value: 11}, {id: "b", value: 7}, {id: "c", value: 10}], "id");   // {a: {id: "a", value: 11}, b: {id: "b", value: 7}, c: {id: "c", value: 10}}
-adam.split({a: 1, b: 2, c: 3, d: 4, e: 5}, ["a", "d"]);   // [{a: 1, d: 4}, {b: 2, c: 3, e: 5}]
+
+adam.split(obj, ["a", "d"]);   // [{a: 1, d: 4}, {b: 2, c: 3, e: 5}]
+adam.split(obj, null, {filter: "odd"});   // [{a: 1, c: 3, e: 5}, {b: 2, d: 4}]
+adam.split(obj, null, {filter: ["even", /3/], filterConnect: "or"});   // [{b: 2, c: 3, d: 4}, {a: 1, e: 5}]
 ```
 
 See `test/adam.js` for additional examples.
@@ -112,17 +121,17 @@ Create object (map) from list of objects.
 
 Return class of given value (namely value of internal property `[[Class]]`).
 
-### getFields(obj: Object): Array
+### getFields(obj: Object, [settings: Object]): Array
 
-Return list of fields of specified object.
+Return list of all or filtered fields of specified object.
 
 ### getFreeField(obj: Object, [settings: Object]): String
 
 Return name of first free (absent) field of specified object, that conforms to the following pattern: &lt;prefix&gt;&lt;number&gt;
 
-### getSize(obj: Object): Integer
+### getSize(obj: Object, [settings: Object]): Integer
 
-Return number of fields of specified object.
+Return number of all or filtered fields of specified object.
 
 ### getType(value: Any): String
 
@@ -132,9 +141,9 @@ Return type of given value.
 
 Return the name of field (or list of names) having the specified value in the given object.
 
-### getValues(obj: Object): Array
+### getValues(obj: Object, [settings: Object]): Array
 
-Return list of field values of specified object.
+Return list of all or filtered field values of specified object.
 
 ### isEmpty(value: Any): Boolean
 
@@ -144,11 +153,11 @@ Check whether given value is an empty value i.e. `null`, `undefined`, empty obje
 
 Check whether given value has (or does not have) specified kind (type or class).
 
-### isSizeMore(obj: Object, qty: Number): Boolean
+### isSizeMore(obj: Object, qty: Number, [settings: Object]): Boolean
 
-Check whether number of fields of specified object is more than the given value.
+Check whether number of all or filtered fields of specified object is more than the given value.
 
-### split(obj: Object, firstObjFields: Array | Object): Array
+### split(obj: Object, firstObjFields: Array | Object | null, [settings: Object]): Array
 
 Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.
 
@@ -157,6 +166,7 @@ See `doc` folder for details.
 ## Related projects
 
 * [eva](https://github.com/gamtiq/eva)
+* [mixing](https://github.com/gamtiq/mixing)
 * [teo](https://github.com/gamtiq/teo)
 
 ## Contributing

@@ -31,6 +31,8 @@
 
     "use strict";
 
+    /*jshint latedef:nofunc*/
+
     /**
      * Return class of given value (namely value of internal property `[[Class]]`).
      * 
@@ -63,44 +65,67 @@
     }
 
     /**
-     * Return number of fields of specified object.
+     * Return number of all or filtered fields of specified object.
      * 
      * @param {Object} obj
      *      Object to be processed.
+     * @param {Object} [settings]
+     *     Operation settings. Keys are settings names, values are corresponding settings values.
+     *     The following settings are supported:
+     *     
+     *   * `filter` - a filter specifying fields that should be counted (see {@link module:adam.checkField checkField})
+     *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
+     *      in `filter` setting (see {@link module:adam.checkField checkField})
      * @return {Integer}
-     *      Number of fields of specified object.
+     *      Number of all or filtered fields of specified object.
      * @alias module:adam.getSize
+     * @see {@link module:adam.checkField checkField}
      */
-    function getSize(obj) {
+    function getSize(obj, settings) {
         /*jshint unused:false*/
         var nSize = 0,
+            bAll = ! settings || ! ("filter" in settings),
+            filter = bAll ? null : settings.filter,
             sKey;
         for (sKey in obj) {
-            nSize++;
+            if (bAll || checkField(obj, sKey, filter, settings)) {
+                nSize++;
+            }
         }
         return nSize;
     }
 
     /**
-     * Check whether number of fields of specified object is more than the given value.
+     * Check whether number of all or filtered fields of specified object is more than the given value.
      * 
      * @param {Object} obj
      *      Object to be checked.
      * @param {Number} nValue
      *      Value that should be used for comparison with number of fields.
+     * @param {Object} [settings]
+     *     Operation settings. Keys are settings names, values are corresponding settings values.
+     *     The following settings are supported:
+     *     
+     *   * `filter` - a filter specifying fields that should be counted (see {@link module:adam.checkField checkField})
+     *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
+     *      in `filter` setting (see {@link module:adam.checkField checkField})
      * @return {Boolean}
-     *      `true`, when number of fields is more than the given value, otherwise `false`.
+     *      `true`, when number of all or filtered fields is more than the given value, otherwise `false`.
      * @alias module:adam.isSizeMore
+     * @see {@link module:adam.checkField checkField}
      */
-    function isSizeMore(obj, nValue) {
+    function isSizeMore(obj, nValue, settings) {
         /*jshint unused:false*/
         var nSize = 0,
+            bAll = ! settings || ! ("filter" in settings),
+            filter = bAll ? null : settings.filter,
             sKey;
         if (nValue >= 0) {
             for (sKey in obj) {
-                nSize++;
-                if (nSize > nValue) {
-                    return true;
+                if (bAll || checkField(obj, sKey, filter, settings)) {
+                    if (++nSize > nValue) {
+                        return true;
+                    }
                 }
             }
         }
@@ -114,9 +139,9 @@
      *      Value to be checked.
      * @return {Boolean}
      *      `true` if the value is an empty value, otherwise `false`.
-     * @alias module:adam.getType
-     * @see module:adam.getClass getClass
-     * @see module:adam.isSizeMore isSizeMore
+     * @alias module:adam.isEmpty
+     * @see {@link module:adam.getClass getClass}
+     * @see {@link module:adam.isSizeMore isSizeMore}
      */
     function isEmpty(value) {
         /*jshint eqeqeq:false, eqnull:true, laxbreak:true*/
@@ -135,13 +160,13 @@
      *      Type or class for check. Can be any value that is returned by {@link module:adam.getType getType} 
      *      and {@link module:adam.getClass getClass}, or one of the following:
      *      
-     *    * `empty` - check whether the value is empty (see {@link module:adam.isEmpty isEmpty}
-     *    * `even` - check whether the value is a even integer
+     *    * `empty` - check whether the value is empty (see {@link module:adam.isEmpty isEmpty})
+     *    * `even` - check whether the value is an even integer
      *    * `false` - check whether the value is a false value
      *    * `infinity` - check whether the value is a number representing positive or negative infinity
      *    * `integer` - check whether the value is an integer number
      *    * `negative` - check whether the value is a negative number
-     *    * `odd` - check whether the value is a odd integer
+     *    * `odd` - check whether the value is an odd integer
      *    * `positive` - check whether the value is a positive number
      *    * `real` - check whether the value is a real number
      *    * `true` - check whether the value is a true value
@@ -152,8 +177,10 @@
      *      For example, `!real` means: check whether the value is not a real number.
      * @return {Boolean}
      *      `true` if value has the specified kind (or does not have when the check is negated), otherwise `false`.
-     * @alias module:adam.getType
-     * @see module:adam.isEmpty isEmpty
+     * @alias module:adam.isKindOf
+     * @see {@link module:adam.getClass getClass}
+     * @see {@link module:adam.getType getType}
+     * @see {@link module:adam.isEmpty isEmpty}
      */
     function isKindOf(value, sKind) {
         /*jshint laxbreak:true*/
@@ -202,7 +229,7 @@
      *      - `own` - if the field is own property of the object it means that the field corresponds to this filter
      *      - `!own` - if the field is not own property of the object it means that the field corresponds to this filter
      *      - any other value - is used as the check when calling {@link module:adam.isKindOf isKindOf};
-     *        if the {@link module:adam.isKindOf isKindOf} returns `true` for the given field value and the filter
+     *        if {@link module:adam.isKindOf isKindOf} returns `true` for the given field value and the filter
      *        it means that the field corresponds to this filter
      *    * an object;
      *      - if the object has `and` or `or` field, its value is used as subfilter and will be passed in recursive call of `checkField`
@@ -221,20 +248,24 @@
      *     
      *   * `filterConnect`: `String` (`and`) - a boolean connector that should be used when array of filters is specified
      *      in `filter` parameter; valid values are the following: `and`, `or` (case-insensitive); any other value is treated as `and`
+     *   * `value`: `Any` - a value that should be used for check instead of field's value
      * @return {Boolean}
      *      `true` if the field corresponds to specified filter(s), otherwise `false`.
-     * @alias module:adam.getType
-     * @see module:adam.getClass getClass
-     * @see module:adam.isKindOf isKindOf
+     * @alias module:adam.checkField
+     * @see {@link module:adam.getClass getClass}
+     * @see {@link module:adam.isKindOf isKindOf}
      */
     function checkField(obj, field, filter, settings) {
-        var value = obj[field],
-            test = true,
-            bAnd, nI, nL;
+        /*jshint laxbreak:true*/
+        var test = true,
+            bAnd, nI, nL, value;
         field = String(field);
         if (! settings) {
             settings = {};
         }
+        value = "value" in settings
+                    ? settings.value
+                    : obj[field];
         bAnd = settings.filterConnect;
         bAnd = typeof bAnd !== "string" || bAnd.toLowerCase() !== "or";
         if (getClass(filter) !== "Array") {
@@ -294,19 +325,31 @@
     }
 
     /**
-     * Return list of fields of specified object.
+     * Return list of all or filtered fields of specified object.
      * 
      * @param {Object} obj
      *      Object to be processed.
+     * @param {Object} [settings]
+     *     Operation settings. Keys are settings names, values are corresponding settings values.
+     *     The following settings are supported:
+     *     
+     *   * `filter` - a filter specifying fields that should be selected (see {@link module:adam.checkField checkField})
+     *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
+     *      in `filter` setting (see {@link module:adam.checkField checkField})
      * @return {Array}
-     *      List of fields of specified object.
+     *      List of all or filtered fields of specified object.
      * @alias module:adam.getFields
+     * @see {@link module:adam.checkField checkField}
      */
-    function getFields(obj) {
+    function getFields(obj, settings) {
         var result = [],
+            bAll = ! settings || ! ("filter" in settings),
+            filter = bAll ? null : settings.filter,
             sKey;
         for (sKey in obj) {
-            result.push(sKey);
+            if (bAll || checkField(obj, sKey, filter, settings)) {
+                result.push(sKey);
+            }
         }
         return result;
     }
@@ -346,19 +389,31 @@
     }
 
     /**
-     * Return list of field values of specified object.
+     * Return list of all or filtered field values of specified object.
      * 
      * @param {Object} obj
      *      Object to be processed.
+     * @param {Object} [settings]
+     *     Operation settings. Keys are settings names, values are corresponding settings values.
+     *     The following settings are supported:
+     *     
+     *   * `filter` - a filter specifying fields that should be selected (see {@link module:adam.checkField checkField})
+     *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
+     *      in `filter` setting (see {@link module:adam.checkField checkField})
      * @return {Array}
-     *      List of field values of specified object.
+     *      List of all or filtered field values of specified object.
      * @alias module:adam.getValues
+     * @see {@link module:adam.checkField checkField}
      */
-    function getValues(obj) {
+    function getValues(obj, settings) {
         var result = [],
+            bAll = ! settings || ! ("filter" in settings),
+            filter = bAll ? null : settings.filter,
             sKey;
         for (sKey in obj) {
-            result[result.length] = obj[sKey];
+            if (bAll || checkField(obj, sKey, filter, settings)) {
+                result[result.length] = obj[sKey];
+            }
         }
         return result;
     }
@@ -429,6 +484,10 @@
      *     
      *   * `deleteKeyField`: `Boolean` (`false`) - specifies whether key field (whose value is field name of the created object)
      *     should be deleted from the source object (an item of the list)
+     *   * `filter` - a filter specifying objects that should be included into result (see {@link module:adam.checkField checkField});
+     *     an item of the list will be used as value for check
+     *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
+     *      in `filter` setting (see {@link module:adam.checkField checkField})
      * @return {Object}
      *      Object created from the given list.
      * @alias module:adam.fromArray
@@ -436,11 +495,14 @@
     function fromArray(list, keyField, settings) {
         var nL = list.length,
             result = {},
-            bDeleteKeyField, bFuncKey, item, field, nI, sKeyName;
+            bAll, bDeleteKeyField, bFuncKey, filter, filterConnect, item, field, nI, sKeyName;
         if (nL) {
             if (! settings) {
                 settings = {};
             }
+            bAll = ! ("filter" in settings);
+            filter = bAll ? null : settings.filter;
+            filterConnect = settings.filterConnect;
             bFuncKey = typeof keyField === "function";
             bDeleteKeyField = Boolean(settings.deleteKeyField && keyField);
             if (! bFuncKey) {
@@ -457,10 +519,12 @@
                         field = field.call(item);
                     }
                 }
-                if (bDeleteKeyField) {
-                    delete item[sKeyName];
+                if (bAll || checkField(result, field, filter, {value: item, filterConnect: filterConnect})) {
+                    if (bDeleteKeyField) {
+                        delete item[sKeyName];
+                    }
+                    result[field] = item;
                 }
-                result[field] = item;
             }
         }
         return result;
@@ -471,41 +535,67 @@
      * 
      * @param {Object} obj
      *      Object to be divided.
-     * @param {Array | Object} firstObjFields
+     * @param {Array | Object | null} firstObjFields
      *      List of names of fields that should be included in the first part,
      *      or an object defining those fields.
+     *      If value is not specified (`null` or `undefined`), `filter` setting should be used to divide fields into parts.
+     * @param {Object} [settings]
+     *     Operation settings. Keys are settings names, values are corresponding settings values.
+     *     The following settings are supported:
+     *     
+     *   * `filter` - a filter that should be used to divide fields into parts (see {@link module:adam.checkField checkField});
+     *      fields conforming to the filter will be included in the first part,
+     *      fields that do not conform to the filter will be included in the second part
+     *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
+     *      in `filter` setting (see {@link module:adam.checkField checkField})
      * @return {Array}
      *      Created parts: item with index 0 is the first part, item with index 1 is the second part.
      * @alias module:adam.split
      */
-    function split(obj, firstObjFields) {
+    function split(obj, firstObjFields, settings) {
+        /*jshint laxbreak:true*/
         var first = {},
             second = {},
             result = [first, second],
-            sKey;
-        if (typeof firstObjFields.length === "number") {
-            firstObjFields = fromArray(firstObjFields);
+            bByName, filter, sKey;
+        if (! settings) {
+            settings = {};
+        }
+        if (firstObjFields) {
+            bByName = true;
+            if (typeof firstObjFields.length === "number") {
+                firstObjFields = fromArray(firstObjFields);
+            }
+        }
+        else {
+            bByName = false;
+            filter = settings.filter;
         }
         for (sKey in obj) {
-            (sKey in firstObjFields ? first : second)[sKey] = obj[sKey];
+            ((bByName ? sKey in firstObjFields : checkField(obj, sKey, filter, settings)) 
+                ? first 
+                : second)[sKey] = obj[sKey];
         }
         return result;
     }
 
     // Exports
 
-    exports.checkField = checkField;
-    exports.fromArray = fromArray;
-    exports.getClass = getClass;
-    exports.getFields = getFields;
-    exports.getFreeField = getFreeField;
-    exports.getSize = getSize;
-    exports.getType = getType;
-    exports.getValueKey = getValueKey;
-    exports.getValues = getValues;
-    exports.isEmpty = isEmpty;
-    exports.isKindOf = isKindOf;
-    exports.isSizeMore = isSizeMore;
-    exports.split = split;
+    module.exports = {
+        checkField: checkField,
+        fromArray: fromArray,
+        getClass: getClass,
+        getFields: getFields,
+        getFreeField: getFreeField,
+        getSize: getSize,
+        getType: getType,
+        getValueKey: getValueKey,
+        getValues: getValues,
+        isEmpty: isEmpty,
+        isKindOf: isKindOf,
+        isSizeMore: isSizeMore,
+        split: split
+    };
+
     return module.exports;
 }));

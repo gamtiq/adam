@@ -41,6 +41,18 @@ describe("adam", function() {
         expect = chai.expect;
     }
     
+    function checkArray(func, paramList, expectedResult) {
+        var result = func.apply(null, paramList),
+            nL = expectedResult.length,
+            nI;
+        expect( result )
+            .length(nL);
+        for (nI = 0; nI < nL; nI++) {
+            expect( result )
+                .include(expectedResult[nI]);
+        }
+    }
+    
     
     describe(".getClass(value)", function() {
         var getClass = adam.getClass;
@@ -139,94 +151,128 @@ describe("adam", function() {
     });
 
     
-    describe(".getSize(obj)", function() {
+    describe(".getSize", function() {
         var getSize = adam.getSize;
         
-        it("should return quantity of all fields of object (including prototype chain)", function() {
-            var parent = {a: 1, b: 2, c: 3, d: 4},
-                F = function() {},
-                child;
-            F.prototype = parent;
-            child = new F();
-            child.b = "b";
-            child.d = "d";
-            child.e = 5;
-            child.f = "f";
-            expect( getSize({}) )
-                .equal(0);
-            /*jshint ignore:start*/
-            expect( getSize(new Object()) )
-                .equal(0);
-            expect( getSize(new Boolean(true)) )
-                .equal(0);
-            expect( getSize(new Date()) )
-                .equal(0);
-            expect( getSize(new Number(57)) )
-                .equal(0);
-            /*jshint ignore:end*/
-            expect( getSize(grandchild) )
-                .equal(7);
-            expect( getSize(parent) )
-                .equal(4);
-            expect( getSize(child) )
-                .equal(6);
-            
-            parent.f = 6;
-            expect( getSize(parent) )
-                .equal(5);
-            expect( getSize(child) )
-                .equal(6);
-            
-            delete parent.a;
-            delete parent.c;
-            expect( getSize(parent) )
-                .equal(3);
-            expect( getSize(child) )
-                .equal(4);
+        describe("getSize(obj)", function() {
+            it("should return quantity of all fields of object (including prototype chain)", function() {
+                var parent = {a: 1, b: 2, c: 3, d: 4},
+                    F = function() {},
+                    child;
+                F.prototype = parent;
+                child = new F();
+                child.b = "b";
+                child.d = "d";
+                child.e = 5;
+                child.f = "f";
+                expect( getSize({}) )
+                    .equal(0);
+                /*jshint ignore:start*/
+                expect( getSize(new Object()) )
+                    .equal(0);
+                expect( getSize(new Boolean(true)) )
+                    .equal(0);
+                expect( getSize(new Date()) )
+                    .equal(0);
+                expect( getSize(new Number(57)) )
+                    .equal(0);
+                /*jshint ignore:end*/
+                expect( getSize(grandchild) )
+                    .equal(7);
+                expect( getSize(parent) )
+                    .equal(4);
+                expect( getSize(child) )
+                    .equal(6);
+                
+                parent.f = 6;
+                expect( getSize(parent) )
+                    .equal(5);
+                expect( getSize(child) )
+                    .equal(6);
+                
+                delete parent.a;
+                delete parent.c;
+                expect( getSize(parent) )
+                    .equal(3);
+                expect( getSize(child) )
+                    .equal(4);
+            });
+        });
+        
+        describe("getSize(obj, settings)", function() {
+            it("should return quantity of fields corresponding to given filter", function() {
+                expect( getSize(child, {filter: "integer"}) )
+                    .equal(4);
+                expect( getSize(child, {filter: "string"}) )
+                    .equal(1);
+                expect( getSize(child, {filter: ["odd", "string"], filterConnect: "or"}) )
+                    .equal(3);
+            });
         });
     });
 
     
-    describe(".isSizeMore(obj, nQty)", function() {
+    describe(".isSizeMore", function() {
         var isSizeMore = adam.isSizeMore;
         
-        it("should return true (obj has more fields than nQty)", function() {
-            /*jshint expr:true*/
-            expect( isSizeMore({}, -1) )
-                .be["true"];
-            expect( isSizeMore(Klass, 0) )
-                .be["true"];
-            expect( isSizeMore(parent, 0) )
-                .be["true"];
-            expect( isSizeMore(parent, 1) )
-                .be["true"];
-            expect( isSizeMore(parent, 2) )
-                .be["true"];
-            expect( isSizeMore(child, 0) )
-                .be["true"];
-            expect( isSizeMore(child, 3) )
-                .be["true"];
-            expect( isSizeMore(child, 4) )
-                .be["true"];
-            expect( isSizeMore(grandchild, 6) )
-                .be["true"];
+        describe("isSizeMore(obj, nQty)", function() {
+            it("should return true (obj has more fields than nQty)", function() {
+                /*jshint expr:true*/
+                expect( isSizeMore({}, -1) )
+                    .be["true"];
+                expect( isSizeMore(Klass, 0) )
+                    .be["true"];
+                expect( isSizeMore(parent, 0) )
+                    .be["true"];
+                expect( isSizeMore(parent, 1) )
+                    .be["true"];
+                expect( isSizeMore(parent, 2) )
+                    .be["true"];
+                expect( isSizeMore(child, 0) )
+                    .be["true"];
+                expect( isSizeMore(child, 3) )
+                    .be["true"];
+                expect( isSizeMore(child, 4) )
+                    .be["true"];
+                expect( isSizeMore(grandchild, 6) )
+                    .be["true"];
+            });
+            
+            it("should return false (obj has less fields than nQty)", function() {
+                /*jshint expr:true*/
+                expect( isSizeMore({}, 0) )
+                    .be["false"];
+                expect( isSizeMore(parent, 3) )
+                    .be["false"];
+                expect( isSizeMore(parent, 4) )
+                    .be["false"];
+                expect( isSizeMore(parent, 1000) )
+                    .be["false"];
+                expect( isSizeMore(child, 5) )
+                    .be["false"];
+                expect( isSizeMore(child, 50000) )
+                    .be["false"];
+                expect( isSizeMore(grandchild, 7) )
+                    .be["false"];
+            });
         });
-        it("should return false (obj has less fields than nQty)", function() {
-            /*jshint expr:true*/
-            expect( isSizeMore({}, 0) )
-                .be["false"];
-            expect( isSizeMore(parent, 3) )
-                .be["false"];
-            expect( isSizeMore(parent, 4) )
-                .be["false"];
-            expect( isSizeMore(parent, 1000) )
-                .be["false"];
-            expect( isSizeMore(child, 5) )
-                .be["false"];
-            expect( isSizeMore(child, 50000) )
-                .be["false"];
-            expect( isSizeMore(grandchild, 7) )
-                .be["false"];
+        
+        describe("isSizeMore(obj, nQty, settings)", function() {
+            it("should return true (obj has more filtered fields than nQty)", function() {
+                /*jshint expr:true*/
+                expect( isSizeMore(grandchild, 3, {filter: "string"}) )
+                    .be["true"];
+                expect( isSizeMore(child, 2, {filter: ["odd", "string"], filterConnect: "or"}) )
+                    .be["true"];
+            });
+            
+            it("should return false (obj has less filtered fields than nQty)", function() {
+                /*jshint expr:true*/
+                expect( isSizeMore(child, 4, {filter: "integer"}) )
+                    .be["false"];
+                expect( isSizeMore(child, 3, {filter: ["even", "null"], filterConnect: "or"}) )
+                    .be["false"];
+            });
         });
     });
 
@@ -573,51 +619,81 @@ describe("adam", function() {
                 checkFalse(obj, "d", ["object", /\w/, "!empty"], settings);
             });
         });
+        
+        describe("checkField(obj, field, filter, {value: ...})", function() {
+            var obj = {a: "value", b: [], c: null},
+                settings = {value: obj};
+            
+            it("should return true", function() {
+                checkTrue(obj, "a", "object", settings);
+                checkTrue(obj, "b", "!empty", settings);
+                checkTrue(obj, "c", "!null", settings);
+            });
+            
+            it("should return false", function() {
+                checkFalse(obj, "a", ["string", "!empty"], settings);
+                checkFalse(obj, "b", "Array", settings);
+                checkFalse(obj, "c", /null/, settings);
+            });
+        });
     });
 
     
-    describe(".getFields(obj)", function() {
+    describe(".getFields", function() {
         var getFields = adam.getFields;
         
-        it("should return array of all fields of object (including prototype chain)", function() {
-            expect( getFields({}) )
-                .eql([]);
-            expect( getFields({}) )
-                .length(0);
-            expect( getFields({fld: function() {}}) )
-                .eql(["fld"]);
-            /*jshint ignore:start*/
-            expect( getFields(new Boolean(false)) )
-                .eql([]);
-            expect( getFields(new Date()) )
-                .eql([]);
-            expect( getFields(new Number(784)) )
-                .eql([]);
-            /*jshint ignore:end*/
-            expect( getFields(parent) )
-                .include("a")
-                .and.include("b")
-                .and.include("c");
-            expect( getFields(parent) )
-                .length(3);
-            expect( getFields(child) )
-                .include("a")
-                .and.include("b")
-                .and.include("c")
-                .and.include("d")
-                .and.include("e");
-            expect( getFields(child) )
-                .length(5);
-            expect( getFields(grandchild) )
-                .include("a")
-                .and.include("b")
-                .and.include("c")
-                .and.include("d")
-                .and.include("e")
-                .and.include("f")
-                .and.include("g");
-            expect( getFields(grandchild) )
-                .length(7);
+        describe("getFields(obj)", function() {
+            it("should return array of all fields of object (including prototype chain)", function() {
+                expect( getFields({}) )
+                    .eql([]);
+                expect( getFields({}) )
+                    .length(0);
+                expect( getFields({fld: function() {}}) )
+                    .eql(["fld"]);
+                /*jshint ignore:start*/
+                expect( getFields(new Boolean(false)) )
+                    .eql([]);
+                expect( getFields(new Date()) )
+                    .eql([]);
+                expect( getFields(new Number(784)) )
+                    .eql([]);
+                /*jshint ignore:end*/
+                expect( getFields(parent) )
+                    .include("a")
+                    .and.include("b")
+                    .and.include("c");
+                expect( getFields(parent) )
+                    .length(3);
+                expect( getFields(child) )
+                    .include("a")
+                    .and.include("b")
+                    .and.include("c")
+                    .and.include("d")
+                    .and.include("e");
+                expect( getFields(child) )
+                    .length(5);
+                expect( getFields(grandchild) )
+                    .include("a")
+                    .and.include("b")
+                    .and.include("c")
+                    .and.include("d")
+                    .and.include("e")
+                    .and.include("f")
+                    .and.include("g");
+                expect( getFields(grandchild) )
+                    .length(7);
+            });
+        });
+        
+        describe("getFields(obj, settings)", function() {
+            it("should return array of object's fields conforming to the given filter", function() {
+                checkArray(getFields,
+                            [child, {filter: "odd"}],
+                            ["a", "e"]);
+                checkArray(getFields,
+                            [child, {filter: ["even", "string"], filterConnect: "or"}],
+                            ["b", "c", "d"]);
+            });
         });
     });
 
@@ -769,49 +845,63 @@ describe("adam", function() {
     });
 
     
-    describe(".getValues(obj)", function() {
-        var getValues = adam.getValues,
-            d = new Date();
+    describe(".getValues", function() {
+        var getValues = adam.getValues;
         
-        it("should return array of all field values of object (including prototype chain)", function() {
-            expect( getValues({}) )
-                .eql([]);
-            expect( getValues({}) )
-                .length(0);
-            expect( getValues({field: d}) )
-                .eql([d]);
-            /*jshint ignore:start*/
-            expect( getValues(new Boolean(true)) )
-                .eql([]);
-            expect( getValues(new Date()) )
-                .eql([]);
-            expect( getValues(new Number(234345)) )
-                .eql([]);
-            /*jshint ignore:end*/
-            expect( getValues(parent) )
-                .include(1)
-                .and.include(2)
-                .and.include(3);
-            expect( getValues(parent) )
-                .length(3);
-            expect( getValues(child) )
-                .include("abc")
-                .and.include(1)
-                .and.include(2)
-                .and.include(4)
-                .and.include(5);
-            expect( getValues(child) )
-                .length(5);
-            expect( getValues(grandchild) )
-                .include("a")
-                .and.include(2)
-                .and.include("C++")
-                .and.include(4)
-                .and.include(5)
-                .and.include("field")
-                .and.include("gnome");
-            expect( getValues(grandchild) )
-                .length(7);
+        describe("getValues(obj)", function() {
+            it("should return array of all field values of object (including prototype chain)", function() {
+                var d = new Date();
+                
+                expect( getValues({}) )
+                    .eql([]);
+                expect( getValues({}) )
+                    .length(0);
+                expect( getValues({field: d}) )
+                    .eql([d]);
+                /*jshint ignore:start*/
+                expect( getValues(new Boolean(true)) )
+                    .eql([]);
+                expect( getValues(new Date()) )
+                    .eql([]);
+                expect( getValues(new Number(234345)) )
+                    .eql([]);
+                /*jshint ignore:end*/
+                expect( getValues(parent) )
+                    .include(1)
+                    .and.include(2)
+                    .and.include(3);
+                expect( getValues(parent) )
+                    .length(3);
+                expect( getValues(child) )
+                    .include("abc")
+                    .and.include(1)
+                    .and.include(2)
+                    .and.include(4)
+                    .and.include(5);
+                expect( getValues(child) )
+                    .length(5);
+                expect( getValues(grandchild) )
+                    .include("a")
+                    .and.include(2)
+                    .and.include("C++")
+                    .and.include(4)
+                    .and.include(5)
+                    .and.include("field")
+                    .and.include("gnome");
+                expect( getValues(grandchild) )
+                    .length(7);
+            });
+        });
+        
+        describe("getValues(obj, settings)", function() {
+            it("should return array of object's field values conforming to the given filter", function() {
+                checkArray(getValues,
+                            [child, {filter: {field: /b|e/}}],
+                            [2, 5]);
+                checkArray(getValues,
+                            [grandchild, {filter: {or: ["!string", /\W/]}}],
+                            [2, 4, 5, "C++"]);
+            });
         });
     });
 
@@ -988,27 +1078,41 @@ describe("adam", function() {
     });
 
     
-    describe(".split(obj, firstObjFields)", function() {
+    describe(".split", function() {
         var split = adam.split,
             date = new Date(),
             nTime = date.getTime(),
             method = function() {return nTime;},
             obj = {a: 1, b: 2, first: "first", second: "second", delta: 123, d: date, time: nTime, func: method};
-        it("should return array from 2 correct objects", function() {
-            expect( split({}, {}) )
-                .eql([{}, {}]);
-            expect( split({}, {one: 1, two: 2, three: 3}) )
-                .eql([{}, {}]);
-            expect( split({abc: date}, ["one", "two", "three"]) )
-                .eql([{}, {abc: date}]);
-            expect( split(obj, ["one", "two", "three"]) )
-                .eql([{}, obj]);
-            expect( split(obj, {first: null, second: null}) )
-                .eql([{first: "first", second: "second"}, 
-                      {a: 1, b: 2, delta: 123, d: date, time: nTime, func: method}]);
-            expect( split(obj, ["a", "delta", "time", "second"]) )
-                .eql([{a: 1, second: "second", delta: 123, time: nTime}, 
-                      {b: 2, first: "first", d: date, func: method}]);
+        
+        describe("split(obj, firstObjFields)", function() {
+            it("should return array from 2 correct objects", function() {
+                expect( split({}, {}) )
+                    .eql([{}, {}]);
+                expect( split({}, {one: 1, two: 2, three: 3}) )
+                    .eql([{}, {}]);
+                expect( split({abc: date}, ["one", "two", "three"]) )
+                    .eql([{}, {abc: date}]);
+                expect( split(obj, ["one", "two", "three"]) )
+                    .eql([{}, obj]);
+                expect( split(obj, {first: null, second: null}) )
+                    .eql([{first: "first", second: "second"}, 
+                          {a: 1, b: 2, delta: 123, d: date, time: nTime, func: method}]);
+                expect( split(obj, ["a", "delta", "time", "second"]) )
+                    .eql([{a: 1, second: "second", delta: 123, time: nTime}, 
+                          {b: 2, first: "first", d: date, func: method}]);
+            });
+        });
+        
+        describe("split(obj, null, {filter: ...})", function() {
+            it("should return array from 2 correct objects", function() {
+                expect( split(obj, null, {filter: "integer"}) )
+                    .eql([{a: 1, b: 2, delta: 123, time: nTime}, 
+                          {first: "first", second: "second", d: date, func: method}]);
+                expect( split(obj, null, {filter: ["string", "Date"], filterConnect: "or"}) )
+                    .eql([{first: "first", second: "second", d: date}, 
+                          {a: 1, b: 2, delta: 123, time: nTime, func: method}]);
+            });
         });
     });
 
@@ -1057,6 +1161,21 @@ describe("adam", function() {
                               "quantity": 5
                             }
                           ];
+        
+        function getCategoryListCopy() {
+            var result = categoryList.slice(0),
+                nL = result.length,
+                copy, item, nI, sKey;
+            for (nI = 0; nI < nL; nI++) {
+                item = result[nI];
+                copy = {};
+                for (sKey in item) {
+                    copy[sKey] = item[sKey];
+                }
+                result[nI] = copy;
+            }
+            return result;
+        }
         
         function test(list, bCallFunc, sField) {
             /*jshint laxbreak:true*/
@@ -1164,7 +1283,7 @@ describe("adam", function() {
                 for (nI = 0, nL = categoryList.length; nI < nL; nI++) {
                     keys.push( String(categoryList[nI].id) );
                 }
-                obj = fromArray(categoryList, "id", {deleteKeyField: true});
+                obj = fromArray(getCategoryListCopy, "id", {deleteKeyField: true});
                 for (sKey in obj) {
                     expect(keys)
                         .contain(sKey);
@@ -1197,6 +1316,42 @@ describe("adam", function() {
                             f3: {a: "a"}
                         });
                 
+            });
+        });
+        
+        describe("fromArray(list, keyField, {filter: ..., filterConnect: ...})", function() {
+            it("should return object including values conforming to the given filter", function() {
+                function test(list, keyField, settings, expectedResult) {
+                    var result = fromArray(list, keyField, settings),
+                        nSize = 0,
+                        sKey;
+                    for (sKey in result) {
+                        expect( expectedResult )
+                            .contain.key(sKey);
+                        expect( result[sKey] )
+                            .equal(expectedResult[sKey]);
+                        nSize++;
+                    }
+                    expect( adam.getSize(expectedResult) )
+                        .equal(nSize);
+                }
+                
+                test(categoryList, "id", 
+                        {filter: function(item) {
+                            return item.quantity < 10;
+                        }},
+                        {
+                            1: categoryList[1],
+                            3: categoryList[3],
+                            7: categoryList[7]
+                        });
+                
+                test(categoryList, "name", {filter: {field: /^(?:C|D)/}},
+                        {
+                            "Drama": categoryList[1],
+                            "Comedy": categoryList[3],
+                            "Cartoon": categoryList[4]
+                        });
             });
         });
     });
