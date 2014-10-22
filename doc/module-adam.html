@@ -121,6 +121,238 @@
         <dl>
             
 <dt>
+    <h4 class="name" id="change"><span class="type-signature">&lt;static> </span>change<span class="signature">(obj, action, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Change all or filtered fields of object, applying specified action/transformation.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Object whose fields should be changed.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>action</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>An action/operation that should be applied to get new field value.
+     See description of <code>transform</code> setting of <a href="module-adam.html#copy">copy</a>.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
+    The following settings are supported:</p>
+<ul>
+<li><code>filter</code> - a filter that should be used to select fields for modification (see <a href="module-adam.html#checkField">checkField</a>);
+ fields conforming to the filter will be changed</li>
+<li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+</ul></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#checkField">checkField</a></li>
+			
+			<li><a href="module-adam.html#copy">copy</a></li>
+			</ul>
+	</dd>
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>Modified object (value of <code>obj</code> parameter).</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Object</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
     <h4 class="name" id="checkField"><span class="type-signature">&lt;static> </span>checkField<span class="signature">(obj, field, filter, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
     
@@ -392,6 +624,388 @@ it means that the field corresponds to this filter</li>
 	<dd>
 		
 <span class="param-type">Boolean</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="copy"><span class="type-signature">&lt;static> </span>copy<span class="signature">(source, target, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Copy all or filtered fields from source object into target object, applying specified transformation if necessary.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>source</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Object whose fields will be copied.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Object into which fields should be copied.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
+    The following settings are supported:</p>
+<ul>
+<li><code>filter</code> - a filter that should be used to select fields for copying (see <a href="module-adam.html#checkField">checkField</a>);
+ fields conforming to the filter will be copied</li>
+<li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+<li><code>transform</code> - an action/operation that should be applied to get field's value that will be copied
+ instead of value from source object; can be a string specifying transformation (see <a href="module-adam.html#transform">transform</a>)
+ or a function whose result will be used as field's value; object with the following fields will be passed into the function:<ul>
+<li><code>field</code> - field name</li>
+<li><code>value</code> field value from source object</li>
+<li><code>source</code> - reference to the source object</li>
+<li><code>target</code> - reference to the target object</li>
+</ul>
+</li>
+</ul></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#checkField">checkField</a></li>
+			
+			<li><a href="module-adam.html#transform">transform</a></li>
+			</ul>
+	</dd>
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>Reference to the target object (value of <code>target</code> parameter).</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Object</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="empty"><span class="type-signature">&lt;static> </span>empty<span class="signature">(value)</span><span class="type-signature"> &rarr; {Any}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Empty the given value according to the following rules:</p>
+<ul>
+<li>for array: removes all elements from the value</li>
+<li>for object: removes all own fields from the value</li>
+<li>for string: returns empty string</li>
+<li>for number: returns <code>0</code></li>
+<li>otherwise: returns <code>undefined</code></li>
+</ul>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Value to be processed.</p></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>Processed value (for array or object) or empty value corresponding to the given value.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Any</span>
 
 
 	</dd>
@@ -1920,7 +2534,7 @@ an item of the list will be used as value for check</li>
     
     
     <div class="description">
-        <p>Check whether given value is an empty value i.e. <code>null</code>, <code>undefined</code>, empty object, empty array or empty string.</p>
+        <p>Check whether given value is an empty value i.e. <code>null</code>, <code>undefined</code>, <code>0</code>, empty object, empty array or empty string.</p>
     </div>
     
 
@@ -2474,6 +3088,619 @@ For example, <code>!real</code> means: check whether the value is not a real num
         
             
 <dt>
+    <h4 class="name" id="map"><span class="type-signature">&lt;static> </span>map<span class="signature">(obj, action, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Create new object containing all or filtered fields of the source object/array,
+applying specified action/transformation for field values.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Array/object whose fields should be copied.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>action</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>An action/operation that should be applied to get field value that will be saved in created object.
+     See description of <code>transform</code> setting of <a href="module-adam.html#copy">copy</a>.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
+    The following settings are supported:</p>
+<ul>
+<li><code>filter</code> - a filter that should be used to select fields for copying (see <a href="module-adam.html#checkField">checkField</a>);
+ fields conforming to the filter will be copied in created object</li>
+<li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+</ul></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#checkField">checkField</a></li>
+			
+			<li><a href="module-adam.html#copy">copy</a></li>
+			</ul>
+	</dd>
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>Created object containing processed fields.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Object</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="remove"><span class="type-signature">&lt;static> </span>remove<span class="signature">(obj, filter, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Array|Object}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Remove filtered fields/elements from specified object/array.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Array or object to be processed.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>filter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>A filter or array of filters specifying fields or elements that should be removed
+     (see <a href="module-adam.html#checkField">checkField</a>).</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
+    The following settings are supported:</p>
+<ul>
+<li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> parameter (see <a href="module-adam.html#checkField">checkField</a>)</li>
+</ul></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#checkField">checkField</a></li>
+			</ul>
+	</dd>
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>Processed array or object.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Object</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="reverse"><span class="type-signature">&lt;static> </span>reverse<span class="signature">(value)</span><span class="type-signature"> &rarr; {Any}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Reverse or negate the given value according to the following rules:</p>
+<ul>
+<li>for array: reverses order of its elements</li>
+<li>for object: swaps fields with their values (i.e. for <code>{a: &quot;b&quot;, c: &quot;d&quot;}</code> returns <code>{b: &quot;a&quot;, d: &quot;c&quot;}</code>)</li>
+<li>for string: reverses order of its characters</li>
+<li>for number: returns negated value (i.e. <code>- value</code>)</li>
+<li>for boolean: returns negated value (i.e. <code>! value</code>)</li>
+<li>otherwise: returns source value without modification</li>
+</ul>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Value to be processed.</p></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>Processed value.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Any</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
     <h4 class="name" id="split"><span class="type-signature">&lt;static> </span>split<span class="signature">(obj, firstObjFields, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
     
@@ -2706,6 +3933,188 @@ For example, <code>!real</code> means: check whether the value is not a real num
     
 </dd>
 
+        
+            
+<dt>
+    <h4 class="name" id="transform"><span class="type-signature">&lt;static> </span>transform<span class="signature">(value, sAction)</span><span class="type-signature"> &rarr; {Any}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Transform the given value applying the specified operation.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Value to be transformed.</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>sAction</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Operation that should be applied to transform the value. Can be one of the following:</p>
+<ul>
+<li><code>array</code> - convert the value to array (using <code>Array(value)</code>)</li>
+<li><code>boolean</code> - convert the value to boolean value (using <code>Boolean(value)</code>)</li>
+<li><code>empty</code> - empty the value (see <a href="module-adam.html#empty">empty</a>)</li>
+<li><code>function</code> - convert the value to function (using <code>Function(value)</code>)</li>
+<li><code>integer</code> - try to convert the value to an integer number (using <code>Math.round(Number(value)</code>)</li>
+<li><code>number</code> - try to convert the value to number (using <code>Number(value)</code>)</li>
+<li><code>object</code> - convert the value to object (using <code>Object(value)</code>)</li>
+<li><code>reverse</code> - reverse the value (see <a href="module-adam.html#reverse">reverse</a>)</li>
+<li><code>string</code> - convert the value to string (using <code>String(value)</code>)</li>
+<li>otherwise - source value</li>
+</ul></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+	<dt class="tag-see">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#empty">empty</a></li>
+			
+			<li><a href="module-adam.html#reverse">reverse</a></li>
+			</ul>
+	</dd>
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>Transformed value.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Any</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
         </dl>
     
 
@@ -2732,7 +4141,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on 2014-10-12T19:24:24+04:00 using the <a
+		on 2014-10-22T19:11:45+04:00 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>

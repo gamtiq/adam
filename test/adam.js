@@ -48,9 +48,15 @@ describe("adam", function() {
         expect( result )
             .length(nL);
         for (nI = 0; nI < nL; nI++) {
-            expect( result )
-                .include(expectedResult[nI]);
+            if (nI in expectedResult) {
+                expect( result )
+                    .include(expectedResult[nI]);
+            }
         }
+    }
+    
+    function inc(data) {
+        return ++data.value;
     }
     
     
@@ -286,6 +292,7 @@ describe("adam", function() {
                     .equal(true);
             }
             
+            check(0);
             check("");
             check(null);
             check(undef);
@@ -303,7 +310,6 @@ describe("adam", function() {
             check(false);
             check(" ");
             check("a b");
-            check(0);
             check(1);
             check(NaN);
             check([null]);
@@ -1353,6 +1359,443 @@ describe("adam", function() {
                             "Cartoon": categoryList[4]
                         });
             });
+        });
+    });
+
+    
+    describe(".remove(obj, filter, [settings])", function() {
+        var remove = adam.remove;
+        
+        it("should remove specified elements from array", function() {
+            checkArray(remove, 
+                        [
+                             [1, 2, 3, 4, 5], 
+                             "odd"
+                         ], 
+                        [2, 4]);
+            checkArray(remove, 
+                        [
+                             ["1", 2, null, 11, -5, 0, "29", undef], 
+                             ["string", "false"],
+                             {filterConnect: "or"}
+                         ], 
+                         [2, 11, -5]);
+        });
+        
+        it("should remove specified fields from object", function() {
+            expect( remove({a: 1, z: 7, omega: 3, delta: 5, f: -7}, {field: /a/}) )
+                .eql({z: 7, f: -7});
+            expect( remove({a: "a", b: "be", c: "omega", d: 7}, [/a/, "number"], {filterConnect: "or"}) )
+                .eql({b: "be"});
+        });
+    });
+    
+    describe(".empty(value)", function() {
+        var empty = adam.empty;
+        
+        it("should return empty array", function() {
+            var list = [1, 2, 3];
+            expect( empty(list) )
+                .equal(list);
+            expect( list.length )
+                .equal(0);
+        });
+        
+        it("should return empty object", function() {
+            var obj = {a: 1, b: parent, c: child, d: undef};
+            expect( empty(obj) )
+                .equal(obj);
+            expect( adam.getSize(obj) )
+                .equal(0);
+        });
+        
+        it("should return empty string", function() {
+            expect( empty("abc...xyz") )
+                .equal("");
+            expect( empty("") )
+                .equal("");
+        });
+        
+        it("should return 0", function() {
+            expect( empty(3403793) )
+                .equal(0);
+            expect( empty(-74024) )
+                .equal(0);
+            expect( empty(Number.NEGATIVE_INFINITY) )
+                .equal(0);
+        });
+        
+        it("should return undefined", function() {
+            expect( empty(null) )
+                .equal(undef);
+            expect( empty(undef) )
+                .equal(undef);
+            expect( empty(false) )
+                .equal(undef);
+            expect( empty(true) )
+                .equal(undef);
+            expect( empty(NaN) )
+                .equal(undef);
+        });
+    });
+
+    
+    describe(".reverse(value)", function() {
+        var reverse = adam.reverse;
+        
+        it("should return reversed array", function() {
+            expect( reverse([1, 2, 3]) )
+                .eql([3, 2, 1]);
+            expect( reverse(["a", child, parent, adam, null]) )
+                .eql([null, adam, parent, child, "a"]);
+        });
+        
+        it("should return reversed object", function() {
+            expect( reverse(parent) )
+                .eql({1: "a", 2: "b", 3: "c"});
+            expect( reverse(grandchild) )
+                .eql({a: "a", 2: "b", "C++": "c", 4: "d", 5: "e", field: "f", gnome: "g"});
+        });
+        
+        it("should return reversed string", function() {
+            expect( reverse("abc-xyz") )
+                .equal("zyx-cba");
+            expect( reverse("refer") )
+                .equal("refer");
+            expect( reverse("lave") )
+                .equal("eval");
+        });
+        
+        it("should return negated number", function() {
+            expect( reverse(7) )
+                .equal(-7);
+            expect( reverse(-4) )
+                .equal(4);
+            expect( reverse(0) )
+                .equal(0);
+            expect( reverse(Number.POSITIVE_INFINITY) )
+                .equal(Number.NEGATIVE_INFINITY);
+        });
+        
+        it("should return negated boolean", function() {
+            expect( reverse(true) )
+                .equal(false);
+            expect( reverse(false) )
+                .equal(true);
+        });
+        
+        it("should return source value", function() {
+            expect( reverse(null) )
+                .equal(null);
+            expect( reverse(undef) )
+                .equal(undef);
+            expect( isNaN(reverse(NaN)) )
+                .equal(true);
+        });
+    });
+
+    
+    describe(".transform(value, sAction)", function() {
+        var transform = adam.transform;
+        
+        it("should return array", function() {
+            var result = transform(3, "array");
+            expect( adam.getClass(result) )
+                .equal("Array");
+            expect( result )
+                .length(3);
+            
+            checkArray(transform,
+                        ["abc", "array"],
+                        ["abc"]);
+            checkArray(transform,
+                        [parent, "array"],
+                        [parent]);
+        });
+        
+        it("should return boolean", function() {
+            expect( transform("false", "boolean") )
+                .equal(true);
+            expect( transform(1, "boolean") )
+                .equal(true);
+            expect( transform(child, "boolean") )
+                .equal(true);
+            
+            expect( transform("", "boolean") )
+                .equal(false);
+            expect( transform(null, "boolean") )
+                .equal(false);
+            expect( transform(0, "boolean") )
+                .equal(false);
+            expect( transform(NaN, "boolean") )
+                .equal(false);
+            expect( transform(undef, "boolean") )
+                .equal(false);
+        });
+        
+        it("should empty value", function() {
+            expect( transform("true", "empty") )
+                .equal("");
+            expect( transform(-583, "empty") )
+                .equal(0);
+            expect( transform({z: "x", u: "i"}, "empty") )
+                .eql({});
+        });
+        
+        it("should return function", function() {
+            expect( transform("true", "function") )
+                .a("function");
+        });
+        
+        it("should return integer", function() {
+            expect( transform(7.3953039923423, "integer") )
+                .equal(7);
+            expect( transform(-90.5, "integer") )
+                .equal(-90);
+            expect( transform(Math.PI, "integer") )
+                .equal(3);
+            expect( isNaN(transform("true", "integer")) )
+                .equal(true);
+        });
+        
+        it("should return number", function() {
+            expect( transform("389", "number") )
+                .equal(389);
+            expect( transform("12.8", "number") )
+                .equal(12.8);
+            expect( transform("-4031", "number") )
+                .equal(-4031);
+            expect( isNaN(transform("Math.PI", "number")) )
+                .equal(true);
+        });
+        
+        it("should return object", function() {
+            function check(value, expectedClass) {
+                var result = transform(value, "object");
+                expect( typeof result )
+                    .equal("object");
+                expect( adam.getClass(result) )
+                    .equal(expectedClass);
+            }
+            
+            expect( transform(grandchild, "object") )
+                .eql(grandchild);
+            
+            expect( transform(null, "object") )
+                .eql({});
+            expect( transform(undef, "object") )
+                .eql({});
+            
+            check(true, "Boolean");
+            check(-83, "Number");
+            check("some text", "String");
+        });
+        
+        it("should reverse value", function() {
+            expect( transform("adam", "reverse") )
+                .equal("mada");
+            expect( transform({a: 1, b: 2}, "reverse") )
+                .eql({1: "a", "2": "b"});
+            expect( transform(-94, "reverse") )
+                .equal(94);
+        });
+        
+        it("should return string", function() {
+            expect( transform(false, "string") )
+                .equal("false");
+            expect( transform(5, "string") )
+                .equal("5");
+            expect( transform(child, "string") )
+                .equal("[object Object]");
+            expect( transform(undef, "string") )
+                .equal("undefined");
+            expect( transform("delta", "string") )
+                .equal("delta");
+        });
+        
+        it("should return source value", function() {
+            expect( transform(7.3, "int") )
+                .equal(7.3);
+            expect( transform("9", "char") )
+                .equal("9");
+            expect( transform("destiny") )
+                .equal("destiny");
+            expect( transform("current", "date") )
+                .equal("current");
+        });
+    });
+
+    
+    describe(".copy", function() {
+        var copy = adam.copy;
+        
+        function check(expectedResult, source, target, settings) {
+            /*jshint unused:vars*/
+            var result = copy.apply(null, Array.prototype.slice.call(arguments, 1));
+            expect( result )
+                .equal(target);
+            expect( result )
+                .eql(expectedResult);
+        }
+        
+        describe("copy(source, target)", function() {
+            it("should copy all fields", function() {
+                check({a: 1, b: 2, c: 3, d: 4},
+                        {b: 2, c: 3, d: 4},
+                        {a: 1, b: 100, d: "delta"});
+                checkArray(copy,
+                            [
+                                 ["a", 2, "c"],
+                                 [1, 3, 5, child, null]
+                             ],
+                             ["a", 2, "c", child, null]);
+            });
+        });
+        
+        describe("copy(source, target, {filter: ...})", function() {
+            it("should copy filtered fields", function() {
+                check({a: "a", b: 100, c: "C++", f: "field", g: "gnome", x: "rays"},
+                        grandchild,
+                        {a: 1, b: 100, x: "rays"},
+                        {filter: "string"});
+                checkArray(copy,
+                            [
+                                 ["a", "b", "c", "d", "e", "f", "g"],
+                                 [1, 2, 3, 4, 5],
+                                 {filter: function(value, key) {
+                                     return key > 3;
+                                 }}
+                             ],
+                             [1, 2, 3, 4, "e", "f", "g"]);
+            });
+        });
+        
+        describe("copy(source, target, {transform: ...})", function() {
+            it("should copy transformed fields", function() {
+                check({a: 2, b: 100, c: 4, t: "eam"},
+                        {a: 1, c: 3},
+                        {a: 7, b: 100, t: "eam"},
+                        {transform: inc});
+                check({a: "-1", b: 100, c: "3", f: "fire"},
+                        {a: -1, c: 3},
+                        {a: 5, b: 100, f: "fire"},
+                        {transform: "string"});
+                checkArray(copy,
+                            [
+                                 [1, 2, 3],
+                                 [1, 2, 3, 40, 50],
+                                 {transform: inc}
+                             ],
+                             [2, 3, 4, 40, 50]);
+            });
+        });
+        
+        describe("copy(source, target, {filter: ..., transform: ...})", function() {
+            it("should copy filtered and transformed fields", function() {
+                var result;
+                check({a: -1, b: 3, c: 4, d: -4},
+                        {a: "a", b: 2, c: 3, d: null},
+                        {a: -1, b: -2, c: -3, d: -4},
+                        {filter: "number", transform: inc});
+                
+                result = ["1", -2, "3", "null"];
+                result[6] = "7";
+                checkArray(copy,
+                            [
+                                 [1, false, 3, null, "abc", 6, 7, 8],
+                                 [-1, -2, -3],
+                                 {filter: ["odd", "null"], filterConnect: "or", transform: "string"}
+                             ],
+                             result);
+            });
+        });
+    });
+
+    
+    describe(".change", function() {
+        var change = adam.change;
+        
+        function check(expectedResult, obj, action, settings) {
+            /*jshint unused:vars*/
+            var result = change.apply(null, Array.prototype.slice.call(arguments, 1));
+            expect( result )
+                .equal(obj);
+            expect( result )
+                .eql(expectedResult);
+        }
+        
+        it("should change all fields", function() {
+            check({x: 1, y: 12, z: 123},
+                    {x: 0, y: 11, z: 122},
+                    inc);
+            checkArray(change,
+                        [
+                             ["abc", 8, {d: 3, g: 5}, true],
+                             "reverse"
+                         ],
+                         ["cba", -8, {3: "d", 5: "g"}, false]);
+        });
+        
+        it("should change filtered fields", function() {
+            check({x: 1, y: 11, z: 123},
+                    {x: 0, y: 11, z: 122},
+                    inc,
+                    {filter: "even"});
+            checkArray(change,
+                        [
+                             ["a", 7, false, null, 8],
+                             "string",
+                             {filter: ["odd", "null"], filterConnect: "or"}
+                         ],
+                         ["a", "7", false, "null", 8]);
+        });
+    });
+
+    
+    describe(".map", function() {
+        var map = adam.map;
+        
+        function check(expectedResult, obj, action, settings) {
+            /*jshint unused:vars*/
+            var result = map.apply(null, Array.prototype.slice.call(arguments, 1));
+            expect( result )
+                .not.equal(obj);
+            expect( result )
+                .eql(expectedResult);
+        }
+        
+        it("should copy and transform all fields", function() {
+            check({c: -2, b: -1, a: 0},
+                    {c: -3, b: -2, a: -1},
+                    inc);
+            checkArray(map,
+                        [
+                             ["abc", -987, {x: "files"}],
+                             "empty"
+                         ],
+                         ["", 0, {}]);
+        });
+        
+        it("should copy and transform filtered fields", function() {
+            var result;
+            check({b: 3, d: 5, e: 6},
+                    grandchild,
+                    inc,
+                    {filter: "integer"});
+            
+            result = [];
+            result[1] = "";
+            result[4] = 0;
+            result[6] = 0;
+            result[7] = "";
+            result[8] = "";
+            checkArray(map,
+                        [
+                             [0, "x-way", 7, true, -9, child, -3, "some", "value", 104],
+                             "empty",
+                             {filter: ["negative", "string"], filterConnect: "or"}
+                         ],
+                         result);
         });
     });
 });

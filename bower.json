@@ -14,11 +14,21 @@
     "object",
     "process",
     "create",
+    "check",
     "field",
     "value",
+    "type",
+    "kind",
     "size",
     "split",
-    "filter"
+    "filter",
+    "copy",
+    "change",
+    "map",
+    "remove",
+    "reverse",
+    "empty",
+    "transform"
   ],
   "license": "MIT",
   "ignore": [

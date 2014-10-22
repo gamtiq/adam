@@ -112,7 +112,11 @@
     ...
 &lt;/script&gt;</code></pre>
 <h3>Examples</h3>
-<pre><code class="lang-js">var obj = {a: 1, b: 2, c: 3, d: 4, e: 5};
+<pre><code class="lang-js">function inc(data) {
+    return ++data.value;
+}
+
+var obj = {a: 1, b: 2, c: 3, d: 4, e: 5};
 
 adam.getClass([8]);   // &quot;Array&quot;
 adam.getType(null);   // &quot;null&quot;
@@ -130,8 +134,8 @@ adam.isSizeMore(obj, 5);   // false
 adam.isEmpty({});   // true
 
 adam.getFields(obj);   // [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]
-adam.getFields(obj, {filter: function(value) {return value &gt; 3;}});   // [&quot;d&quot;, &quot;e&quot;]
-adam.getFields(adam, {filter: {field: /^is/}});   // [&quot;isEmpty&quot;, &quot;isKindOf&quot;, &quot;isSizeMore&quot;]
+adam.getFields(obj, {filter: function(value) {return value &lt; 4;}});   // [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+adam.getFields(obj, {filter: {field: /^[d-h]/}});   // [&quot;d&quot;, &quot;e&quot;]
 
 adam.getValues(obj);   // [1, 2, 3, 4, 5]
 adam.getValues(obj, {filter: {field: /a|c/}});   // [1, 3]
@@ -141,11 +145,38 @@ adam.fromArray([{id: &quot;a&quot;, value: 11}, {id: &quot;b&quot;, value: 7}, {
 
 adam.split(obj, [&quot;a&quot;, &quot;d&quot;]);   // [{a: 1, d: 4}, {b: 2, c: 3, e: 5}]
 adam.split(obj, null, {filter: &quot;odd&quot;});   // [{a: 1, c: 3, e: 5}, {b: 2, d: 4}]
-adam.split(obj, null, {filter: [&quot;even&quot;, /3/], filterConnect: &quot;or&quot;});   // [{b: 2, c: 3, d: 4}, {a: 1, e: 5}]</code></pre>
+adam.split(obj, null, {filter: [&quot;even&quot;, /3/], filterConnect: &quot;or&quot;});   // [{b: 2, c: 3, d: 4}, {a: 1, e: 5}]
+
+adam.remove({a: 1, b: &quot;2&quot;, c: 3}, &quot;string&quot;);   // {a: 1, c: 3}
+adam.remove([1, 2, 3, 4, 5], &quot;even&quot;);   // [1, 3, 5]
+
+adam.empty({x: -1, y: 9});   // {}
+
+adam.reverse({a: &quot;x&quot;, b: &quot;files&quot;});   // {x: &quot;a&quot;, files: &quot;b&quot;}
+adam.reverse(&quot;eval&quot;);   // &quot;lave&quot;
+
+adam.transform(&quot;7.381&quot;, &quot;string&quot;);   // 7
+
+adam.copy(obj, {b: &quot;no&quot;, z: &quot;a&quot;});   // {a: 1, b: 2, c: 3, d: 4, e: 5, z: &quot;a&quot;}
+adam.copy(obj, {b: &quot;no&quot;, z: &quot;a&quot;}, {filter: &quot;odd&quot;});   // {a: 1, b: &quot;no&quot;, c: 3, e: 5, z: &quot;a&quot;}
+adam.copy(obj, {b: &quot;no&quot;, z: &quot;a&quot;}, {filter: &quot;even&quot;, transform: inc});   // {b: 3, d: 5, z: &quot;a&quot;}
+
+adam.change({a: 1, b: 2, c: 3}, &quot;reverse&quot;);   // {a: -1, b: -2, c: -3}
+adam.change({a: 10, b: 28, c: -3, d: null, e: &quot;zero = 0&quot;}, &quot;empty&quot;, {filter: /0/});   // {a: 0, b: 28, c: -3, d: null, e: &quot;&quot;}
+adam.change([1, 2, 3, 4, 5], &quot;reverse&quot;, {filter: &quot;even&quot;});   // [1, -2, 3, -4, 5]
+
+adam.map(obj, &quot;reverse&quot;, {filter: &quot;odd&quot;});   // {a: -1, c: -3, e: -5}
+adam.map([&quot;1&quot;, &quot;2&quot;, &quot;3&quot;], &quot;number&quot;);   // [1, 2, 3]</code></pre>
 <p>See <code>test/adam.js</code> for additional examples.</p>
 <h2>API</h2>
+<h3>change(obj: Object, action: Function | String, [settings: Object]): Object</h3>
+<p>Change all or filtered fields of object, applying specified action/transformation.</p>
 <h3>checkField(obj: Object, field: String, filter: Any, [settings: Object]): Boolean</h3>
 <p>Check whether the field of given object corresponds to specified condition(s) or filter(s).</p>
+<h3>copy(source: Object, target: Object, [settings: Object]): Object</h3>
+<p>Copy all or filtered fields from source object into target object, applying specified transformation if necessary.</p>
+<h3>empty(value: Any): Any</h3>
+<p>Empty the given value.</p>
 <h3>fromArray(list: Array, [keyField: Function | String], [settings: Object]): Object</h3>
 <p>Create object (map) from list of objects.</p>
 <h3>getClass(value: Any): String</h3>
@@ -163,13 +194,22 @@ adam.split(obj, null, {filter: [&quot;even&quot;, /3/], filterConnect: &quot;or&
 <h3>getValues(obj: Object, [settings: Object]): Array</h3>
 <p>Return list of all or filtered field values of specified object.</p>
 <h3>isEmpty(value: Any): Boolean</h3>
-<p>Check whether given value is an empty value i.e. <code>null</code>, <code>undefined</code>, empty object, empty array or empty string.</p>
+<p>Check whether given value is an empty value i.e. <code>null</code>, <code>undefined</code>, <code>0</code>, empty object, empty array or empty string.</p>
 <h3>isKindOf(value: Any, kind: String): Boolean</h3>
 <p>Check whether given value has (or does not have) specified kind (type or class).</p>
 <h3>isSizeMore(obj: Object, qty: Number, [settings: Object]): Boolean</h3>
 <p>Check whether number of all or filtered fields of specified object is more than the given value.</p>
+<h3>map(obj: Object, action: Function | String, [settings: Object]): Object</h3>
+<p>Create new object containing all or filtered fields of the source object/array,
+applying specified action/transformation for field values.</p>
+<h3>remove(obj: Array | Object, filter: Any, [settings: Object]): Array | Object</h3>
+<p>Remove filtered fields/elements from specified object/array.</p>
+<h3>reverse(value: Any): Any</h3>
+<p>Reverse or negate the given value.</p>
 <h3>split(obj: Object, firstObjFields: Array | Object | null, [settings: Object]): Array</h3>
 <p>Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.</p>
+<h3>transform(value: Any, action: String): Any</h3>
+<p>Transform the given value applying the specified operation.</p>
 <p>See <code>doc</code> folder for details.</p>
 <h2>Related projects</h2>
 <ul>
@@ -204,7 +244,7 @@ Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on 2014-10-12T19:24:24+04:00 using the <a
+		on 2014-10-22T19:11:45+04:00 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>

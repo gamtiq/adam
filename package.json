@@ -41,11 +41,21 @@
     "object",
     "process",
     "create",
+    "check",
     "field",
     "value",
+    "type",
+    "kind",
     "size",
     "split",
-    "filter"
+    "filter",
+    "copy",
+    "change",
+    "map",
+    "remove",
+    "reverse",
+    "empty",
+    "transform"
   ],
   "jam": {
     "main": "dist/adam.js",

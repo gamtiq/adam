@@ -73,6 +73,10 @@ define(["path/to/dist/adam.js"], function(adam) {
 ### Examples
 
 ```js
+function inc(data) {
+    return ++data.value;
+}
+
 var obj = {a: 1, b: 2, c: 3, d: 4, e: 5};
 
 adam.getClass([8]);   // "Array"
@@ -91,8 +95,8 @@ adam.isSizeMore(obj, 5);   // false
 adam.isEmpty({});   // true
 
 adam.getFields(obj);   // ["a", "b", "c", "d", "e"]
-adam.getFields(obj, {filter: function(value) {return value > 3;}});   // ["d", "e"]
-adam.getFields(adam, {filter: {field: /^is/}});   // ["isEmpty", "isKindOf", "isSizeMore"]
+adam.getFields(obj, {filter: function(value) {return value < 4;}});   // ["a", "b", "c"]
+adam.getFields(obj, {filter: {field: /^[d-h]/}});   // ["d", "e"]
 
 adam.getValues(obj);   // [1, 2, 3, 4, 5]
 adam.getValues(obj, {filter: {field: /a|c/}});   // [1, 3]
@@ -103,15 +107,48 @@ adam.fromArray([{id: "a", value: 11}, {id: "b", value: 7}, {id: "c", value: 10}]
 adam.split(obj, ["a", "d"]);   // [{a: 1, d: 4}, {b: 2, c: 3, e: 5}]
 adam.split(obj, null, {filter: "odd"});   // [{a: 1, c: 3, e: 5}, {b: 2, d: 4}]
 adam.split(obj, null, {filter: ["even", /3/], filterConnect: "or"});   // [{b: 2, c: 3, d: 4}, {a: 1, e: 5}]
+
+adam.remove({a: 1, b: "2", c: 3}, "string");   // {a: 1, c: 3}
+adam.remove([1, 2, 3, 4, 5], "even");   // [1, 3, 5]
+
+adam.empty({x: -1, y: 9});   // {}
+
+adam.reverse({a: "x", b: "files"});   // {x: "a", files: "b"}
+adam.reverse("eval");   // "lave"
+
+adam.transform("7.381", "string");   // 7
+
+adam.copy(obj, {b: "no", z: "a"});   // {a: 1, b: 2, c: 3, d: 4, e: 5, z: "a"}
+adam.copy(obj, {b: "no", z: "a"}, {filter: "odd"});   // {a: 1, b: "no", c: 3, e: 5, z: "a"}
+adam.copy(obj, {b: "no", z: "a"}, {filter: "even", transform: inc});   // {b: 3, d: 5, z: "a"}
+
+adam.change({a: 1, b: 2, c: 3}, "reverse");   // {a: -1, b: -2, c: -3}
+adam.change({a: 10, b: 28, c: -3, d: null, e: "zero = 0"}, "empty", {filter: /0/});   // {a: 0, b: 28, c: -3, d: null, e: ""}
+adam.change([1, 2, 3, 4, 5], "reverse", {filter: "even"});   // [1, -2, 3, -4, 5]
+
+adam.map(obj, "reverse", {filter: "odd"});   // {a: -1, c: -3, e: -5}
+adam.map(["1", "2", "3"], "number");   // [1, 2, 3]
 ```
 
 See `test/adam.js` for additional examples.
 
 ## API
 
+### change(obj: Object, action: Function | String, [settings: Object]): Object
+
+Change all or filtered fields of object, applying specified action/transformation.
+
 ### checkField(obj: Object, field: String, filter: Any, [settings: Object]): Boolean
 
 Check whether the field of given object corresponds to specified condition(s) or filter(s).
+
+### copy(source: Object, target: Object, [settings: Object]): Object
+
+Copy all or filtered fields from source object into target object, applying specified transformation if necessary.
+
+### empty(value: Any): Any
+
+Empty the given value.
 
 ### fromArray(list: Array, [keyField: Function | String], [settings: Object]): Object
 
@@ -147,7 +184,7 @@ Return list of all or filtered field values of specified object.
 
 ### isEmpty(value: Any): Boolean
 
-Check whether given value is an empty value i.e. `null`, `undefined`, empty object, empty array or empty string.
+Check whether given value is an empty value i.e. `null`, `undefined`, `0`, empty object, empty array or empty string.
 
 ### isKindOf(value: Any, kind: String): Boolean
 
@@ -157,9 +194,26 @@ Check whether given value has (or does not have) specified kind (type or class).
 
 Check whether number of all or filtered fields of specified object is more than the given value.
 
+### map(obj: Object, action: Function | String, [settings: Object]): Object
+
+Create new object containing all or filtered fields of the source object/array,
+applying specified action/transformation for field values.
+
+### remove(obj: Array | Object, filter: Any, [settings: Object]): Array | Object
+
+Remove filtered fields/elements from specified object/array.
+
+### reverse(value: Any): Any
+
+Reverse or negate the given value.
+
 ### split(obj: Object, firstObjFields: Array | Object | null, [settings: Object]): Array
 
 Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.
+
+### transform(value: Any, action: String): Any
+
+Transform the given value applying the specified operation.
 
 See `doc` folder for details.
 

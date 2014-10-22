@@ -118,7 +118,7 @@ function isSizeMore(obj, nValue, settings) {
 }
 
 /**
- * Check whether given value is an empty value i.e. `null`, `undefined`, empty object, empty array or empty string.
+ * Check whether given value is an empty value i.e. `null`, `undefined`, `0`, empty object, empty array or empty string.
  * 
  * @param {Any} value
  *      Value to be checked.
@@ -131,6 +131,7 @@ function isSizeMore(obj, nValue, settings) {
 function isEmpty(value) {
     /*jshint eqeqeq:false, eqnull:true, laxbreak:true*/
     return value == null
+            || value === 0
             || value === ""
             || (typeof value === "object" && ! isSizeMore(value, 0))
             || (getClass(value) === "Array" && value.length === 0);
@@ -566,10 +567,319 @@ function split(obj, firstObjFields, settings) {
     return result;
 }
 
+/**
+ * Remove filtered fields/elements from specified object/array.
+ * 
+ * @param {Array | Object} obj
+ *      Array or object to be processed.
+ * @param {Any} filter
+ *      A filter or array of filters specifying fields or elements that should be removed
+ *      (see {@link module:adam.checkField checkField}).
+ * @param {Object} [settings]
+ *     Operation settings. Keys are settings names, values are corresponding settings values.
+ *     The following settings are supported:
+ *     
+ *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
+ *      in `filter` parameter (see {@link module:adam.checkField checkField})
+ * @return {Array | Object}
+ *      Processed array or object.
+ * @alias module:adam.remove
+ * @see {@link module:adam.checkField checkField}
+ */
+function remove(obj, filter, settings) {
+    var field;
+    if (obj && typeof obj === "object") {
+        if (getClass(obj) === "Array") {
+            field = obj.length;
+            while(field--) {
+                if (checkField(obj, field, filter, settings)) {
+                    obj.splice(field, 1);
+                }
+            }
+        }
+        else {
+            for (field in obj) {
+                if (checkField(obj, field, filter, settings)) {
+                    delete obj[field];
+                }
+            }
+        }
+    }
+    return obj;
+}
+
+/**
+ * Empty the given value according to the following rules:
+ * 
+ *   * for array: removes all elements from the value
+ *   * for object: removes all own fields from the value
+ *   * for string: returns empty string
+ *   * for number: returns `0`
+ *   * otherwise: returns `undefined`
+ * 
+ * @param {Any} value
+ *      Value to be processed.
+ * @return {Any}
+ *      Processed value (for array or object) or empty value corresponding to the given value.
+ * @alias module:adam.empty
+ */
+function empty(value) {
+    var sField;
+    switch (getType(value)) {
+        case "object":
+            if (getClass(value) === "Array") {
+                value.length = 0;
+            }
+            else {
+                for (sField in value) {
+                    delete value[sField];
+                }
+            }
+            break;
+        case "string":
+            value = "";
+            break;
+        case "number":
+            value = 0;
+            break;
+        default:
+            value = sField;
+    }
+    return value;
+}
+
+/**
+ * Reverse or negate the given value according to the following rules:
+ * 
+ *   * for array: reverses order of its elements
+ *   * for object: swaps fields with their values (i.e. for `{a: "b", c: "d"}` returns `{b: "a", d: "c"}`)
+ *   * for string: reverses order of its characters
+ *   * for number: returns negated value (i.e. `- value`)
+ *   * for boolean: returns negated value (i.e. `! value`)
+ *   * otherwise: returns source value without modification
+ * 
+ * @param {Any} value
+ *      Value to be processed.
+ * @return {Any}
+ *      Processed value.
+ * @alias module:adam.reverse
+ */
+function reverse(value) {
+    var cache, sField;
+    switch (getType(value)) {
+        case "object":
+            if (getClass(value) === "Array") {
+                value = value.reverse();
+            }
+            else {
+                cache = {};
+                for (sField in value) {
+                    cache[ value[sField] ] = sField;
+                }
+                value = cache;
+            }
+            break;
+        case "string":
+            value = value.split("").reverse().join("");
+            break;
+        case "number":
+            value = - value;
+            break;
+        case "boolean":
+            value = ! value;
+            break;
+    }
+    return value;
+}
+
+/**
+ * Transform the given value applying the specified operation.
+ * 
+ * @param {Any} value
+ *      Value to be transformed.
+ * @param {String} sAction
+ *      Operation that should be applied to transform the value. Can be one of the following:
+ *      
+ *    * `array` - convert the value to array (using `Array(value)`)
+ *    * `boolean` - convert the value to boolean value (using `Boolean(value)`)
+ *    * `empty` - empty the value (see {@link module:adam.empty empty})
+ *    * `function` - convert the value to function (using `Function(value)`)
+ *    * `integer` - try to convert the value to an integer number (using `Math.round(Number(value)`)
+ *    * `number` - try to convert the value to number (using `Number(value)`)
+ *    * `object` - convert the value to object (using `Object(value)`)
+ *    * `reverse` - reverse the value (see {@link module:adam.reverse reverse})
+ *    * `string` - convert the value to string (using `String(value)`)
+ *    * otherwise - source value
+ * @return {Any}
+ *      Transformed value.
+ * @alias module:adam.transform
+ * @see {@link module:adam.empty empty}
+ * @see {@link module:adam.reverse reverse}
+ */
+function transform(value, sAction) {
+    /*jshint evil:true, -W064*/
+    var result;
+    switch (sAction) {
+        case "array":
+            result = Array(value);
+            break;
+        case "boolean":
+            result = Boolean(value);
+            break;
+        case "empty":
+            result = empty(value);
+            break;
+        case "function":
+            result = Function(value);
+            break;
+        case "integer":
+            result = Math.round(Number(value));
+            break;
+        case "number":
+            result = Number(value);
+            break;
+        case "object":
+            result = Object(value);
+            break;
+        case "reverse":
+            result = reverse(value);
+            break;
+        case "string":
+            result = String(value);
+            break;
+        default:
+            result = value;
+    }
+    return result;
+}
+
+/**
+ * Copy all or filtered fields from source object into target object, applying specified transformation if necessary.
+ * 
+ * @param {Object} source
+ *      Object whose fields will be copied.
+ * @param {Object} target
+ *      Object into which fields should be copied.
+ * @param {Object} [settings]
+ *     Operation settings. Keys are settings names, values are corresponding settings values.
+ *     The following settings are supported:
+ *     
+ *   * `filter` - a filter that should be used to select fields for copying (see {@link module:adam.checkField checkField});
+ *      fields conforming to the filter will be copied
+ *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
+ *      in `filter` setting (see {@link module:adam.checkField checkField})
+ *   * `transform` - an action/operation that should be applied to get field's value that will be copied
+ *      instead of value from source object; can be a string specifying transformation (see {@link module:adam.transform transform})
+ *      or a function whose result will be used as field's value; object with the following fields will be passed into the function:
+ *      - `field` - field name
+ *      - `value` field value from source object
+ *      - `source` - reference to the source object
+ *      - `target` - reference to the target object
+ * @return {Object}
+ *      Reference to the target object (value of `target` parameter).
+ * @alias module:adam.copy
+ * @see {@link module:adam.checkField checkField}
+ * @see {@link module:adam.transform transform}
+ */
+function copy(source, target, settings) {
+    /*jshint laxbreak:true*/
+    var bAll = true,
+        bFuncAction, action, filter, key;
+    if (! settings) {
+        settings = {};
+    }
+    if ("filter" in settings) {
+        filter = settings.filter;
+        bAll = false;
+    }
+    action = settings.transform;
+    if (typeof action === "function") {
+        bFuncAction = true;
+    }
+    for (key in source) {
+        if (bAll || checkField(source, key, filter, settings)) {
+            target[key] = action
+                            ? (bFuncAction
+                                ? action({source: source, target: target, field: key, value: source[key]})
+                                : transform(source[key], action))
+                            : source[key];
+        }
+    }
+    return target;
+}
+
+/**
+ * Change all or filtered fields of object, applying specified action/transformation.
+ * 
+ * @param {Object} obj
+ *      Object whose fields should be changed.
+ * @param {Function | String} action
+ *      An action/operation that should be applied to get new field value.
+ *      See description of `transform` setting of {@link module:adam.copy copy}.
+ * @param {Object} [settings]
+ *     Operation settings. Keys are settings names, values are corresponding settings values.
+ *     The following settings are supported:
+ *     
+ *   * `filter` - a filter that should be used to select fields for modification (see {@link module:adam.checkField checkField});
+ *      fields conforming to the filter will be changed
+ *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
+ *      in `filter` setting (see {@link module:adam.checkField checkField})
+ * @return {Object}
+ *      Modified object (value of `obj` parameter).
+ * @alias module:adam.change
+ * @see {@link module:adam.checkField checkField}
+ * @see {@link module:adam.copy copy}
+ */
+function change(obj, action, settings) {
+    /*jshint laxbreak:true*/
+    settings = settings
+                ? copy(settings, {})
+                : {};
+    settings.transform = action;
+    return copy(obj, obj, settings);
+}
+
+/**
+ * Create new object containing all or filtered fields of the source object/array,
+ * applying specified action/transformation for field values.
+ * 
+ * @param {Array | Object} obj
+ *      Array/object whose fields should be copied.
+ * @param {Function | String} action
+ *      An action/operation that should be applied to get field value that will be saved in created object.
+ *      See description of `transform` setting of {@link module:adam.copy copy}.
+ * @param {Object} [settings]
+ *     Operation settings. Keys are settings names, values are corresponding settings values.
+ *     The following settings are supported:
+ *     
+ *   * `filter` - a filter that should be used to select fields for copying (see {@link module:adam.checkField checkField});
+ *      fields conforming to the filter will be copied in created object
+ *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
+ *      in `filter` setting (see {@link module:adam.checkField checkField})
+ * @return {Object}
+ *      Created object containing processed fields.
+ * @alias module:adam.map
+ * @see {@link module:adam.checkField checkField}
+ * @see {@link module:adam.copy copy}
+ */
+function map(obj, action, settings) {
+    /*jshint laxbreak:true*/
+    settings = settings
+                ? copy(settings, {})
+                : {};
+    settings.transform = action;
+    return copy(obj, 
+                getClass(obj) === "Array" ? [] : {}, 
+                settings);
+}
+
 // Exports
 
 module.exports = {
+    change: change,
     checkField: checkField,
+    copy: copy,
+    empty: empty,
     fromArray: fromArray,
     getClass: getClass,
     getFields: getFields,
@@ -581,5 +891,9 @@ module.exports = {
     isEmpty: isEmpty,
     isKindOf: isKindOf,
     isSizeMore: isSizeMore,
-    split: split
+    map: map,
+    remove: remove,
+    reverse: reverse,
+    split: split,
+    transform: transform
 };
