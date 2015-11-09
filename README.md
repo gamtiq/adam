@@ -77,7 +77,17 @@ function inc(data) {
     return ++data.value;
 }
 
-var obj = {a: 1, b: 2, c: 3, d: 4, e: 5};
+var s1 = Symbol("s1"),
+    s2 = Symbol("s2"),
+    proto = {a: 1},
+    obj = Object.create(proto);
+proto[s1] = "s1";
+obj.b = 2;
+obj[s2] = null;
+
+adam.getPropertySymbols(obj);   // [s2, s1]
+
+obj = {a: 1, b: 2, c: 3, d: 4, e: 5};
 
 adam.getClass([8]);   // "Array"
 adam.getType(null);   // "null"
@@ -165,6 +175,13 @@ Return list of all or filtered fields of specified object.
 ### getFreeField(obj: Object, [settings: Object]): String
 
 Return name of first free (absent) field of specified object, that conforms to the following pattern: &lt;prefix&gt;&lt;number&gt;
+
+### getPropertySymbols(obj: Object): Array
+
+Return list of all symbol property keys for given object including keys from prototype chain.
+
+*This function is defined only when `Object.getOwnPropertySymbols` is available in JS engine.
+Otherwise the value of `getPropertySymbols` field is `undefined`.*
 
 ### getSize(obj: Object, [settings: Object]): Integer
 

@@ -18,6 +18,41 @@
 
 /*jshint latedef:nofunc*/
 
+var getPropertySymbols;
+
+if (typeof Object.getOwnPropertySymbols === "function") {
+    /**
+     * Return list of all symbol property keys for given object including keys from prototype chain.
+     * 
+     * @param {Object} obj
+     *      Object to be processed.
+     * @return {Array}
+     *      List of all found symbol property keys.
+     * @alias module:adam.getPropertySymbols
+     */
+    getPropertySymbols = function getPropertySymbols(obj) {
+        var exceptList = {},
+            getOwnPropertySymbols = Object.getOwnPropertySymbols,
+            getPrototypeOf = Object.getPrototypeOf,
+            result = [],
+            nI, nL, propName, symbolList;
+        if (obj && typeof obj === "object") {
+            do {
+                symbolList = getOwnPropertySymbols(obj);
+                for (nI = 0, nL = symbolList.length; nI < nL; nI++) {
+                    propName = symbolList[nI];
+                    if (! (propName in exceptList)) {
+                        result.push(propName);
+                        exceptList[propName] = true;
+                    }
+                }
+                obj = getPrototypeOf(obj);
+            } while (obj);
+        }
+        return result;
+    };
+}
+
 /**
  * Return class of given value (namely value of internal property `[[Class]]`).
  * 
@@ -884,6 +919,7 @@ module.exports = {
     getClass: getClass,
     getFields: getFields,
     getFreeField: getFreeField,
+    getPropertySymbols: getPropertySymbols,
     getSize: getSize,
     getType: getType,
     getValueKey: getValueKey,

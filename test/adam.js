@@ -60,6 +60,63 @@ describe("adam", function() {
     }
     
     
+    if (adam.getPropertySymbols) {
+        describe(".getPropertySymbols(obj)", function() {
+            var getPropertySymbols = adam.getPropertySymbols;
+            
+            it("should return empty array", function() {
+                expect( getPropertySymbols(null) )
+                    .eql([]);
+                expect( getPropertySymbols(undef) )
+                    .eql([]);
+                expect( getPropertySymbols({}) )
+                    .eql([]);
+                expect( getPropertySymbols("abc") )
+                    .eql([]);
+                expect( getPropertySymbols(543) )
+                    .eql([]);
+                expect( getPropertySymbols(true) )
+                    .eql([]);
+            });
+            
+            it("should return array containing symbol property keys", function() {
+                var symA = Symbol("a"),
+                    symB = Symbol("b"),
+                    symC = Symbol("c"),
+                    symD = Symbol("d"),
+                    rootProto = {
+                        first: "field",
+                        second: "value"
+                    },
+                    proto = Object.create(rootProto),
+                    obj;
+                
+                rootProto[symA] = "Symbol a";
+                rootProto[symB] = symB;
+                proto.f1 = "F1";
+                proto[symB] = "symbolical";
+                proto[symC] = "JS++";
+                
+                obj = {
+                    f: 1,
+                    s: 2
+                };
+                obj[symA] = symD;
+                obj[symB] = symC;
+                
+                checkArray(getPropertySymbols, [obj], [symA, symB]);
+                
+                obj = Object.create(proto);
+                obj[symA] = "a";
+                obj[symC] = "c";
+                obj[symD] = "d";
+                
+                checkArray(getPropertySymbols, [obj], [symA, symB, symC, symD]);
+            });
+        });
+    }
+    
+    
     describe(".getClass(value)", function() {
         var getClass = adam.getClass;
         
