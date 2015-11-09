@@ -10,7 +10,7 @@
             "outputSourceFiles": true
         },
         "systemName": "adam",
-        "copyright": "Copyright (c) 2014 Denis Sikuler",
+        "copyright": "Copyright (c) 2014-2015 Denis Sikuler",
         "theme": "spacelab",
         "linenums": true
     }
