@@ -80,12 +80,17 @@ function inc(data) {
 var s1 = Symbol("s1"),
     s2 = Symbol("s2"),
     proto = {a: 1},
-    obj = Object.create(proto);
+    obj2 = Object.create(proto),
+    obj;
 proto[s1] = "s1";
-obj.b = 2;
-obj[s2] = null;
+obj2.b = 2;
+obj2[s2] = null;
+obj2.c = "str";
+obj2.d = 0;
 
-adam.getPropertySymbols(obj);   // [s2, s1]
+adam.getPropertySymbols(obj2);   // [s2, s1]
+adam.getFields(obj2);   // ["b", "c", "d", s2, "a", s1]
+adam.getFields(obj2, {filter: ["string", "false"], filterConnect: "or"});   // ["c", "d", s2, s1]
 
 obj = {a: 1, b: 2, c: 3, d: 4, e: 5};
 
@@ -246,5 +251,5 @@ Add unit tests for any new or changed functionality.
 Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## License
-Copyright (c) 2014-2015 Denis Sikuler  
+Copyright (c) 2014-2016 Denis Sikuler  
 Licensed under the MIT license.

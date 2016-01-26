@@ -707,35 +707,43 @@ describe("adam", function() {
         
         describe("getFields(obj)", function() {
             it("should return array of all fields of object (including prototype chain)", function() {
-                expect( getFields({}) )
+                var list;
+                
+                list = getFields({});
+                expect( list )
                     .eql([]);
-                expect( getFields({}) )
+                expect( list )
                     .length(0);
+                
                 expect( getFields({fld: function() {}}) )
                     .eql(["fld"]);
                 /*jshint ignore:start*/
                 expect( getFields(new Boolean(false)) )
                     .eql([]);
-                expect( getFields(new Date()) )
-                    .eql([]);
-                expect( getFields(new Number(784)) )
+                expect( getFields(new Object()) )
                     .eql([]);
                 /*jshint ignore:end*/
-                expect( getFields(parent) )
+                
+                list = getFields(parent);
+                expect( list )
                     .include("a")
                     .and.include("b")
                     .and.include("c");
-                expect( getFields(parent) )
+                expect( list )
                     .length(3);
-                expect( getFields(child) )
+                
+                list = getFields(child);
+                expect( list )
                     .include("a")
                     .and.include("b")
                     .and.include("c")
                     .and.include("d")
                     .and.include("e");
-                expect( getFields(child) )
+                expect( list )
                     .length(5);
-                expect( getFields(grandchild) )
+                
+                list = getFields(grandchild);
+                expect( list )
                     .include("a")
                     .and.include("b")
                     .and.include("c")
@@ -743,9 +751,30 @@ describe("adam", function() {
                     .and.include("e")
                     .and.include("f")
                     .and.include("g");
-                expect( getFields(grandchild) )
+                expect( list )
                     .length(7);
             });
+            
+            if (adam.getPropertySymbols) {
+                it("should return array of all fields of object (including symbol property keys and keys from prototype chain)", function() {
+                    var proto = Object.create(child),
+                        obj = Object.create(proto),
+                        symA = Symbol("A"),
+                        symB = Symbol("B"),
+                        symC = Symbol("symbol c");
+                    proto.pro = "super";
+                    proto[symA] = 1;
+                    proto[symC] = "final";
+                    obj[symB] = symA;
+                    obj.d = null;
+                    obj.b = undef;
+                    obj.omega = "333";
+                    
+                    checkArray(getFields,
+                                [obj],
+                                ["a", "b", "c", "d", "e", "pro", symA, symC, symB, "omega"]);
+                });
+            }
         });
         
         describe("getFields(obj, settings)", function() {
@@ -754,9 +783,49 @@ describe("adam", function() {
                             [child, {filter: "odd"}],
                             ["a", "e"]);
                 checkArray(getFields,
+                            [child, {filter: ["own", "string"], filterConnect: "and"}],
+                            ["c"]);
+                checkArray(getFields,
                             [child, {filter: ["even", "string"], filterConnect: "or"}],
                             ["b", "c", "d"]);
+                checkArray(getFields,
+                            [grandchild, {filter: ["!own", /\d/], filterConnect: "and"}],
+                            ["b", "d", "e"]);
             });
+            
+            if (adam.getPropertySymbols) {
+                it("should return array of object's fields conforming to the given filter (including symbol property keys)", function() {
+                    var proto = Object.create(grandchild),
+                        obj = Object.create(proto),
+                        symA = Symbol("symA"),
+                        symB = Symbol("B"),
+                        symC = Symbol("symbol c"),
+                        symD = Symbol("D");
+                    proto.pro = "super sym";
+                    proto[symA] = -1;
+                    proto[symC] = "semifinal";
+                    proto.symD = symD;
+                    obj[symB] = symA;
+                    obj.d = null;
+                    obj.b = undef;
+                    obj.f = "frozen";
+                    obj.h = "symbolic value";
+                    obj.iValue = 789;
+                    obj.xyz = parent;
+                    
+                    checkArray(getFields,
+                                [obj, {filter: ["symbol", "own"], filterConnect: "and"}],
+                                [symB]);
+                    
+                    checkArray(getFields,
+                                [obj, {filter: ["symbol", /^sym/], filterConnect: "or"}],
+                                ["symD", symB, "h"]);
+                    
+                    checkArray(getFields,
+                                [obj, {filter: ["positive", "false", /sym/], filterConnect: "or"}],
+                                ["b", "d", "e", "h", "pro", symB, "iValue"]);
+                });
+            }
         });
     });
 

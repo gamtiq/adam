@@ -1,4 +1,73 @@
-/*
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>adam Source: E:/projects/github/adam/src/adam.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.spacelab.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">adam</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-adam.html">adam</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+		<div class="col-sm-3 col-md-3">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: E:/projects/github/adam/src/adam.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">/*
  * adam
  * https://github.com/gamtiq/adam
  *
@@ -80,10 +149,10 @@ if (typeof Object.getOwnPropertySymbols === "function") {
             getPrototypeOf = Object.getPrototypeOf,
             result = [],
             nI, nL, propName, symbolList;
-        if (obj && typeof obj === "object") {
+        if (obj &amp;&amp; typeof obj === "object") {
             do {
                 symbolList = getOwnPropertySymbols(obj);
-                for (nI = 0, nL = symbolList.length; nI < nL; nI++) {
+                for (nI = 0, nL = symbolList.length; nI &lt; nL; nI++) {
                     propName = symbolList[nI];
                     if (! (propName in exceptList)) {
                         result.push(propName);
@@ -126,7 +195,7 @@ function getType(value) {
     var sType = typeof value;
     return value === null
             ? "null"
-            : (sType === "number" && isNaN(value) ? "nan" : sType);
+            : (sType === "number" &amp;&amp; isNaN(value) ? "nan" : sType);
 }
 
 /**
@@ -213,8 +282,8 @@ function isEmpty(value) {
     return value == null
             || value === 0
             || value === ""
-            || (typeof value === "object" && ! isSizeMore(value, 0))
-            || (getClass(value) === "Array" && value.length === 0);
+            || (typeof value === "object" &amp;&amp; ! isSizeMore(value, 0))
+            || (getClass(value) === "Array" &amp;&amp; value.length === 0);
 }
 
 /**
@@ -258,19 +327,19 @@ function isKindOf(value, sKind) {
     }
     bResult= sType === sKind
                 || getClass(value) === sKind
-                || (sKind === "true" && Boolean(value))
-                || (sKind === "false" && ! value)
-                || (sKind === "empty" && isEmpty(value))
+                || (sKind === "true" &amp;&amp; Boolean(value))
+                || (sKind === "false" &amp;&amp; ! value)
+                || (sKind === "empty" &amp;&amp; isEmpty(value))
                 || (sType === "number"
-                    && ((sKind === "zero" && value === 0)
-                        || (sKind === "positive" && value > 0)
-                        || (sKind === "negative" && value < 0)
-                        || ((bInfinity = (value === Number.POSITIVE_INFINITY || value === Number.NEGATIVE_INFINITY)) && (sKind === "infinity"))
+                    &amp;&amp; ((sKind === "zero" &amp;&amp; value === 0)
+                        || (sKind === "positive" &amp;&amp; value > 0)
+                        || (sKind === "negative" &amp;&amp; value &lt; 0)
+                        || ((bInfinity = (value === Number.POSITIVE_INFINITY || value === Number.NEGATIVE_INFINITY)) &amp;&amp; (sKind === "infinity"))
                         || (! bInfinity 
-                                && ( ((bInteger = (value === Math.ceil(value))) && sKind === "integer")
-                                    || (bInteger && sKind === "even" && value % 2 === 0)
-                                    || (bInteger && sKind === "odd" && value % 2 !== 0)
-                                    || (! bInteger && sKind === "real") )
+                                &amp;&amp; ( ((bInteger = (value === Math.ceil(value))) &amp;&amp; sKind === "integer")
+                                    || (bInteger &amp;&amp; sKind === "even" &amp;&amp; value % 2 === 0)
+                                    || (bInteger &amp;&amp; sKind === "odd" &amp;&amp; value % 2 !== 0)
+                                    || (! bInteger &amp;&amp; sKind === "real") )
                             )
                         )
                     );
@@ -336,7 +405,7 @@ function checkField(obj, field, filter, settings) {
     if (getClass(filter) !== "Array") {
         filter = [filter];
     }
-    for (nI = 0, nL = filter.length; nI < nL; nI++) {
+    for (nI = 0, nL = filter.length; nI &lt; nL; nI++) {
         test = filter[nI];
         switch (getClass(test)) {
             case "Function":
@@ -382,7 +451,7 @@ function checkField(obj, field, filter, settings) {
             default:
                 test = test === value;
         }
-        if ((bAnd && ! test) || (! bAnd && test)) {
+        if ((bAnd &amp;&amp; ! test) || (! bAnd &amp;&amp; test)) {
             break;
         }
     }
@@ -413,9 +482,9 @@ function getFields(obj, settings) {
     
     function processKeyList(keyList) {
         var key, nI, nL;
-        for (nI = 0, nL = keyList.length; nI < nL; nI++) {
+        for (nI = 0, nL = keyList.length; nI &lt; nL; nI++) {
             key = keyList[nI];
-            if ((bAll || checkField(obj, key, filter, settings)) && ! (key in addedKeyMap)) {
+            if ((bAll || checkField(obj, key, filter, settings)) &amp;&amp; ! (key in addedKeyMap)) {
                 result.push(key);
                 addedKeyMap[key] = null;
             }
@@ -429,11 +498,11 @@ function getFields(obj, settings) {
         filter = bAll ? null : settings.filter,
         bOwn = bAll ? false : filter === "own",
         bNotOwn = bAll ? false : filter === "!own",
-        bUseFilter = bAll ? false : ! bOwn && ! bNotOwn,
+        bUseFilter = bAll ? false : ! bOwn &amp;&amp; ! bNotOwn,
         result = [],
         target = obj;
     while (target) {
-        if (bAll || bUseFilter || (bOwn && target === obj) || (bNotOwn && target !== obj)) {
+        if (bAll || bUseFilter || (bOwn &amp;&amp; target === obj) || (bNotOwn &amp;&amp; target !== obj)) {
             processKeyList(getOwnPropertyNames(target));
             if (bProcessSymbols) {
                 processKeyList(getOwnPropertySymbols(target));
@@ -512,7 +581,7 @@ function getValues(obj, settings) {
 
 /**
  * Return name of first free (absent) field of specified object, that conforms to the following pattern:
- * &lt;prefix&gt;&lt;number&gt;
+ * &amp;lt;prefix&amp;gt;&amp;lt;number&amp;gt;
  * 
  * @param {Object} obj
  *      Object in which a free field should be found.
@@ -597,11 +666,11 @@ function fromArray(list, keyField, settings) {
         filter = bAll ? null : settings.filter;
         filterConnect = settings.filterConnect;
         bFuncKey = typeof keyField === "function";
-        bDeleteKeyField = Boolean(settings.deleteKeyField && keyField);
+        bDeleteKeyField = Boolean(settings.deleteKeyField &amp;&amp; keyField);
         if (! bFuncKey) {
             sKeyName = keyField;
         }
-        for (nI = 0; nI < nL; nI++) {
+        for (nI = 0; nI &lt; nL; nI++) {
             item = list[nI];
             if (bFuncKey) {
                 field = sKeyName = keyField(item, result, nI);
@@ -694,7 +763,7 @@ function split(obj, firstObjFields, settings) {
  */
 function remove(obj, filter, settings) {
     var field;
-    if (obj && typeof obj === "object") {
+    if (obj &amp;&amp; typeof obj === "object") {
         if (getClass(obj) === "Array") {
             field = obj.length;
             while(field--) {
@@ -1004,3 +1073,135 @@ module.exports = {
     split: split,
     transform: transform
 };
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+<div class="modal fade" id="searchResults">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search results</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright (c) 2014-2016 Denis Sikuler
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+	
+		on 2016-01-26T22:18:41+03:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		SearcherDisplay.init();
+	});
+</script>
+
+</body>
+</html>

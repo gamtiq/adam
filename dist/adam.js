@@ -17,7 +17,7 @@
      * adam
      * https://github.com/gamtiq/adam
      *
-     * Copyright (c) 2014-2015 Denis Sikuler
+     * Copyright (c) 2014-2016 Denis Sikuler
      * Licensed under the MIT license.
      */
 
@@ -33,11 +33,55 @@
 
     /*jshint latedef:nofunc*/
 
-    var getPropertySymbols;
+    var getOwnPropertyNames, getPropertySymbols, getPrototypeOf;
+
+    /*jshint laxbreak:true*/
+    /*
+     * Return own property names of given object.
+     * 
+     * @param {Object} obj
+     *      Object whose own property names should be returned.
+     * @return {Array}
+     *      Own property names of the given object.
+     */
+    getOwnPropertyNames = typeof Object.getOwnPropertyNames === "function"
+                            ? Object.getOwnPropertyNames
+    : function getOwnPropertyNames(obj) {
+        var result = [],
+            sKey;
+        for (sKey in obj) {
+            result.push(sKey);
+        }
+        return result;
+    };
+
+    /*
+     * Return prototype of given object.
+     * 
+     * @param {Object} obj
+     *      Object whose prototype should be returned.
+     * @return {Object}
+     *      The prototype of the given object.
+     */
+    getPrototypeOf = typeof Object.getPrototypeOf === "function"
+                        ? Object.getPrototypeOf
+    : function getPrototypeOf(obj) {
+        /*jshint proto:true*/
+        return obj 
+                ? (obj.constructor
+                    ? obj.constructor.prototype
+                    : (obj.__proto__ || Object.prototype)
+                    )
+                : null;
+    };
+    /*jshint laxbreak:false*/
+
 
     if (typeof Object.getOwnPropertySymbols === "function") {
         /**
          * Return list of all symbol property keys for given object including keys from prototype chain.
+         * 
+         * This function is defined only when `Object.getOwnPropertySymbols` is available.
          * 
          * @param {Object} obj
          *      Object to be processed.
@@ -67,6 +111,7 @@
             return result;
         };
     }
+
 
     /**
      * Return class of given value (namely value of internal property `[[Class]]`).
@@ -295,7 +340,6 @@
         /*jshint laxbreak:true*/
         var test = true,
             bAnd, nI, nL, value;
-        field = String(field);
         if (! settings) {
             settings = {};
         }
@@ -325,7 +369,7 @@
                     }
                     break;
                 case "RegExp":
-                    test = test.test(value);
+                    test = test.test(typeof value === "symbol" ? value.toString() : value);
                     break;
                 case "Object":
                     if ("and" in test) {
@@ -337,10 +381,10 @@
                     else if ("field" in test) {
                         test = test.field;
                         if (getClass(test) === "RegExp") {
-                            test = test.test(field);
+                            test = test.test(typeof field === "symbol" ? field.toString() : field);
                         }
                         else {
-                            test = String(test) === field;
+                            test = test === field;
                         }
                     }
                     else if ("value" in test) {
@@ -363,6 +407,8 @@
     /**
      * Return list of all or filtered fields of specified object.
      * 
+     * Fields are searched (checked) in the object itself and in its prototype chain.
+     * 
      * @param {Object} obj
      *      Object to be processed.
      * @param {Object} [settings]
@@ -378,14 +424,39 @@
      * @see {@link module:adam.checkField checkField}
      */
     function getFields(obj, settings) {
-        var result = [],
-            bAll = ! settings || ! ("filter" in settings),
-            filter = bAll ? null : settings.filter,
-            sKey;
-        for (sKey in obj) {
-            if (bAll || checkField(obj, sKey, filter, settings)) {
-                result.push(sKey);
+        /*jshint latedef:false, laxbreak:true*/
+        
+        function processKeyList(keyList) {
+            var key, nI, nL;
+            for (nI = 0, nL = keyList.length; nI < nL; nI++) {
+                key = keyList[nI];
+                if ((bAll || checkField(obj, key, filter, settings)) && ! (key in addedKeyMap)) {
+                    result.push(key);
+                    addedKeyMap[key] = null;
+                }
             }
+        }
+        
+        var addedKeyMap = {},
+            bAll = ! settings || ! ("filter" in settings),
+            getOwnPropertySymbols = Object.getOwnPropertySymbols,
+            bProcessSymbols = typeof getOwnPropertySymbols === "function",
+            filter = bAll ? null : settings.filter,
+            bOwn = bAll ? false : filter === "own",
+            bNotOwn = bAll ? false : filter === "!own",
+            bUseFilter = bAll ? false : ! bOwn && ! bNotOwn,
+            result = [],
+            target = obj;
+        while (target) {
+            if (bAll || bUseFilter || (bOwn && target === obj) || (bNotOwn && target !== obj)) {
+                processKeyList(getOwnPropertyNames(target));
+                if (bProcessSymbols) {
+                    processKeyList(getOwnPropertySymbols(target));
+                }
+            }
+            target = bAll || bNotOwn || bUseFilter
+                        ? getPrototypeOf(target)
+                        : null;
         }
         return result;
     }

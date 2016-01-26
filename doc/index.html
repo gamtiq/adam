@@ -15,44 +15,55 @@
 </head>
 
 <body>
-<div class="container-fluid">
-	<div class="navbar navbar-fixed-top ">
-		<div class="navbar-inner">
-			<a class="brand" href="index.html">adam</a>
-			<ul class="nav">
-				
-				<li class="dropdown">
-					<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
-						class="caret"></b></a>
 
-					<ul class="dropdown-menu ">
-						
-						<li>
-							<a href="module-adam.html">adam</a>
-						</li>
-						
-
-					</ul>
-				</li>
-				
-			</ul>
-		</div>
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">adam</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-adam.html">adam</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+		<div class="col-sm-3 col-md-3">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
 	</div>
 
-	<div class="row-fluid">
+</div>
+</div>
 
-		
-		<div class="span8">
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
 			
-				<div id="main">
-					
-
 
 	
-	<span class="page-title">Index</span>
 	
-	
-
 
 
 
@@ -72,59 +83,41 @@
 
 
     <section class="readme-section">
-        <article><h1>adam</h1>
-<p>Functions to create, process and test objects.</p>
+        <article><h1>adam</h1><p>Functions to create, process and test objects.</p>
 <p><a href="http://badge.fury.io/js/adam"><img src="https://badge.fury.io/js/adam.png" alt="NPM version"></a>
 <a href="http://travis-ci.org/gamtiq/adam"><img src="https://secure.travis-ci.org/gamtiq/adam.png?branch=master" alt="Build Status"></a>
 <a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a></p>
-<h2>Installation</h2>
-<h3>Node</h3>
-<pre><code>npm install adam</code></pre>
-<h3><a href="https://github.com/component/component">Component</a></h3>
-<pre><code>component install gamtiq/adam</code></pre>
-<h3><a href="http://jamjs.org">Jam</a></h3>
-<pre><code>jam install adam</code></pre>
-<h3><a href="http://bower.io">Bower</a></h3>
-<pre><code>bower install adam</code></pre>
-<h3><a href="http://spmjs.io">SPM</a></h3>
-<pre><code>spm install adam</code></pre>
-<h3>AMD, &lt;script&gt;</h3>
-<p>Use <code>dist/adam.js</code> or <code>dist/adam.min.js</code> (minified version).</p>
-<h2>Usage</h2>
-<h3>Node, Component, SPM</h3>
-<pre><code class="lang-js">var adam = require(&quot;adam&quot;);</code></pre>
-<h3>Jam</h3>
-<pre><code class="lang-js">require([&quot;adam&quot;], function(adam) {
+<h2>Installation</h2><h3>Node</h3><pre class="prettyprint source"><code>npm install adam</code></pre><h3><a href="https://github.com/component/component">Component</a></h3><pre class="prettyprint source"><code>component install gamtiq/adam</code></pre><h3><a href="http://jamjs.org">Jam</a></h3><pre class="prettyprint source"><code>jam install adam</code></pre><h3><a href="http://bower.io">Bower</a></h3><pre class="prettyprint source"><code>bower install adam</code></pre><h3><a href="http://spmjs.io">SPM</a></h3><pre class="prettyprint source"><code>spm install adam</code></pre><h3>AMD, &lt;script&gt;</h3><p>Use <code>dist/adam.js</code> or <code>dist/adam.min.js</code> (minified version).</p>
+<h2>Usage</h2><h3>Node, Component, SPM</h3><pre class="prettyprint source lang-js"><code>var adam = require(&quot;adam&quot;);</code></pre><h3>Jam</h3><pre class="prettyprint source lang-js"><code>require([&quot;adam&quot;], function(adam) {
     ...
-});</code></pre>
-<h3>AMD</h3>
-<pre><code class="lang-js">define([&quot;path/to/dist/adam.js&quot;], function(adam) {
+});</code></pre><h3>AMD</h3><pre class="prettyprint source lang-js"><code>define([&quot;path/to/dist/adam.js&quot;], function(adam) {
     ...
-});</code></pre>
-<h3>Bower, &lt;script&gt;</h3>
-<pre><code class="lang-html">
-&lt;!-- Use bower_components/adam/dist/adam.js if the library was installed by Bower --&gt;
+});</code></pre><h3>Bower, &lt;script&gt;</h3><pre class="prettyprint source lang-html"><code>
+&lt;!-- Use bower_components/adam/dist/adam.js if the library was installed by Bower -->
 
-&lt;script type=&quot;text/javascript&quot; src=&quot;path/to/dist/adam.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;path/to/dist/adam.js&quot;>&lt;/script>
+&lt;script type=&quot;text/javascript&quot;>
     // adam is available via adam field of window object
 
     ...
-&lt;/script&gt;</code></pre>
-<h3>Examples</h3>
-<pre><code class="lang-js">function inc(data) {
+&lt;/script></code></pre><h3>Examples</h3><pre class="prettyprint source lang-js"><code>function inc(data) {
     return ++data.value;
 }
 
 var s1 = Symbol(&quot;s1&quot;),
     s2 = Symbol(&quot;s2&quot;),
     proto = {a: 1},
-    obj = Object.create(proto);
+    obj2 = Object.create(proto),
+    obj;
 proto[s1] = &quot;s1&quot;;
-obj.b = 2;
-obj[s2] = null;
+obj2.b = 2;
+obj2[s2] = null;
+obj2.c = &quot;str&quot;;
+obj2.d = 0;
 
-adam.getPropertySymbols(obj);   // [s2, s1]
+adam.getPropertySymbols(obj2);   // [s2, s1]
+adam.getFields(obj2);   // [&quot;b&quot;, &quot;c&quot;, &quot;d&quot;, s2, &quot;a&quot;, s1]
+adam.getFields(obj2, {filter: [&quot;string&quot;, &quot;false&quot;], filterConnect: &quot;or&quot;});   // [&quot;c&quot;, &quot;d&quot;, s2, s1]
 
 obj = {a: 1, b: 2, c: 3, d: 4, e: 5};
 
@@ -176,67 +169,41 @@ adam.change({a: 10, b: 28, c: -3, d: null, e: &quot;zero = 0&quot;}, &quot;empty
 adam.change([1, 2, 3, 4, 5], &quot;reverse&quot;, {filter: &quot;even&quot;});   // [1, -2, 3, -4, 5]
 
 adam.map(obj, &quot;reverse&quot;, {filter: &quot;odd&quot;});   // {a: -1, c: -3, e: -5}
-adam.map([&quot;1&quot;, &quot;2&quot;, &quot;3&quot;], &quot;number&quot;);   // [1, 2, 3]</code></pre>
-<p>See <code>test/adam.js</code> for additional examples.</p>
-<h2>API</h2>
-<h3>change(obj: Object, action: Function | String, [settings: Object]): Object</h3>
-<p>Change all or filtered fields of object, applying specified action/transformation.</p>
-<h3>checkField(obj: Object, field: String, filter: Any, [settings: Object]): Boolean</h3>
-<p>Check whether the field of given object corresponds to specified condition(s) or filter(s).</p>
-<h3>copy(source: Object, target: Object, [settings: Object]): Object</h3>
-<p>Copy all or filtered fields from source object into target object, applying specified transformation if necessary.</p>
-<h3>empty(value: Any): Any</h3>
-<p>Empty the given value.</p>
-<h3>fromArray(list: Array, [keyField: Function | String], [settings: Object]): Object</h3>
-<p>Create object (map) from list of objects.</p>
-<h3>getClass(value: Any): String</h3>
-<p>Return class of given value (namely value of internal property <code>[[Class]]</code>).</p>
-<h3>getFields(obj: Object, [settings: Object]): Array</h3>
-<p>Return list of all or filtered fields of specified object.</p>
-<h3>getFreeField(obj: Object, [settings: Object]): String</h3>
-<p>Return name of first free (absent) field of specified object, that conforms to the following pattern: &lt;prefix&gt;&lt;number&gt;</p>
-<h3>getPropertySymbols(obj: Object): Array</h3>
-<p>Return list of all symbol property keys for given object including keys from prototype chain.</p>
+adam.map([&quot;1&quot;, &quot;2&quot;, &quot;3&quot;], &quot;number&quot;);   // [1, 2, 3]</code></pre><p>See <code>test/adam.js</code> for additional examples.</p>
+<h2>API</h2><h3>change(obj: Object, action: Function | String, [settings: Object]): Object</h3><p>Change all or filtered fields of object, applying specified action/transformation.</p>
+<h3>checkField(obj: Object, field: String, filter: Any, [settings: Object]): Boolean</h3><p>Check whether the field of given object corresponds to specified condition(s) or filter(s).</p>
+<h3>copy(source: Object, target: Object, [settings: Object]): Object</h3><p>Copy all or filtered fields from source object into target object, applying specified transformation if necessary.</p>
+<h3>empty(value: Any): Any</h3><p>Empty the given value.</p>
+<h3>fromArray(list: Array, [keyField: Function | String], [settings: Object]): Object</h3><p>Create object (map) from list of objects.</p>
+<h3>getClass(value: Any): String</h3><p>Return class of given value (namely value of internal property <code>[[Class]]</code>).</p>
+<h3>getFields(obj: Object, [settings: Object]): Array</h3><p>Return list of all or filtered fields of specified object.</p>
+<h3>getFreeField(obj: Object, [settings: Object]): String</h3><p>Return name of first free (absent) field of specified object, that conforms to the following pattern: &lt;prefix&gt;&lt;number&gt;</p>
+<h3>getPropertySymbols(obj: Object): Array</h3><p>Return list of all symbol property keys for given object including keys from prototype chain.</p>
 <p><em>This function is defined only when <code>Object.getOwnPropertySymbols</code> is available in JS engine.
 Otherwise the value of <code>getPropertySymbols</code> field is <code>undefined</code>.</em></p>
-<h3>getSize(obj: Object, [settings: Object]): Integer</h3>
-<p>Return number of all or filtered fields of specified object.</p>
-<h3>getType(value: Any): String</h3>
-<p>Return type of given value.</p>
-<h3>getValueKey(obj: Object, value, [all: Boolean]): Array | String | null</h3>
-<p>Return the name of field (or list of names) having the specified value in the given object.</p>
-<h3>getValues(obj: Object, [settings: Object]): Array</h3>
-<p>Return list of all or filtered field values of specified object.</p>
-<h3>isEmpty(value: Any): Boolean</h3>
-<p>Check whether given value is an empty value i.e. <code>null</code>, <code>undefined</code>, <code>0</code>, empty object, empty array or empty string.</p>
-<h3>isKindOf(value: Any, kind: String): Boolean</h3>
-<p>Check whether given value has (or does not have) specified kind (type or class).</p>
-<h3>isSizeMore(obj: Object, qty: Number, [settings: Object]): Boolean</h3>
-<p>Check whether number of all or filtered fields of specified object is more than the given value.</p>
-<h3>map(obj: Object, action: Function | String, [settings: Object]): Object</h3>
-<p>Create new object containing all or filtered fields of the source object/array,
+<h3>getSize(obj: Object, [settings: Object]): Integer</h3><p>Return number of all or filtered fields of specified object.</p>
+<h3>getType(value: Any): String</h3><p>Return type of given value.</p>
+<h3>getValueKey(obj: Object, value, [all: Boolean]): Array | String | null</h3><p>Return the name of field (or list of names) having the specified value in the given object.</p>
+<h3>getValues(obj: Object, [settings: Object]): Array</h3><p>Return list of all or filtered field values of specified object.</p>
+<h3>isEmpty(value: Any): Boolean</h3><p>Check whether given value is an empty value i.e. <code>null</code>, <code>undefined</code>, <code>0</code>, empty object, empty array or empty string.</p>
+<h3>isKindOf(value: Any, kind: String): Boolean</h3><p>Check whether given value has (or does not have) specified kind (type or class).</p>
+<h3>isSizeMore(obj: Object, qty: Number, [settings: Object]): Boolean</h3><p>Check whether number of all or filtered fields of specified object is more than the given value.</p>
+<h3>map(obj: Object, action: Function | String, [settings: Object]): Object</h3><p>Create new object containing all or filtered fields of the source object/array,
 applying specified action/transformation for field values.</p>
-<h3>remove(obj: Array | Object, filter: Any, [settings: Object]): Array | Object</h3>
-<p>Remove filtered fields/elements from specified object/array.</p>
-<h3>reverse(value: Any): Any</h3>
-<p>Reverse or negate the given value.</p>
-<h3>split(obj: Object, firstObjFields: Array | Object | null, [settings: Object]): Array</h3>
-<p>Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.</p>
-<h3>transform(value: Any, action: String): Any</h3>
-<p>Transform the given value applying the specified operation.</p>
+<h3>remove(obj: Array | Object, filter: Any, [settings: Object]): Array | Object</h3><p>Remove filtered fields/elements from specified object/array.</p>
+<h3>reverse(value: Any): Any</h3><p>Reverse or negate the given value.</p>
+<h3>split(obj: Object, firstObjFields: Array | Object | null, [settings: Object]): Array</h3><p>Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.</p>
+<h3>transform(value: Any, action: String): Any</h3><p>Transform the given value applying the specified operation.</p>
 <p>See <code>doc</code> folder for details.</p>
-<h2>Related projects</h2>
-<ul>
+<h2>Related projects</h2><ul>
 <li><a href="https://github.com/gamtiq/eva">eva</a></li>
 <li><a href="https://github.com/gamtiq/mixing">mixing</a></li>
 <li><a href="https://github.com/gamtiq/teo">teo</a></li>
 </ul>
-<h2>Contributing</h2>
-<p>In lieu of a formal styleguide, take care to maintain the existing coding style.
+<h2>Contributing</h2><p>In lieu of a formal styleguide, take care to maintain the existing coding style.
 Add unit tests for any new or changed functionality.
 Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
-<h2>License</h2>
-<p>Copyright (c) 2014-2015 Denis Sikuler<br>Licensed under the MIT license.</p></article>
+<h2>License</h2><p>Copyright (c) 2014-2016 Denis Sikuler<br>Licensed under the MIT license.</p></article>
     </section>
 
 
@@ -245,101 +212,131 @@ Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
 
 
 
-				</div>
-
-				<div class="clearfix"></div>
-				<footer>
-					
-					
-		<span class="copyright">
-		Copyright (c) 2014-2015 Denis Sikuler
-		</span>
-					<br />
-					
-		<span class="jsdoc-message">
-		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on 2015-11-09T20:52:29+04:00 using the <a
-			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
-		</span>
-				</footer>
-			</div>
-
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
-			
-			<br clear="both">
 		</div>
-
 	</div>
-	<!--<script src="scripts/sunlight.js"></script>-->
-	<script src="scripts/docstrap.lib.js"></script>
-	<script src="scripts/bootstrap-dropdown.js"></script>
-	<script src="scripts/toc.js"></script>
 
-	<script>
-		$( function () {
-			$( "[id*='$']" ).each( function () {
-				var $this = $( this );
+	<div class="clearfix"></div>
 
-				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
-			} );
-
-			$( "#toc" ).toc( {
-				anchorName  : function ( i, heading, prefix ) {
-					return $( heading ).attr( "id" ) || ( prefix + i );
-				},
-				selectors   : "h1,h2,h3,h4",
-				showAndHide : false,
-				scrollTo    : "100px"
-			} );
-
-			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
-			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
-			$( '.dropdown-toggle' ).dropdown();
-//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
-
-			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
-				var $this = $( this );
-
-				var example = $this.find( "code" );
-				exampleText = example.html();
-				var lang = /{@lang (.*?)}/.exec( exampleText );
-				if ( lang && lang[1] ) {
-					exampleText = exampleText.replace( lang[0], "" );
-					example.html( exampleText );
-					lang = lang[1];
-				} else {
-					lang = "javascript";
-				}
-
-				if ( lang ) {
-
-					$this
-						.addClass( "sunlight-highlight-" + lang )
-						.addClass( "linenums" )
-						.html( example.html() );
-
-				}
-			} );
-
-			Sunlight.highlightAll( {
-				lineNumbers : true,
-				showMenu : true,
-				enableDoclinks : true
-			} );
-		} );
-	 </script>
-
-
-
-	<!--Navigation and Symbol Display-->
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
 	
 
+</div>
+</div>
 
-	<!--Google Analytics-->
+<div class="modal fade" id="searchResults">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search results</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright (c) 2014-2016 Denis Sikuler
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
+		on 2016-01-26T22:18:41+03:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		SearcherDisplay.init();
+	});
+</script>
 
 </body>
 </html>

@@ -15,53 +15,63 @@
 </head>
 
 <body>
-<div class="container-fluid">
-	<div class="navbar navbar-fixed-top ">
-		<div class="navbar-inner">
-			<a class="brand" href="index.html">adam</a>
-			<ul class="nav">
-				
-				<li class="dropdown">
-					<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
-						class="caret"></b></a>
 
-					<ul class="dropdown-menu ">
-						
-						<li>
-							<a href="module-adam.html">adam</a>
-						</li>
-						
-
-					</ul>
-				</li>
-				
-			</ul>
-		</div>
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">adam</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-adam.html">adam</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+		<div class="col-sm-3 col-md-3">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
 	</div>
 
-	<div class="row-fluid">
+</div>
+</div>
 
-		
-		<div class="span8">
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
 			
-				<div id="main">
-					
-
 
 	<h1 class="page-title">Module: adam</h1>
 <section>
 
 <header>
-    <h2>
-    adam
-    </h2>
     
 </header>
 
+
 <article>
     <div class="container-overview">
-    
-
     
         
             <div class="description"><p>Functions to create, process and test objects.</p></div>
@@ -69,6 +79,22 @@
 
         
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -79,16 +105,18 @@
 
 	
 
-	
 
-	
 
 	
-
-	
-
-
-
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-10">line 10</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
@@ -120,13 +148,14 @@
 
         <dl>
             
+<hr>
 <dt>
-    <h4 class="name" id="change"><span class="type-signature">&lt;static> </span>change<span class="signature">(obj, action, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id=".change"><span class="type-signature">&lt;static> </span>change(obj, action, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Change all or filtered fields of object, applying specified action/transformation.</p>
@@ -134,8 +163,9 @@
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -143,25 +173,25 @@
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -172,6 +202,7 @@
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -192,7 +223,7 @@
             <td class="description last"><p>Object whose fields should be changed.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -206,6 +237,7 @@
 |
 
 <span class="param-type">String</span>
+
 
 
             
@@ -224,10 +256,10 @@
             
 
             <td class="description last"><p>An action/operation that should be applied to get new field value.
-     See description of <code>transform</code> setting of <a href="module-adam.html#copy">copy</a>.</p></td>
+     See description of <code>transform</code> setting of <a href="module-adam.html#.copy">copy</a>.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -238,6 +270,7 @@
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -260,21 +293,37 @@
             <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
     The following settings are supported:</p>
 <ul>
-<li><code>filter</code> - a filter that should be used to select fields for modification (see <a href="module-adam.html#checkField">checkField</a>);
+<li><code>filter</code> - a filter that should be used to select fields for modification (see <a href="module-adam.html#.checkField">checkField</a>);
  fields conforming to the filter will be changed</li>
 <li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
- in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+ in <code>filter</code> setting (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -285,27 +334,29 @@
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-939">line 939</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#checkField">checkField</a></li>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
 			
-			<li><a href="module-adam.html#copy">copy</a></li>
+			<li><a href="module-adam.html#.copy">copy</a></li>
 			</ul>
 	</dd>
 	
@@ -313,15 +364,17 @@
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -333,32 +386,34 @@
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Object</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="checkField"><span class="type-signature">&lt;static> </span>checkField<span class="signature">(obj, field, filter, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id=".checkField"><span class="type-signature">&lt;static> </span>checkField(obj, field, filter, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Check whether the field of given object corresponds to specified condition(s) or filter(s).</p>
@@ -366,8 +421,9 @@
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -375,25 +431,25 @@
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -404,6 +460,7 @@
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -424,7 +481,7 @@
             <td class="description last"><p>Object to be processed.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -435,6 +492,7 @@
             
                 
 <span class="param-type">String</span>
+
 
 
             
@@ -455,7 +513,7 @@
             <td class="description last"><p>Name of the field that should be checked.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -466,6 +524,7 @@
             
                 
 <span class="param-type">Any</span>
+
 
 
             
@@ -492,8 +551,8 @@ that the field corresponds to this filter</li>
 <li>a string; value can be one of the following:<ul>
 <li><code>own</code> - if the field is own property of the object it means that the field corresponds to this filter</li>
 <li><code>!own</code> - if the field is not own property of the object it means that the field corresponds to this filter</li>
-<li>any other value - is used as the check when calling <a href="module-adam.html#isKindOf">isKindOf</a>;
-if <a href="module-adam.html#isKindOf">isKindOf</a> returns <code>true</code> for the given field value and the filter
+<li>any other value - is used as the check when calling <a href="module-adam.html#.isKindOf">isKindOf</a>;
+if <a href="module-adam.html#.isKindOf">isKindOf</a> returns <code>true</code> for the given field value and the filter
 it means that the field corresponds to this filter</li>
 </ul>
 </li>
@@ -513,7 +572,7 @@ it means that the field corresponds to this filter</li>
 </ul></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -524,6 +583,7 @@ it means that the field corresponds to this filter</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -552,14 +612,30 @@ it means that the field corresponds to this filter</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -570,27 +646,29 @@ it means that the field corresponds to this filter</li>
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-324">line 324</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#getClass">getClass</a></li>
+			<li><a href="module-adam.html#.getClass">getClass</a></li>
 			
-			<li><a href="module-adam.html#isKindOf">isKindOf</a></li>
+			<li><a href="module-adam.html#.isKindOf">isKindOf</a></li>
 			</ul>
 	</dd>
 	
@@ -598,15 +676,17 @@ it means that the field corresponds to this filter</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -618,32 +698,34 @@ it means that the field corresponds to this filter</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Boolean</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="copy"><span class="type-signature">&lt;static> </span>copy<span class="signature">(source, target, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id=".copy"><span class="type-signature">&lt;static> </span>copy(source, target, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Copy all or filtered fields from source object into target object, applying specified transformation if necessary.</p>
@@ -651,8 +733,9 @@ it means that the field corresponds to this filter</li>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -660,25 +743,25 @@ it means that the field corresponds to this filter</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -689,6 +772,7 @@ it means that the field corresponds to this filter</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -709,7 +793,7 @@ it means that the field corresponds to this filter</li>
             <td class="description last"><p>Object whose fields will be copied.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -720,6 +804,7 @@ it means that the field corresponds to this filter</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -740,7 +825,7 @@ it means that the field corresponds to this filter</li>
             <td class="description last"><p>Object into which fields should be copied.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -751,6 +836,7 @@ it means that the field corresponds to this filter</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -773,12 +859,12 @@ it means that the field corresponds to this filter</li>
             <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
     The following settings are supported:</p>
 <ul>
-<li><code>filter</code> - a filter that should be used to select fields for copying (see <a href="module-adam.html#checkField">checkField</a>);
+<li><code>filter</code> - a filter that should be used to select fields for copying (see <a href="module-adam.html#.checkField">checkField</a>);
  fields conforming to the filter will be copied</li>
 <li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
- in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+ in <code>filter</code> setting (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 <li><code>transform</code> - an action/operation that should be applied to get field's value that will be copied
- instead of value from source object; can be a string specifying transformation (see <a href="module-adam.html#transform">transform</a>)
+ instead of value from source object; can be a string specifying transformation (see <a href="module-adam.html#.transform">transform</a>)
  or a function whose result will be used as field's value; object with the following fields will be passed into the function:<ul>
 <li><code>field</code> - field name</li>
 <li><code>value</code> field value from source object</li>
@@ -789,14 +875,30 @@ it means that the field corresponds to this filter</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -807,27 +909,29 @@ it means that the field corresponds to this filter</li>
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-890">line 890</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#checkField">checkField</a></li>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
 			
-			<li><a href="module-adam.html#transform">transform</a></li>
+			<li><a href="module-adam.html#.transform">transform</a></li>
 			</ul>
 	</dd>
 	
@@ -835,15 +939,17 @@ it means that the field corresponds to this filter</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -855,32 +961,34 @@ it means that the field corresponds to this filter</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Object</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="empty"><span class="type-signature">&lt;static> </span>empty<span class="signature">(value)</span><span class="type-signature"> &rarr; {Any}</span></h4>
+    <h4 class="name" id=".empty"><span class="type-signature">&lt;static> </span>empty(value)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Empty the given value according to the following rules:</p>
@@ -895,8 +1003,9 @@ it means that the field corresponds to this filter</li>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -904,23 +1013,23 @@ it means that the field corresponds to this filter</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -933,6 +1042,7 @@ it means that the field corresponds to this filter</li>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -943,14 +1053,30 @@ it means that the field corresponds to this filter</li>
             <td class="description last"><p>Value to be processed.</p></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -961,16 +1087,18 @@ it means that the field corresponds to this filter</li>
 
 	
 
-	
 
-	
 
 	
-
-	
-
-
-
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-732">line 732</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
@@ -980,15 +1108,17 @@ it means that the field corresponds to this filter</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -1000,32 +1130,34 @@ it means that the field corresponds to this filter</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Any</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="fromArray"><span class="type-signature">&lt;static> </span>fromArray<span class="signature">(list, <span class="optional">keyField</span>, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id=".fromArray"><span class="type-signature">&lt;static> </span>fromArray(list, <span class="optional">keyField</span>, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Create object (map) from list of objects.
@@ -1035,8 +1167,9 @@ values of the created object are corresponding items of the list.</p>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -1044,25 +1177,25 @@ values of the created object are corresponding items of the list.</p>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -1073,6 +1206,7 @@ values of the created object are corresponding items of the list.</p>
             
                 
 <span class="param-type">Array</span>
+
 
 
             
@@ -1093,7 +1227,7 @@ values of the created object are corresponding items of the list.</p>
             <td class="description last"><p>List of objects/values to be processed.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -1107,6 +1241,7 @@ values of the created object are corresponding items of the list.</p>
 |
 
 <span class="param-type">String</span>
+
 
 
             
@@ -1133,7 +1268,7 @@ values of the created object are corresponding items of the list.</p>
      When the parameter is not set, items of the list are used as field names.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -1144,6 +1279,7 @@ values of the created object are corresponding items of the list.</p>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -1168,21 +1304,37 @@ values of the created object are corresponding items of the list.</p>
 <ul>
 <li><code>deleteKeyField</code>: <code>Boolean</code> (<code>false</code>) - specifies whether key field (whose value is field name of the created object)
 should be deleted from the source object (an item of the list)</li>
-<li><code>filter</code> - a filter specifying objects that should be included into result (see <a href="module-adam.html#checkField">checkField</a>);
+<li><code>filter</code> - a filter specifying objects that should be included into result (see <a href="module-adam.html#.checkField">checkField</a>);
 an item of the list will be used as value for check</li>
 <li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
- in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+ in <code>filter</code> setting (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -1193,25 +1345,27 @@ an item of the list will be used as value for check</li>
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-588">line 588</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#checkField">checkField</a></li>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
 			</ul>
 	</dd>
 	
@@ -1219,15 +1373,17 @@ an item of the list will be used as value for check</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -1239,32 +1395,34 @@ an item of the list will be used as value for check</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Object</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="getClass"><span class="type-signature">&lt;static> </span>getClass<span class="signature">(value)</span><span class="type-signature"> &rarr; {String}</span></h4>
+    <h4 class="name" id=".getClass"><span class="type-signature">&lt;static> </span>getClass(value)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Return class of given value (namely value of internal property <code>[[Class]]</code>).</p>
@@ -1272,8 +1430,9 @@ an item of the list will be used as value for check</li>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -1281,23 +1440,23 @@ an item of the list will be used as value for check</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -1310,6 +1469,7 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -1320,14 +1480,30 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Value whose class should be determined.</p></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -1338,16 +1514,18 @@ an item of the list will be used as value for check</li>
 
 	
 
-	
 
-	
 
 	
-
-	
-
-
-
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-110">line 110</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
@@ -1357,15 +1535,17 @@ an item of the list will be used as value for check</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -1377,41 +1557,45 @@ an item of the list will be used as value for check</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">String</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="getFields"><span class="type-signature">&lt;static> </span>getFields<span class="signature">(obj, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    <h4 class="name" id=".getFields"><span class="type-signature">&lt;static> </span>getFields(obj, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Return list of all or filtered fields of specified object.</p>
+<p>Fields are searched (checked) in the object itself and in its prototype chain.</p>
     </div>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -1419,25 +1603,25 @@ an item of the list will be used as value for check</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -1448,6 +1632,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -1468,7 +1653,7 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Object to be processed.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -1479,6 +1664,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -1501,20 +1687,36 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
     The following settings are supported:</p>
 <ul>
-<li><code>filter</code> - a filter specifying fields that should be selected (see <a href="module-adam.html#checkField">checkField</a>)</li>
+<li><code>filter</code> - a filter specifying fields that should be selected (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 <li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
- in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+ in <code>filter</code> setting (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -1525,25 +1727,27 @@ an item of the list will be used as value for check</li>
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-411">line 411</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#checkField">checkField</a></li>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
 			</ul>
 	</dd>
 	
@@ -1551,15 +1755,17 @@ an item of the list will be used as value for check</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -1571,32 +1777,34 @@ an item of the list will be used as value for check</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Array</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="getFreeField"><span class="type-signature">&lt;static> </span>getFreeField<span class="signature">(obj, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {String}</span></h4>
+    <h4 class="name" id=".getFreeField"><span class="type-signature">&lt;static> </span>getFreeField(obj, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Return name of first free (absent) field of specified object, that conforms to the following pattern:
@@ -1605,8 +1813,9 @@ an item of the list will be used as value for check</li>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -1614,25 +1823,25 @@ an item of the list will be used as value for check</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -1643,6 +1852,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -1664,7 +1874,7 @@ an item of the list will be used as value for check</li>
      If <code>null</code> (or any false value) is set, the first value that conforms to the pattern will be returned.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -1675,6 +1885,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -1703,14 +1914,30 @@ an item of the list will be used as value for check</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -1721,16 +1948,18 @@ an item of the list will be used as value for check</li>
 
 	
 
-	
 
-	
 
 	
-
-	
-
-
-
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-531">line 531</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
@@ -1740,15 +1969,17 @@ an item of the list will be used as value for check</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -1760,41 +1991,45 @@ an item of the list will be used as value for check</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">String</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="getPropertySymbols"><span class="type-signature">&lt;static> </span>getPropertySymbols<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    <h4 class="name" id=".getPropertySymbols"><span class="type-signature">&lt;static> </span>getPropertySymbols(obj)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Return list of all symbol property keys for given object including keys from prototype chain.</p>
+<p>This function is defined only when <code>Object.getOwnPropertySymbols</code> is available.</p>
     </div>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -1802,23 +2037,23 @@ an item of the list will be used as value for check</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -1829,6 +2064,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -1841,14 +2077,30 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Object to be processed.</p></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -1859,16 +2111,18 @@ an item of the list will be used as value for check</li>
 
 	
 
-	
 
-	
 
 	
-
-	
-
-
-
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-77">line 77</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
@@ -1878,15 +2132,17 @@ an item of the list will be used as value for check</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -1898,32 +2154,34 @@ an item of the list will be used as value for check</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Array</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="getSize"><span class="type-signature">&lt;static> </span>getSize<span class="signature">(obj, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Integer}</span></h4>
+    <h4 class="name" id=".getSize"><span class="type-signature">&lt;static> </span>getSize(obj, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Return number of all or filtered fields of specified object.</p>
@@ -1931,8 +2189,9 @@ an item of the list will be used as value for check</li>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -1940,25 +2199,25 @@ an item of the list will be used as value for check</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -1969,6 +2228,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -1989,7 +2249,7 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Object to be processed.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -2000,6 +2260,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -2022,20 +2283,36 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
     The following settings are supported:</p>
 <ul>
-<li><code>filter</code> - a filter specifying fields that should be counted (see <a href="module-adam.html#checkField">checkField</a>)</li>
+<li><code>filter</code> - a filter specifying fields that should be counted (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 <li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
- in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+ in <code>filter</code> setting (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -2046,25 +2323,27 @@ an item of the list will be used as value for check</li>
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-149">line 149</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#checkField">checkField</a></li>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
 			</ul>
 	</dd>
 	
@@ -2072,15 +2351,17 @@ an item of the list will be used as value for check</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -2092,32 +2373,34 @@ an item of the list will be used as value for check</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Integer</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="getType"><span class="type-signature">&lt;static> </span>getType<span class="signature">(value)</span><span class="type-signature"> &rarr; {String}</span></h4>
+    <h4 class="name" id=".getType"><span class="type-signature">&lt;static> </span>getType(value)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Return type of given value.</p>
@@ -2125,8 +2408,9 @@ an item of the list will be used as value for check</li>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -2134,23 +2418,23 @@ an item of the list will be used as value for check</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -2163,6 +2447,7 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -2173,14 +2458,30 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Value whose type should be determined.</p></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -2191,16 +2492,18 @@ an item of the list will be used as value for check</li>
 
 	
 
-	
 
-	
 
 	
-
-	
-
-
-
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-124">line 124</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
@@ -2210,15 +2513,17 @@ an item of the list will be used as value for check</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -2230,32 +2535,34 @@ an item of the list will be used as value for check</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">String</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="getValueKey"><span class="type-signature">&lt;static> </span>getValueKey<span class="signature">(obj, value, <span class="optional">bAll</span>)</span><span class="type-signature"> &rarr; {Array|String|null}</span></h4>
+    <h4 class="name" id=".getValueKey"><span class="type-signature">&lt;static> </span>getValueKey(obj, value, <span class="optional">bAll</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Return the name of field (or list of names) having the specified value in the given object.</p>
@@ -2263,8 +2570,9 @@ an item of the list will be used as value for check</li>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -2272,25 +2580,25 @@ an item of the list will be used as value for check</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -2301,6 +2609,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -2321,7 +2630,7 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Object to be checked.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -2332,6 +2641,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Any</span>
+
 
 
             
@@ -2352,7 +2662,7 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Value that should be searched for.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -2363,6 +2673,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Boolean</span>
+
 
 
             
@@ -2386,14 +2697,30 @@ an item of the list will be used as value for check</li>
      Default value is <code>false</code>.</p></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -2404,16 +2731,18 @@ an item of the list will be used as value for check</li>
 
 	
 
-	
 
-	
 
 	
-
-	
-
-
-
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-464">line 464</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
@@ -2423,15 +2752,17 @@ an item of the list will be used as value for check</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -2444,11 +2775,11 @@ an item of the list will be used as value for check</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Array</span>
 |
 
@@ -2458,24 +2789,26 @@ an item of the list will be used as value for check</li>
 <span class="param-type">null</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="getValues"><span class="type-signature">&lt;static> </span>getValues<span class="signature">(obj, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    <h4 class="name" id=".getValues"><span class="type-signature">&lt;static> </span>getValues(obj, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Return list of all or filtered field values of specified object.</p>
@@ -2483,8 +2816,9 @@ an item of the list will be used as value for check</li>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -2492,25 +2826,25 @@ an item of the list will be used as value for check</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -2521,6 +2855,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -2541,7 +2876,7 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Object to be processed.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -2552,6 +2887,7 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -2574,20 +2910,36 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
     The following settings are supported:</p>
 <ul>
-<li><code>filter</code> - a filter specifying fields that should be selected (see <a href="module-adam.html#checkField">checkField</a>)</li>
+<li><code>filter</code> - a filter specifying fields that should be selected (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 <li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
- in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+ in <code>filter</code> setting (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -2598,25 +2950,27 @@ an item of the list will be used as value for check</li>
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-500">line 500</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#checkField">checkField</a></li>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
 			</ul>
 	</dd>
 	
@@ -2624,15 +2978,17 @@ an item of the list will be used as value for check</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -2644,32 +3000,34 @@ an item of the list will be used as value for check</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Array</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="isEmpty"><span class="type-signature">&lt;static> </span>isEmpty<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id=".isEmpty"><span class="type-signature">&lt;static> </span>isEmpty(value)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Check whether given value is an empty value i.e. <code>null</code>, <code>undefined</code>, <code>0</code>, empty object, empty array or empty string.</p>
@@ -2677,8 +3035,9 @@ an item of the list will be used as value for check</li>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -2686,23 +3045,23 @@ an item of the list will be used as value for check</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -2715,6 +3074,7 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -2725,14 +3085,30 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Value to be checked.</p></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -2743,27 +3119,29 @@ an item of the list will be used as value for check</li>
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-211">line 211</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#getClass">getClass</a></li>
+			<li><a href="module-adam.html#.getClass">getClass</a></li>
 			
-			<li><a href="module-adam.html#isSizeMore">isSizeMore</a></li>
+			<li><a href="module-adam.html#.isSizeMore">isSizeMore</a></li>
 			</ul>
 	</dd>
 	
@@ -2771,15 +3149,17 @@ an item of the list will be used as value for check</li>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -2791,32 +3171,34 @@ an item of the list will be used as value for check</li>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Boolean</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="isKindOf"><span class="type-signature">&lt;static> </span>isKindOf<span class="signature">(value, sKind)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id=".isKindOf"><span class="type-signature">&lt;static> </span>isKindOf(value, sKind)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Check whether given value has (or does not have) specified kind (type or class).</p>
@@ -2824,8 +3206,9 @@ an item of the list will be used as value for check</li>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -2833,23 +3216,23 @@ an item of the list will be used as value for check</li>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -2862,6 +3245,7 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -2872,7 +3256,7 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Value to be checked.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -2885,6 +3269,7 @@ an item of the list will be used as value for check</li>
 <span class="param-type">String</span>
 
 
+
             
             </td>
 
@@ -2892,10 +3277,10 @@ an item of the list will be used as value for check</li>
 
             
 
-            <td class="description last"><p>Type or class for check. Can be any value that is returned by <a href="module-adam.html#getType">getType</a> 
-     and <a href="module-adam.html#getClass">getClass</a>, or one of the following:</p>
+            <td class="description last"><p>Type or class for check. Can be any value that is returned by <a href="module-adam.html#.getType">getType</a> 
+     and <a href="module-adam.html#.getClass">getClass</a>, or one of the following:</p>
 <ul>
-<li><code>empty</code> - check whether the value is empty (see <a href="module-adam.html#isEmpty">isEmpty</a>)</li>
+<li><code>empty</code> - check whether the value is empty (see <a href="module-adam.html#.isEmpty">isEmpty</a>)</li>
 <li><code>even</code> - check whether the value is an even integer</li>
 <li><code>false</code> - check whether the value is a false value</li>
 <li><code>infinity</code> - check whether the value is a number representing positive or negative infinity</li>
@@ -2913,14 +3298,30 @@ For example, <code>!real</code> means: check whether the value is not a real num
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -2931,29 +3332,31 @@ For example, <code>!real</code> means: check whether the value is not a real num
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-251">line 251</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#getClass">getClass</a></li>
+			<li><a href="module-adam.html#.getClass">getClass</a></li>
 			
-			<li><a href="module-adam.html#getType">getType</a></li>
+			<li><a href="module-adam.html#.getType">getType</a></li>
 			
-			<li><a href="module-adam.html#isEmpty">isEmpty</a></li>
+			<li><a href="module-adam.html#.isEmpty">isEmpty</a></li>
 			</ul>
 	</dd>
 	
@@ -2961,15 +3364,17 @@ For example, <code>!real</code> means: check whether the value is not a real num
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -2981,32 +3386,34 @@ For example, <code>!real</code> means: check whether the value is not a real num
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Boolean</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="isSizeMore"><span class="type-signature">&lt;static> </span>isSizeMore<span class="signature">(obj, nValue, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id=".isSizeMore"><span class="type-signature">&lt;static> </span>isSizeMore(obj, nValue, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Check whether number of all or filtered fields of specified object is more than the given value.</p>
@@ -3014,8 +3421,9 @@ For example, <code>!real</code> means: check whether the value is not a real num
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -3023,25 +3431,25 @@ For example, <code>!real</code> means: check whether the value is not a real num
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -3052,6 +3460,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -3072,7 +3481,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
             <td class="description last"><p>Object to be checked.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -3083,6 +3492,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
             
                 
 <span class="param-type">Number</span>
+
 
 
             
@@ -3103,7 +3513,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
             <td class="description last"><p>Value that should be used for comparison with number of fields.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -3114,6 +3524,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -3136,20 +3547,36 @@ For example, <code>!real</code> means: check whether the value is not a real num
             <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
     The following settings are supported:</p>
 <ul>
-<li><code>filter</code> - a filter specifying fields that should be counted (see <a href="module-adam.html#checkField">checkField</a>)</li>
+<li><code>filter</code> - a filter specifying fields that should be counted (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 <li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
- in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+ in <code>filter</code> setting (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -3160,25 +3587,27 @@ For example, <code>!real</code> means: check whether the value is not a real num
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-182">line 182</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#checkField">checkField</a></li>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
 			</ul>
 	</dd>
 	
@@ -3186,15 +3615,17 @@ For example, <code>!real</code> means: check whether the value is not a real num
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -3206,32 +3637,34 @@ For example, <code>!real</code> means: check whether the value is not a real num
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Boolean</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="map"><span class="type-signature">&lt;static> </span>map<span class="signature">(obj, action, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id=".map"><span class="type-signature">&lt;static> </span>map(obj, action, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Create new object containing all or filtered fields of the source object/array,
@@ -3240,8 +3673,9 @@ applying specified action/transformation for field values.</p>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -3249,25 +3683,25 @@ applying specified action/transformation for field values.</p>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -3281,6 +3715,7 @@ applying specified action/transformation for field values.</p>
 |
 
 <span class="param-type">Object</span>
+
 
 
             
@@ -3301,7 +3736,7 @@ applying specified action/transformation for field values.</p>
             <td class="description last"><p>Array/object whose fields should be copied.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -3315,6 +3750,7 @@ applying specified action/transformation for field values.</p>
 |
 
 <span class="param-type">String</span>
+
 
 
             
@@ -3333,10 +3769,10 @@ applying specified action/transformation for field values.</p>
             
 
             <td class="description last"><p>An action/operation that should be applied to get field value that will be saved in created object.
-     See description of <code>transform</code> setting of <a href="module-adam.html#copy">copy</a>.</p></td>
+     See description of <code>transform</code> setting of <a href="module-adam.html#.copy">copy</a>.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -3347,6 +3783,7 @@ applying specified action/transformation for field values.</p>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -3369,21 +3806,37 @@ applying specified action/transformation for field values.</p>
             <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
     The following settings are supported:</p>
 <ul>
-<li><code>filter</code> - a filter that should be used to select fields for copying (see <a href="module-adam.html#checkField">checkField</a>);
+<li><code>filter</code> - a filter that should be used to select fields for copying (see <a href="module-adam.html#.checkField">checkField</a>);
  fields conforming to the filter will be copied in created object</li>
 <li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
- in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+ in <code>filter</code> setting (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -3394,27 +3847,29 @@ applying specified action/transformation for field values.</p>
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-971">line 971</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#checkField">checkField</a></li>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
 			
-			<li><a href="module-adam.html#copy">copy</a></li>
+			<li><a href="module-adam.html#.copy">copy</a></li>
 			</ul>
 	</dd>
 	
@@ -3422,15 +3877,17 @@ applying specified action/transformation for field values.</p>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -3442,32 +3899,34 @@ applying specified action/transformation for field values.</p>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Object</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="remove"><span class="type-signature">&lt;static> </span>remove<span class="signature">(obj, filter, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Array|Object}</span></h4>
+    <h4 class="name" id=".remove"><span class="type-signature">&lt;static> </span>remove(obj, filter, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Remove filtered fields/elements from specified object/array.</p>
@@ -3475,8 +3934,9 @@ applying specified action/transformation for field values.</p>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -3484,25 +3944,25 @@ applying specified action/transformation for field values.</p>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -3516,6 +3976,7 @@ applying specified action/transformation for field values.</p>
 |
 
 <span class="param-type">Object</span>
+
 
 
             
@@ -3536,7 +3997,7 @@ applying specified action/transformation for field values.</p>
             <td class="description last"><p>Array or object to be processed.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -3547,6 +4008,7 @@ applying specified action/transformation for field values.</p>
             
                 
 <span class="param-type">Any</span>
+
 
 
             
@@ -3565,10 +4027,10 @@ applying specified action/transformation for field values.</p>
             
 
             <td class="description last"><p>A filter or array of filters specifying fields or elements that should be removed
-     (see <a href="module-adam.html#checkField">checkField</a>).</p></td>
+     (see <a href="module-adam.html#.checkField">checkField</a>).</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -3579,6 +4041,7 @@ applying specified action/transformation for field values.</p>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -3602,18 +4065,34 @@ applying specified action/transformation for field values.</p>
     The following settings are supported:</p>
 <ul>
 <li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
- in <code>filter</code> parameter (see <a href="module-adam.html#checkField">checkField</a>)</li>
+ in <code>filter</code> parameter (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -3624,25 +4103,27 @@ applying specified action/transformation for field values.</p>
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-695">line 695</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#checkField">checkField</a></li>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
 			</ul>
 	</dd>
 	
@@ -3650,15 +4131,17 @@ applying specified action/transformation for field values.</p>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -3670,35 +4153,37 @@ applying specified action/transformation for field values.</p>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Array</span>
 |
 
 <span class="param-type">Object</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="reverse"><span class="type-signature">&lt;static> </span>reverse<span class="signature">(value)</span><span class="type-signature"> &rarr; {Any}</span></h4>
+    <h4 class="name" id=".reverse"><span class="type-signature">&lt;static> </span>reverse(value)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Reverse or negate the given value according to the following rules:</p>
@@ -3714,8 +4199,9 @@ applying specified action/transformation for field values.</p>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -3723,23 +4209,23 @@ applying specified action/transformation for field values.</p>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -3752,6 +4238,7 @@ applying specified action/transformation for field values.</p>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -3762,14 +4249,30 @@ applying specified action/transformation for field values.</p>
             <td class="description last"><p>Value to be processed.</p></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -3780,16 +4283,18 @@ applying specified action/transformation for field values.</p>
 
 	
 
-	
 
-	
 
 	
-
-	
-
-
-
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-773">line 773</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
@@ -3799,15 +4304,17 @@ applying specified action/transformation for field values.</p>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -3819,32 +4326,34 @@ applying specified action/transformation for field values.</p>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Any</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="split"><span class="type-signature">&lt;static> </span>split<span class="signature">(obj, firstObjFields, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    <h4 class="name" id=".split"><span class="type-signature">&lt;static> </span>split(obj, firstObjFields, <span class="optional">settings</span>)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.</p>
@@ -3852,8 +4361,9 @@ applying specified action/transformation for field values.</p>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -3861,25 +4371,25 @@ applying specified action/transformation for field values.</p>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
-		<th>Argument</th>
-		
+        
+        <th>Argument</th>
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -3890,6 +4400,7 @@ applying specified action/transformation for field values.</p>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -3910,7 +4421,7 @@ applying specified action/transformation for field values.</p>
             <td class="description last"><p>Object to be divided.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -3927,6 +4438,7 @@ applying specified action/transformation for field values.</p>
 |
 
 <span class="param-type">null</span>
+
 
 
             
@@ -3949,7 +4461,7 @@ applying specified action/transformation for field values.</p>
      If value is not specified (<code>null</code> or <code>undefined</code>), <code>filter</code> setting should be used to divide fields into parts.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -3960,6 +4472,7 @@ applying specified action/transformation for field values.</p>
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -3982,22 +4495,38 @@ applying specified action/transformation for field values.</p>
             <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
     The following settings are supported:</p>
 <ul>
-<li><code>filter</code> - a filter that should be used to divide fields into parts (see <a href="module-adam.html#checkField">checkField</a>);
+<li><code>filter</code> - a filter that should be used to divide fields into parts (see <a href="module-adam.html#.checkField">checkField</a>);
  fields conforming to the filter will be included in the first part,
  fields that do not conform to the filter will be included in the second part</li>
 <li><code>filterConnect</code>: <code>String</code> - a boolean connector that should be used when array of filters is specified
- in <code>filter</code> setting (see <a href="module-adam.html#checkField">checkField</a>)</li>
+ in <code>filter</code> setting (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -4008,25 +4537,27 @@ applying specified action/transformation for field values.</p>
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-649">line 649</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#checkField">checkField</a></li>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
 			</ul>
 	</dd>
 	
@@ -4034,15 +4565,17 @@ applying specified action/transformation for field values.</p>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -4054,32 +4587,34 @@ applying specified action/transformation for field values.</p>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Array</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
         
             
+<hr>
 <dt>
-    <h4 class="name" id="transform"><span class="type-signature">&lt;static> </span>transform<span class="signature">(value, sAction)</span><span class="type-signature"> &rarr; {Any}</span></h4>
+    <h4 class="name" id=".transform"><span class="type-signature">&lt;static> </span>transform(value, sAction)</h4>
     
     
 </dt>
 <dd>
-    
+
     
     <div class="description">
         <p>Transform the given value applying the specified operation.</p>
@@ -4087,8 +4622,9 @@ applying specified action/transformation for field values.</p>
     
 
     
+
     
-    
+
     
     
         <h5>Parameters:</h5>
@@ -4096,23 +4632,23 @@ applying specified action/transformation for field values.</p>
 
 <table class="params table table-striped">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+    <tr>
+        
+        <th>Name</th>
+        
 
-		<th>Type</th>
+        <th>Type</th>
 
-		
+        
 
-		
+        
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-	<tbody>
-	
+    <tbody>
+    
 
         <tr>
             
@@ -4125,6 +4661,7 @@ applying specified action/transformation for field values.</p>
 <span class="param-type">Any</span>
 
 
+
             
             </td>
 
@@ -4135,7 +4672,7 @@ applying specified action/transformation for field values.</p>
             <td class="description last"><p>Value to be transformed.</p></td>
         </tr>
 
-	
+    
 
         <tr>
             
@@ -4146,6 +4683,7 @@ applying specified action/transformation for field values.</p>
             
                 
 <span class="param-type">String</span>
+
 
 
             
@@ -4159,25 +4697,41 @@ applying specified action/transformation for field values.</p>
 <ul>
 <li><code>array</code> - convert the value to array (using <code>Array(value)</code>)</li>
 <li><code>boolean</code> - convert the value to boolean value (using <code>Boolean(value)</code>)</li>
-<li><code>empty</code> - empty the value (see <a href="module-adam.html#empty">empty</a>)</li>
+<li><code>empty</code> - empty the value (see <a href="module-adam.html#.empty">empty</a>)</li>
 <li><code>function</code> - convert the value to function (using <code>Function(value)</code>)</li>
 <li><code>integer</code> - try to convert the value to an integer number (using <code>Math.round(Number(value)</code>)</li>
 <li><code>number</code> - try to convert the value to number (using <code>Number(value)</code>)</li>
 <li><code>object</code> - convert the value to object (using <code>Object(value)</code>)</li>
-<li><code>reverse</code> - reverse the value (see <a href="module-adam.html#reverse">reverse</a>)</li>
+<li><code>reverse</code> - reverse the value (see <a href="module-adam.html#.reverse">reverse</a>)</li>
 <li><code>string</code> - convert the value to string (using <code>String(value)</code>)</li>
 <li>otherwise - source value</li>
 </ul></td>
         </tr>
 
-	
-	</tbody>
+    
+    </tbody>
 </table>
 
     
-    
+
     
 <dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
 	
 
 	
@@ -4188,27 +4742,29 @@ applying specified action/transformation for field values.</p>
 
 	
 
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="E__projects_github_adam_src_adam.js.html">E:/projects/github/adam/src/adam.js</a>,
+				 <a href="E__projects_github_adam_src_adam.js.html#sunlight-1-line-825">line 825</a>
+			</li>
+		</ul>
+	</dd>
 	
 
 	
 
 	
-
-	
-
-
-
-	
-
-	
-
-	
-	<dt class="tag-see">See:</dt>
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
 	<dd class="tag-see">
 		<ul>
-			<li><a href="module-adam.html#empty">empty</a></li>
+			<li><a href="module-adam.html#.empty">empty</a></li>
 			
-			<li><a href="module-adam.html#reverse">reverse</a></li>
+			<li><a href="module-adam.html#.reverse">reverse</a></li>
 			</ul>
 	</dd>
 	
@@ -4216,15 +4772,17 @@ applying specified action/transformation for field values.</p>
 	
 </dl>
 
+
     
+
     
 
     
 
     
+
     
-    
-    
+
     
     <h5>Returns:</h5>
     
@@ -4236,20 +4794,21 @@ applying specified action/transformation for field values.</p>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Any</span>
 
 
-	</dd>
+
+    </dd>
 </dl>
 
 
         
-    
+
     
 </dd>
 
@@ -4266,101 +4825,131 @@ applying specified action/transformation for field values.</p>
 
 
 
-				</div>
-
-				<div class="clearfix"></div>
-				<footer>
-					
-					
-		<span class="copyright">
-		Copyright (c) 2014-2015 Denis Sikuler
-		</span>
-					<br />
-					
-		<span class="jsdoc-message">
-		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on 2015-11-09T20:52:29+04:00 using the <a
-			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
-		</span>
-				</footer>
-			</div>
-
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
-			
-			<br clear="both">
 		</div>
-
 	</div>
-	<!--<script src="scripts/sunlight.js"></script>-->
-	<script src="scripts/docstrap.lib.js"></script>
-	<script src="scripts/bootstrap-dropdown.js"></script>
-	<script src="scripts/toc.js"></script>
 
-	<script>
-		$( function () {
-			$( "[id*='$']" ).each( function () {
-				var $this = $( this );
+	<div class="clearfix"></div>
 
-				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
-			} );
-
-			$( "#toc" ).toc( {
-				anchorName  : function ( i, heading, prefix ) {
-					return $( heading ).attr( "id" ) || ( prefix + i );
-				},
-				selectors   : "h1,h2,h3,h4",
-				showAndHide : false,
-				scrollTo    : "100px"
-			} );
-
-			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
-			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
-			$( '.dropdown-toggle' ).dropdown();
-//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
-
-			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
-				var $this = $( this );
-
-				var example = $this.find( "code" );
-				exampleText = example.html();
-				var lang = /{@lang (.*?)}/.exec( exampleText );
-				if ( lang && lang[1] ) {
-					exampleText = exampleText.replace( lang[0], "" );
-					example.html( exampleText );
-					lang = lang[1];
-				} else {
-					lang = "javascript";
-				}
-
-				if ( lang ) {
-
-					$this
-						.addClass( "sunlight-highlight-" + lang )
-						.addClass( "linenums" )
-						.html( example.html() );
-
-				}
-			} );
-
-			Sunlight.highlightAll( {
-				lineNumbers : true,
-				showMenu : true,
-				enableDoclinks : true
-			} );
-		} );
-	 </script>
-
-
-
-	<!--Navigation and Symbol Display-->
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
 	
 
+</div>
+</div>
 
-	<!--Google Analytics-->
+<div class="modal fade" id="searchResults">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search results</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright (c) 2014-2016 Denis Sikuler
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
+		on 2016-01-26T22:18:41+03:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		SearcherDisplay.init();
+	});
+</script>
 
 </body>
 </html>
