@@ -1,3 +1,8 @@
+### 0.3.0 / 2016-01-26
+
+* add `getPropertySymbols` method
+* change implementation of `getFields` method
+
 ### 0.2.0 / 2014-10-22
 
 * add methods `remove`, `empty`, `reverse`, `transform`, `copy`, `change`, `map`
