@@ -267,8 +267,8 @@ function isKindOf(value, sKind) {
  * 
  * @param {Object} obj
  *      Object to be processed.
- * @param {String} field
- *      Name of the field that should be checked.
+ * @param {String | Symbol} field
+ *      Field that should be checked.
  * @param {Any} filter
  *      A filter or array of filters specifying conditions that should be checked. A filter can be:
  *      

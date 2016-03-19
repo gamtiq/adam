@@ -1,7 +1,7 @@
 {
   "name": "adam",
   "description": "Functions to create, process and test objects",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "homepage": "https://github.com/gamtiq/adam",
   "author": {
     "name": "Denis Sikuler"

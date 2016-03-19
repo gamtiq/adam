@@ -1,3 +1,8 @@
+### 0.4.0 / 2016-03-20
+
+* add `limit` setting for `getFields` method
+* change implementation of `getSize` and `isSizeMore` methods to consider symbol property keys
+
 ### 0.3.0 / 2016-01-26
 
 * add `getPropertySymbols` method

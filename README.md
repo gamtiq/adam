@@ -160,7 +160,7 @@ See `test/adam.js` for additional examples.
 
 Change all or filtered fields of object, applying specified action/transformation.
 
-### checkField(obj: Object, field: String, filter: Any, [settings: Object]): Boolean
+### checkField(obj: Object, field: String | Symbol, filter: Any, [settings: Object]): Boolean
 
 Check whether the field of given object corresponds to specified condition(s) or filter(s).
 
