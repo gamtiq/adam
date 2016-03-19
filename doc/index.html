@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
 	<title>adam Index</title>
 
 	<!--[if lt IE 9]>
@@ -83,12 +84,18 @@
 
 
     <section class="readme-section">
-        <article><h1>adam</h1><p>Functions to create, process and test objects.</p>
+        <article><h1>adam <a name="start"></a></h1><p>Functions to create, process and test objects.</p>
 <p><a href="http://badge.fury.io/js/adam"><img src="https://badge.fury.io/js/adam.png" alt="NPM version"></a>
 <a href="http://travis-ci.org/gamtiq/adam"><img src="https://secure.travis-ci.org/gamtiq/adam.png?branch=master" alt="Build Status"></a>
 <a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a></p>
+<ul>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#api">API</a></li>
+<li><a href="#related">Related projects</a></li>
+</ul>
 <h2>Installation</h2><h3>Node</h3><pre class="prettyprint source"><code>npm install adam</code></pre><h3><a href="https://github.com/component/component">Component</a></h3><pre class="prettyprint source"><code>component install gamtiq/adam</code></pre><h3><a href="http://jamjs.org">Jam</a></h3><pre class="prettyprint source"><code>jam install adam</code></pre><h3><a href="http://bower.io">Bower</a></h3><pre class="prettyprint source"><code>bower install adam</code></pre><h3><a href="http://spmjs.io">SPM</a></h3><pre class="prettyprint source"><code>spm install adam</code></pre><h3>AMD, &lt;script&gt;</h3><p>Use <code>dist/adam.js</code> or <code>dist/adam.min.js</code> (minified version).</p>
-<h2>Usage</h2><h3>Node, Component, SPM</h3><pre class="prettyprint source lang-js"><code>var adam = require(&quot;adam&quot;);</code></pre><h3>Jam</h3><pre class="prettyprint source lang-js"><code>require([&quot;adam&quot;], function(adam) {
+<h2>Usage <a name="usage"></a> <a href="#start">&#x2191;</a></h2><h3>Node, Component, SPM</h3><pre class="prettyprint source lang-js"><code>var adam = require(&quot;adam&quot;);</code></pre><h3>Jam</h3><pre class="prettyprint source lang-js"><code>require([&quot;adam&quot;], function(adam) {
     ...
 });</code></pre><h3>AMD</h3><pre class="prettyprint source lang-js"><code>define([&quot;path/to/dist/adam.js&quot;], function(adam) {
     ...
@@ -100,15 +107,16 @@
     // adam is available via adam field of window object
 
     ...
-&lt;/script></code></pre><h3>Examples</h3><pre class="prettyprint source lang-js"><code>function inc(data) {
+&lt;/script></code></pre><h3>Examples <a name="examples"></a> <a href="#start">&#x2191;</a></h3><pre class="prettyprint source lang-js"><code>function inc(data) {
     return ++data.value;
 }
 
-var s1 = Symbol(&quot;s1&quot;),
+var obj = {a: 1, b: 2, c: 3, d: 4, e: 5},
+    s1 = Symbol(&quot;s1&quot;),
     s2 = Symbol(&quot;s2&quot;),
     proto = {a: 1},
-    obj2 = Object.create(proto),
-    obj;
+    obj2 = Object.create(proto);
+
 proto[s1] = &quot;s1&quot;;
 obj2.b = 2;
 obj2[s2] = null;
@@ -116,10 +124,6 @@ obj2.c = &quot;str&quot;;
 obj2.d = 0;
 
 adam.getPropertySymbols(obj2);   // [s2, s1]
-adam.getFields(obj2);   // [&quot;b&quot;, &quot;c&quot;, &quot;d&quot;, s2, &quot;a&quot;, s1]
-adam.getFields(obj2, {filter: [&quot;string&quot;, &quot;false&quot;], filterConnect: &quot;or&quot;});   // [&quot;c&quot;, &quot;d&quot;, s2, s1]
-
-obj = {a: 1, b: 2, c: 3, d: 4, e: 5};
 
 adam.getClass([8]);   // &quot;Array&quot;
 adam.getType(null);   // &quot;null&quot;
@@ -133,12 +137,17 @@ adam.getFreeField({a5: 5, a2: 2, a7: 7, a3: 3}, {prefix: &quot;a&quot;, startNum
 
 adam.getSize(obj);   // 5
 adam.getSize(obj, {filter: &quot;even&quot;});   // 2
+adam.getSize(obj2, {filter: [&quot;string&quot;, &quot;null&quot;], filterConnect: &quot;or&quot;});   // 3
 adam.isSizeMore(obj, 5);   // false
+adam.isSizeMore(obj2, 1, {filter: &quot;string&quot;});   // true
 adam.isEmpty({});   // true
 
 adam.getFields(obj);   // [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]
 adam.getFields(obj, {filter: function(value) {return value &lt; 4;}});   // [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
 adam.getFields(obj, {filter: {field: /^[d-h]/}});   // [&quot;d&quot;, &quot;e&quot;]
+adam.getFields(obj2);   // [&quot;b&quot;, &quot;c&quot;, &quot;d&quot;, s2, &quot;a&quot;, s1]
+adam.getFields(obj2, {filter: [&quot;string&quot;, &quot;false&quot;], filterConnect: &quot;or&quot;});   // [&quot;c&quot;, &quot;d&quot;, s2, s1]
+adam.getFields(obj2, {filter: &quot;number&quot;, limit: 2});   // [&quot;b&quot;, &quot;d&quot;]
 
 adam.getValues(obj);   // [1, 2, 3, 4, 5]
 adam.getValues(obj, {filter: {field: /a|c/}});   // [1, 3]
@@ -170,7 +179,7 @@ adam.change([1, 2, 3, 4, 5], &quot;reverse&quot;, {filter: &quot;even&quot;});  
 
 adam.map(obj, &quot;reverse&quot;, {filter: &quot;odd&quot;});   // {a: -1, c: -3, e: -5}
 adam.map([&quot;1&quot;, &quot;2&quot;, &quot;3&quot;], &quot;number&quot;);   // [1, 2, 3]</code></pre><p>See <code>test/adam.js</code> for additional examples.</p>
-<h2>API</h2><h3>change(obj: Object, action: Function | String, [settings: Object]): Object</h3><p>Change all or filtered fields of object, applying specified action/transformation.</p>
+<h2>API <a name="api"></a> <a href="#start">&#x2191;</a></h2><h3>change(obj: Object, action: Function | String, [settings: Object]): Object</h3><p>Change all or filtered fields of object, applying specified action/transformation.</p>
 <h3>checkField(obj: Object, field: String, filter: Any, [settings: Object]): Boolean</h3><p>Check whether the field of given object corresponds to specified condition(s) or filter(s).</p>
 <h3>copy(source: Object, target: Object, [settings: Object]): Object</h3><p>Copy all or filtered fields from source object into target object, applying specified transformation if necessary.</p>
 <h3>empty(value: Any): Any</h3><p>Empty the given value.</p>
@@ -195,7 +204,7 @@ applying specified action/transformation for field values.</p>
 <h3>split(obj: Object, firstObjFields: Array | Object | null, [settings: Object]): Array</h3><p>Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.</p>
 <h3>transform(value: Any, action: String): Any</h3><p>Transform the given value applying the specified operation.</p>
 <p>See <code>doc</code> folder for details.</p>
-<h2>Related projects</h2><ul>
+<h2>Related projects <a name="related"></a> <a href="#start">&#x2191;</a></h2><ul>
 <li><a href="https://github.com/gamtiq/eva">eva</a></li>
 <li><a href="https://github.com/gamtiq/mixing">mixing</a></li>
 <li><a href="https://github.com/gamtiq/teo">teo</a></li>
@@ -251,7 +260,7 @@ Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on 2016-01-26T22:18:41+03:00
+		on 2016-03-19T20:12:54+03:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

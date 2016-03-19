@@ -1,10 +1,15 @@
-# adam
+# adam <a name="start"></a>
 
 Functions to create, process and test objects.
 
 [![NPM version](https://badge.fury.io/js/adam.png)](http://badge.fury.io/js/adam)
 [![Build Status](https://secure.travis-ci.org/gamtiq/adam.png?branch=master)](http://travis-ci.org/gamtiq/adam)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+
+* [Usage](#usage)
+* [Examples](#examples)
+* [API](#api)
+* [Related projects](#related)
 
 ## Installation
 
@@ -32,7 +37,7 @@ Functions to create, process and test objects.
 
 Use `dist/adam.js` or `dist/adam.min.js` (minified version).
 
-## Usage
+## Usage <a name="usage"></a> [&#x2191;](#start)
 
 ### Node, Component, SPM
 
@@ -70,18 +75,19 @@ define(["path/to/dist/adam.js"], function(adam) {
 </script>
 ```
 
-### Examples
+### Examples <a name="examples"></a> [&#x2191;](#start)
 
 ```js
 function inc(data) {
     return ++data.value;
 }
 
-var s1 = Symbol("s1"),
+var obj = {a: 1, b: 2, c: 3, d: 4, e: 5},
+    s1 = Symbol("s1"),
     s2 = Symbol("s2"),
     proto = {a: 1},
-    obj2 = Object.create(proto),
-    obj;
+    obj2 = Object.create(proto);
+
 proto[s1] = "s1";
 obj2.b = 2;
 obj2[s2] = null;
@@ -89,10 +95,6 @@ obj2.c = "str";
 obj2.d = 0;
 
 adam.getPropertySymbols(obj2);   // [s2, s1]
-adam.getFields(obj2);   // ["b", "c", "d", s2, "a", s1]
-adam.getFields(obj2, {filter: ["string", "false"], filterConnect: "or"});   // ["c", "d", s2, s1]
-
-obj = {a: 1, b: 2, c: 3, d: 4, e: 5};
 
 adam.getClass([8]);   // "Array"
 adam.getType(null);   // "null"
@@ -106,12 +108,17 @@ adam.getFreeField({a5: 5, a2: 2, a7: 7, a3: 3}, {prefix: "a", startNum: 2});   /
 
 adam.getSize(obj);   // 5
 adam.getSize(obj, {filter: "even"});   // 2
+adam.getSize(obj2, {filter: ["string", "null"], filterConnect: "or"});   // 3
 adam.isSizeMore(obj, 5);   // false
+adam.isSizeMore(obj2, 1, {filter: "string"});   // true
 adam.isEmpty({});   // true
 
 adam.getFields(obj);   // ["a", "b", "c", "d", "e"]
 adam.getFields(obj, {filter: function(value) {return value < 4;}});   // ["a", "b", "c"]
 adam.getFields(obj, {filter: {field: /^[d-h]/}});   // ["d", "e"]
+adam.getFields(obj2);   // ["b", "c", "d", s2, "a", s1]
+adam.getFields(obj2, {filter: ["string", "false"], filterConnect: "or"});   // ["c", "d", s2, s1]
+adam.getFields(obj2, {filter: "number", limit: 2});   // ["b", "d"]
 
 adam.getValues(obj);   // [1, 2, 3, 4, 5]
 adam.getValues(obj, {filter: {field: /a|c/}});   // [1, 3]
@@ -147,7 +154,7 @@ adam.map(["1", "2", "3"], "number");   // [1, 2, 3]
 
 See `test/adam.js` for additional examples.
 
-## API
+## API <a name="api"></a> [&#x2191;](#start)
 
 ### change(obj: Object, action: Function | String, [settings: Object]): Object
 
@@ -239,7 +246,7 @@ Transform the given value applying the specified operation.
 
 See `doc` folder for details.
 
-## Related projects
+## Related projects <a name="related"></a> [&#x2191;](#start)
 
 * [eva](https://github.com/gamtiq/eva)
 * [mixing](https://github.com/gamtiq/mixing)

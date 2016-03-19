@@ -159,20 +159,10 @@
      * @return {Integer}
      *      Number of all or filtered fields of specified object.
      * @alias module:adam.getSize
-     * @see {@link module:adam.checkField checkField}
+     * @see {@link module:adam.getFields getFields}
      */
     function getSize(obj, settings) {
-        /*jshint unused:false*/
-        var nSize = 0,
-            bAll = ! settings || ! ("filter" in settings),
-            filter = bAll ? null : settings.filter,
-            sKey;
-        for (sKey in obj) {
-            if (bAll || checkField(obj, sKey, filter, settings)) {
-                nSize++;
-            }
-        }
-        return nSize;
+        return getFields(obj, settings).length;
     }
 
     /**
@@ -192,24 +182,19 @@
      * @return {Boolean}
      *      `true`, when number of all or filtered fields is more than the given value, otherwise `false`.
      * @alias module:adam.isSizeMore
-     * @see {@link module:adam.checkField checkField}
+     * @see {@link module:adam.getFields getFields}
      */
     function isSizeMore(obj, nValue, settings) {
         /*jshint unused:false*/
-        var nSize = 0,
-            bAll = ! settings || ! ("filter" in settings),
-            filter = bAll ? null : settings.filter,
-            sKey;
-        if (nValue >= 0) {
-            for (sKey in obj) {
-                if (bAll || checkField(obj, sKey, filter, settings)) {
-                    if (++nSize > nValue) {
-                        return true;
-                    }
-                }
-            }
+        if (settings) {
+            settings = copy(settings, {});
         }
-        return nSize > nValue;
+        else {
+            settings = {};
+        }
+        nValue++;
+        settings.limit = nValue;
+        return getFields(obj, settings).length === nValue;
     }
 
     /**
@@ -418,6 +403,8 @@
      *   * `filter` - a filter specifying fields that should be selected (see {@link module:adam.checkField checkField})
      *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
      *      in `filter` setting (see {@link module:adam.checkField checkField})
+     *   * `limit` - a maximum number of fields that should be included into result;
+     *      after the specified number of fields is attained, the search will be stopped
      * @return {Array}
      *      List of all or filtered fields of specified object.
      * @alias module:adam.getFields
@@ -426,12 +413,19 @@
     function getFields(obj, settings) {
         /*jshint latedef:false, laxbreak:true*/
         
+        function isLimitReached() {
+            return nLimit > 0 && result.length >= nLimit;
+        }
+        
         function processKeyList(keyList) {
             var key, nI, nL;
             for (nI = 0, nL = keyList.length; nI < nL; nI++) {
                 key = keyList[nI];
                 if ((bAll || checkField(obj, key, filter, settings)) && ! (key in addedKeyMap)) {
                     result.push(key);
+                    if (isLimitReached()) {
+                        break;
+                    }
                     addedKeyMap[key] = null;
                 }
             }
@@ -445,13 +439,17 @@
             bOwn = bAll ? false : filter === "own",
             bNotOwn = bAll ? false : filter === "!own",
             bUseFilter = bAll ? false : ! bOwn && ! bNotOwn,
+            nLimit = (settings && settings.limit) || 0,
             result = [],
             target = obj;
         while (target) {
             if (bAll || bUseFilter || (bOwn && target === obj) || (bNotOwn && target !== obj)) {
                 processKeyList(getOwnPropertyNames(target));
-                if (bProcessSymbols) {
+                if (bProcessSymbols && ! isLimitReached()) {
                     processKeyList(getOwnPropertySymbols(target));
+                }
+                if (isLimitReached()) {
+                    break;
                 }
             }
             target = bAll || bNotOwn || bUseFilter

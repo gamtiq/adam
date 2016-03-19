@@ -12,6 +12,13 @@ describe("adam", function() {
         parent = {a: 1, b: 2, c: 3},
         child, 
         grandchild,
+        symA,
+        symB,
+        symC,
+        symD,
+        testObj,
+        testProto,
+        testSymbols,
         undef;
     
     Klass.someField = "some field";
@@ -40,6 +47,33 @@ describe("adam", function() {
         adam = window.adam;
         expect = chai.expect;
     }
+    
+    
+    testSymbols = adam.getPropertySymbols;
+    
+    if (testSymbols) {
+        symA = Symbol("symA");
+        symB = Symbol("B");
+        symC = Symbol("symbol c");
+        symD = Symbol("D");
+        
+        testProto = Object.create(grandchild);
+        testProto.pro = "super sym";
+        testProto[symA] = -1;
+        testProto[symC] = "semifinal";
+        testProto.symD = symD;
+        
+        testObj = Object.create(testProto);
+        testObj[symA] = true;
+        testObj[symB] = symA;
+        testObj.d = null;
+        testObj.b = undef;
+        testObj.f = "frozen";
+        testObj.h = "symbolic value";
+        testObj.iValue = 789;
+        testObj.xyz = parent;
+    }
+    
     
     function checkArray(func, paramList, expectedResult) {
         var result = func.apply(null, paramList),
@@ -235,10 +269,6 @@ describe("adam", function() {
                     .equal(0);
                 expect( getSize(new Boolean(true)) )
                     .equal(0);
-                expect( getSize(new Date()) )
-                    .equal(0);
-                expect( getSize(new Number(57)) )
-                    .equal(0);
                 /*jshint ignore:end*/
                 expect( getSize(grandchild) )
                     .equal(7);
@@ -260,6 +290,16 @@ describe("adam", function() {
                 expect( getSize(child) )
                     .equal(4);
             });
+            
+            if (testSymbols) {
+                it("should return quantity of all fields of object (including symbol property keys and keys from prototype chain)", function() {
+                    expect( getSize(testProto) )
+                        .equal(11);
+                    
+                    expect( getSize(testObj) )
+                        .equal(15);
+                });
+            }
         });
         
         describe("getSize(obj, settings)", function() {
@@ -271,6 +311,16 @@ describe("adam", function() {
                 expect( getSize(child, {filter: ["odd", "string"], filterConnect: "or"}) )
                     .equal(3);
             });
+            
+            if (testSymbols) {
+                it("should return quantity of fields corresponding to given filter (including symbol property keys)", function() {
+                    expect( getSize(testProto, {filter: "number"}) )
+                        .equal(4);
+                    
+                    expect( getSize(testObj, {filter: ["number", "symbol"], filterConnect: "or"}) )
+                        .equal(4);
+                });
+            }
         });
     });
 
@@ -318,6 +368,20 @@ describe("adam", function() {
                 expect( isSizeMore(grandchild, 7) )
                     .be["false"];
             });
+            
+            if (testSymbols) {
+                it("should check whether object has more fields than given value (including symbol property keys)", function() {
+                    /*jshint expr:true*/
+                    expect( isSizeMore(testProto, 10) )
+                        .be["true"];
+                    expect( isSizeMore(testProto, 20) )
+                        .be["false"];
+                    expect( isSizeMore(testObj, 12) )
+                        .be["true"];
+                    expect( isSizeMore(testObj, 15) )
+                        .be["false"];
+                });
+            }
         });
         
         describe("isSizeMore(obj, nQty, settings)", function() {
@@ -336,6 +400,20 @@ describe("adam", function() {
                 expect( isSizeMore(child, 3, {filter: ["even", "null"], filterConnect: "or"}) )
                     .be["false"];
             });
+            
+            if (testSymbols) {
+                it("should check whether object has more filtered fields than given value (including symbol property keys)", function() {
+                    /*jshint expr:true*/
+                    expect( isSizeMore(testProto, 1, {filter: "positive"}) )
+                        .be["true"];
+                    expect( isSizeMore(testProto, 9, {filter: ["string", "own"], filterConnect: "and"}) )
+                        .be["false"];
+                    expect( isSizeMore(testObj, 7, {filter: ["string", "symbol", "null"], filterConnect: "or"}) )
+                        .be["true"];
+                    expect( isSizeMore(testObj, 1, {filter: ["symbol", "own"], filterConnect: "and"}) )
+                        .be["false"];
+                });
+            }
         });
     });
 
@@ -374,6 +452,15 @@ describe("adam", function() {
             check(adam);
             check(check);
         });
+        
+        if (testSymbols) {
+            it("should return false if object has symbol property keys", function() {
+                var obj = {};
+                obj[symA] = 1; 
+                expect( isEmpty(obj) )
+                    .equal(false);
+            });
+        }
     });
 
     
@@ -755,7 +842,7 @@ describe("adam", function() {
                     .length(7);
             });
             
-            if (adam.getPropertySymbols) {
+            if (testSymbols) {
                 it("should return array of all fields of object (including symbol property keys and keys from prototype chain)", function() {
                     var proto = Object.create(child),
                         obj = Object.create(proto),
@@ -793,37 +880,43 @@ describe("adam", function() {
                             ["b", "d", "e"]);
             });
             
-            if (adam.getPropertySymbols) {
-                it("should return array of object's fields conforming to the given filter (including symbol property keys)", function() {
-                    var proto = Object.create(grandchild),
-                        obj = Object.create(proto),
-                        symA = Symbol("symA"),
-                        symB = Symbol("B"),
-                        symC = Symbol("symbol c"),
-                        symD = Symbol("D");
-                    proto.pro = "super sym";
-                    proto[symA] = -1;
-                    proto[symC] = "semifinal";
-                    proto.symD = symD;
-                    obj[symB] = symA;
-                    obj.d = null;
-                    obj.b = undef;
-                    obj.f = "frozen";
-                    obj.h = "symbolic value";
-                    obj.iValue = 789;
-                    obj.xyz = parent;
-                    
+            it("should return array of object's fields with length not exceeding given limit", function() {
+                checkArray(getFields,
+                            [child, {limit: 3}],
+                            ["c", "d", "e"]);
+                checkArray(getFields,
+                            [grandchild, {filter: "number", limit: 2}],
+                            ["d", "e"]);
+                checkArray(getFields,
+                            [grandchild, {filter: ["own", "string"], filterConnect: "or", limit: 10}],
+                            ["a", "c", "f", "g"]);
+            });
+            
+            if (testSymbols) {
+                it("should return array of object's fields conforming to the given settings (including symbol property keys)", function() {
                     checkArray(getFields,
-                                [obj, {filter: ["symbol", "own"], filterConnect: "and"}],
+                                [testObj, {filter: ["symbol", "own"], filterConnect: "and"}],
                                 [symB]);
                     
                     checkArray(getFields,
-                                [obj, {filter: ["symbol", /^sym/], filterConnect: "or"}],
+                                [testObj, {filter: ["symbol", /^sym/], filterConnect: "or"}],
                                 ["symD", symB, "h"]);
                     
                     checkArray(getFields,
-                                [obj, {filter: ["positive", "false", /sym/], filterConnect: "or"}],
+                                [testObj, {filter: ["positive", "false", /sym/], filterConnect: "or"}],
                                 ["b", "d", "e", "h", "pro", symB, "iValue"]);
+                    
+                    checkArray(getFields,
+                                [testObj, {filter: "symbol", limit: 1}],
+                                [symB]);
+                    
+                    checkArray(getFields,
+                                [testObj, {filter: ["symbol", "number"], filterConnect: "or", limit: 4}],
+                                [symB, "iValue", "symD", "e"]);
+                    
+                    checkArray(getFields,
+                                [testObj, {filter: ["symbol", "number"], filterConnect: "or", limit: 3}],
+                                [symB, "iValue", "symD"]);
                 });
             }
         });
