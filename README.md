@@ -29,17 +29,13 @@ Functions to create, process and test objects.
 
     bower install adam
 
-### [SPM](http://spmjs.io)
-
-    spm install adam
-
 ### AMD, &lt;script&gt;
 
 Use `dist/adam.js` or `dist/adam.min.js` (minified version).
 
 ## Usage <a name="usage"></a> [&#x2191;](#start)
 
-### Node, Component, SPM
+### Node, Component
 
 ```js
 var adam = require("adam");

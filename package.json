@@ -74,11 +74,5 @@
   "categories": [
     "Data",
     "Utilities"
-  ],
-  "spm": {
-    "main": "src/adam.js",
-    "engines": {
-      "seajs": "2.2.1"
-    }
-  }
+  ]
 }
