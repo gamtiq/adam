@@ -115,6 +115,7 @@ adam.getFields(obj, {filter: {field: /^[d-h]/}});   // ["d", "e"]
 adam.getFields(obj2);   // ["b", "c", "d", s2, "a", s1]
 adam.getFields(obj2, {filter: ["string", "false"], filterConnect: "or"});   // ["c", "d", s2, s1]
 adam.getFields(obj2, {filter: "number", limit: 2});   // ["b", "d"]
+adam.getFields(obj2, {filter: {field: "symbol"}})   // [s2, s1]
 
 adam.getValues(obj);   // [1, 2, 3, 4, 5]
 adam.getValues(obj, {filter: {field: /a|c/}});   // [1, 3]
@@ -134,7 +135,7 @@ adam.empty({x: -1, y: 9});   // {}
 adam.reverse({a: "x", b: "files"});   // {x: "a", files: "b"}
 adam.reverse("eval");   // "lave"
 
-adam.transform("7.381", "string");   // 7
+adam.transform("7.381", "integer");   // 7
 
 adam.copy(obj, {b: "no", z: "a"});   // {a: 1, b: 2, c: 3, d: 4, e: 5, z: "a"}
 adam.copy(obj, {b: "no", z: "a"}, {filter: "odd"});   // {a: 1, b: "no", c: 3, e: 5, z: "a"}

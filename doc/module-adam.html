@@ -343,7 +343,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-937">line 937</a>
+				 <a href="adam.js.html#sunlight-1-line-932">line 932</a>
 			</li>
 		</ul>
 	</dd>
@@ -564,9 +564,10 @@ it means that the field corresponds to this filter</li>
 <li>if the object has <code>and</code> or <code>or</code> field, its value is used as subfilter and will be passed in recursive call of <code>checkField</code>
 as value of <code>filter</code> parameter; the field name (<code>and</code> or <code>or</code>) will be used as value of <code>filterConnect</code> setting (see below);
 if the result of the recursive call is <code>true</code> it means that the field corresponds to this filter</li>
-<li>if the object has <code>field</code> field, its value is used as filter; if the filter is a regular expression
-and the field name matches the regular expression it means that the field corresponds to this filter;
-otherwise the field corresponds to this filter when the filed name strictly equals to the filter (converted to string)</li>
+<li>if the object has <code>field</code> field, its value is used as filter for the field name (property key) that is being checked;
+the filter is applied to the field name (property key) in recursive call of <code>checkField</code>
+as if the key is a tested field value of special object that is created for the check purposes
+(i.e. <code>checkField({field: field}, &quot;field&quot;, filter.field, {filterConnect: settings.filterConnect})</code>)</li>
 <li>if the object has <code>value</code> field, its value is used as filter; if the field value strictly equals to the filter value
 it means that the field corresponds to this filter</li>
 <li>in any other case if the field value strictly equals to the object it means that the field corresponds to this filter</li>
@@ -658,7 +659,7 @@ it means that the field corresponds to this filter</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-309">line 309</a>
+				 <a href="adam.js.html#sunlight-1-line-310">line 310</a>
 			</li>
 		</ul>
 	</dd>
@@ -921,7 +922,7 @@ it means that the field corresponds to this filter</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-888">line 888</a>
+				 <a href="adam.js.html#sunlight-1-line-883">line 883</a>
 			</li>
 		</ul>
 	</dd>
@@ -1099,7 +1100,7 @@ it means that the field corresponds to this filter</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-730">line 730</a>
+				 <a href="adam.js.html#sunlight-1-line-725">line 725</a>
 			</li>
 		</ul>
 	</dd>
@@ -1357,7 +1358,7 @@ an item of the list will be used as value for check</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-586">line 586</a>
+				 <a href="adam.js.html#sunlight-1-line-581">line 581</a>
 			</li>
 		</ul>
 	</dd>
@@ -1741,7 +1742,7 @@ an item of the list will be used as value for check</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-398">line 398</a>
+				 <a href="adam.js.html#sunlight-1-line-393">line 393</a>
 			</li>
 		</ul>
 	</dd>
@@ -1962,7 +1963,7 @@ an item of the list will be used as value for check</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-529">line 529</a>
+				 <a href="adam.js.html#sunlight-1-line-524">line 524</a>
 			</li>
 		</ul>
 	</dd>
@@ -2745,7 +2746,7 @@ an item of the list will be used as value for check</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-462">line 462</a>
+				 <a href="adam.js.html#sunlight-1-line-457">line 457</a>
 			</li>
 		</ul>
 	</dd>
@@ -2964,7 +2965,7 @@ an item of the list will be used as value for check</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-498">line 498</a>
+				 <a href="adam.js.html#sunlight-1-line-493">line 493</a>
 			</li>
 		</ul>
 	</dd>
@@ -3861,7 +3862,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-969">line 969</a>
+				 <a href="adam.js.html#sunlight-1-line-964">line 964</a>
 			</li>
 		</ul>
 	</dd>
@@ -4117,7 +4118,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-693">line 693</a>
+				 <a href="adam.js.html#sunlight-1-line-688">line 688</a>
 			</li>
 		</ul>
 	</dd>
@@ -4297,7 +4298,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-771">line 771</a>
+				 <a href="adam.js.html#sunlight-1-line-766">line 766</a>
 			</li>
 		</ul>
 	</dd>
@@ -4551,7 +4552,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-647">line 647</a>
+				 <a href="adam.js.html#sunlight-1-line-642">line 642</a>
 			</li>
 		</ul>
 	</dd>
@@ -4756,7 +4757,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-823">line 823</a>
+				 <a href="adam.js.html#sunlight-1-line-818">line 818</a>
 			</li>
 		</ul>
 	</dd>
@@ -4870,7 +4871,7 @@ applying specified action/transformation for field values.</p>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on 2016-03-30T23:50:16+03:00
+		on 2016-04-09T00:01:22+03:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

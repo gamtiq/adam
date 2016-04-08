@@ -648,12 +648,22 @@ describe("adam", function() {
             
             it("should return true", function() {
                 checkTrue(obj, "check", {field: /^che/});
-                checkTrue(obj, "b", {field: "b"});
+                checkTrue(obj, "b", {field: {value: "b"}});
+                
+                if (testSymbols) {
+                    checkTrue(testObj, "d", {field: "string"});
+                    checkTrue(testObj, symA, {field: "symbol"});
+                }
             });
             
             it("should return false", function() {
                 checkFalse(obj, "a", {field: /\d/});
-                checkFalse(obj, "b", {field: "c"});
+                checkFalse(obj, "b", {field: "symbol"});
+                
+                if (testSymbols) {
+                    checkFalse(testObj, symB, {field: "string"});
+                    checkFalse(testObj, "iValue", {field: "positive"});
+                }
             });
         });
         
@@ -917,6 +927,14 @@ describe("adam", function() {
                     checkArray(getFields,
                                 [testObj, {filter: ["symbol", "number"], filterConnect: "or", limit: 3}],
                                 [symB, "iValue", "symD"]);
+                    
+                    checkArray(getFields,
+                                [testObj, {filter: {field: "symbol"}}],
+                                [symA, symB, symC]);
+                    
+                    checkArray(getFields,
+                                [testObj, {filter: [{field: "symbol"}, "!own"]}],
+                                [symC]);
                 });
             }
         });

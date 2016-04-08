@@ -286,9 +286,10 @@ function isKindOf(value, sKind) {
  *      - if the object has `and` or `or` field, its value is used as subfilter and will be passed in recursive call of `checkField`
  *        as value of `filter` parameter; the field name (`and` or `or`) will be used as value of `filterConnect` setting (see below);
  *        if the result of the recursive call is `true` it means that the field corresponds to this filter
- *      - if the object has `field` field, its value is used as filter; if the filter is a regular expression
- *        and the field name matches the regular expression it means that the field corresponds to this filter;
- *        otherwise the field corresponds to this filter when the filed name strictly equals to the filter (converted to string)
+ *      - if the object has `field` field, its value is used as filter for the field name (property key) that is being checked;
+ *        the filter is applied to the field name (property key) in recursive call of `checkField`
+ *        as if the key is a tested field value of special object that is created for the check purposes
+ *        (i.e. `checkField({field: field}, "field", filter.field, {filterConnect: settings.filterConnect})`)
  *      - if the object has `value` field, its value is used as filter; if the field value strictly equals to the filter value
  *        it means that the field corresponds to this filter
  *      - in any other case if the field value strictly equals to the object it means that the field corresponds to this filter
@@ -349,13 +350,7 @@ function checkField(obj, field, filter, settings) {
                     test = checkField(obj, field, test.or, {filterConnect: "or"});
                 }
                 else if ("field" in test) {
-                    test = test.field;
-                    if (getClass(test) === "RegExp") {
-                        test = test.test(typeof field === "symbol" ? field.toString() : field);
-                    }
-                    else {
-                        test = test === field;
-                    }
+                    test = checkField({field: field}, "field", test.field, {filterConnect: settings.filterConnect});
                 }
                 else if ("value" in test) {
                     test = test.value === value;
