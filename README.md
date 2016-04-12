@@ -96,6 +96,7 @@ adam.getClass([8]);   // "Array"
 adam.getType(null);   // "null"
 adam.isKindOf(17, "integer");   // true
 adam.isKindOf(NaN, "!number");   // true
+adam.isKindOf(".321e+2", "numeric");   // true
 
 adam.checkField(obj, "c", ["positive", "odd"]);   // true
 adam.checkField(obj, "b", ["real", /^7/], {filterConnect: "or"});   // false

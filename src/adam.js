@@ -217,6 +217,7 @@ function isEmpty(value) {
  *    * `infinity` - check whether the value is a number representing positive or negative infinity
  *    * `integer` - check whether the value is an integer number
  *    * `negative` - check whether the value is a negative number
+ *    * `numeric` - check whether the value is a number or a string that can be converted to number
  *    * `odd` - check whether the value is an odd integer
  *    * `positive` - check whether the value is a positive number
  *    * `real` - check whether the value is a real number
@@ -246,6 +247,9 @@ function isKindOf(value, sKind) {
                 || (sKind === "true" && Boolean(value))
                 || (sKind === "false" && ! value)
                 || (sKind === "empty" && isEmpty(value))
+                || (sKind === "numeric"
+                    && ( (sType === "number" && ! isNaN(value))
+                            || (sType === "string" && value && ! isNaN(Number(value))) ) )
                 || (sType === "number"
                     && ((sKind === "zero" && value === 0)
                         || (sKind === "positive" && value > 0)

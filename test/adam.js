@@ -509,6 +509,10 @@ describe("adam", function() {
             check("", "empty");
             check([], "empty");
             check({}, "empty");
+            check(-893.217, "numeric");
+            check("-27891.09873", "numeric");
+            check("5.92e4", "numeric");
+            check("-0.34534e-2", "numeric");
             
             check(check, "Function");
             check(adam, "Object");
@@ -527,6 +531,8 @@ describe("adam", function() {
             check(true, "!number");
             check(NaN, "!number");
             check({}, "!null");
+            check(false, "!numeric");
+            check(".9e", "!numeric");
             check({a: check}, "!empty");
             check(undef, "!null");
             check(check, "!Object");
@@ -560,12 +566,16 @@ describe("adam", function() {
             check("adam", "empty");
             check([1, 2, 3], "Object");
             check(Math, "Object");
+            check(true, "numeric");
+            check(NaN, "numeric");
+            check("3.2a", "numeric");
             
             check(1, "!integer");
             check(Math.PI, "!real");
             check(0, "!number");
             check("", "!empty");
             check(undef, "!false");
+            check("7.7e+7", "!numeric");
         });
     });
 
