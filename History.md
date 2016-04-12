@@ -1,3 +1,9 @@
+### 0.4.1 / 2016-04-12
+
+* improve filtering for property keys in `checkField`
+* add `numeric` check for `isKind`
+* remove SPM support
+
 ### 0.4.0 / 2016-03-20
 
 * add `limit` setting for `getFields` method
