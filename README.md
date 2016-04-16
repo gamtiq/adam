@@ -17,6 +17,10 @@ Functions to create, process and test objects.
 
     npm install adam
 
+### [JSPM](http://jspm.io)
+
+    jspm install adam
+
 ### [Component](https://github.com/component/component)
 
     component install gamtiq/adam
@@ -35,7 +39,7 @@ Use `dist/adam.js` or `dist/adam.min.js` (minified version).
 
 ## Usage <a name="usage"></a> [&#x2191;](#start)
 
-### Node, Component
+### Node, JSPM, Component
 
 ```js
 var adam = require("adam");
