@@ -2,7 +2,7 @@
  * adam
  * https://github.com/gamtiq/adam
  *
- * Copyright (c) 2014-2016 Denis Sikuler
+ * Copyright (c) 2014-2020 Denis Sikuler
  * Licensed under the MIT license.
  */
 

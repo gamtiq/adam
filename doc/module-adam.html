@@ -38,16 +38,18 @@
 			</li>
 			
 		</ul>
-		<div class="col-sm-3 col-md-3">
-            <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        
 	</div>
 
 </div>
@@ -151,7 +153,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".change"><span class="type-signature">&lt;static> </span>change(obj, action, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".change"><span class="type-signature">&lt;static> </span>change(obj, action [, settings])</h4>
     
     
 </dt>
@@ -409,7 +411,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".checkField"><span class="type-signature">&lt;static> </span>checkField(obj, field, filter, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".checkField"><span class="type-signature">&lt;static> </span>checkField(obj, field, filter [, settings])</h4>
     
     
 </dt>
@@ -725,7 +727,7 @@ it means that the field corresponds to this filter</li>
             
 <hr>
 <dt>
-    <h4 class="name" id=".copy"><span class="type-signature">&lt;static> </span>copy(source, target, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".copy"><span class="type-signature">&lt;static> </span>copy(source, target [, settings])</h4>
     
     
 </dt>
@@ -1157,7 +1159,7 @@ it means that the field corresponds to this filter</li>
             
 <hr>
 <dt>
-    <h4 class="name" id=".fromArray"><span class="type-signature">&lt;static> </span>fromArray(list, <span class="optional">keyField</span>, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".fromArray"><span class="type-signature">&lt;static> </span>fromArray(list [, keyField] [, settings])</h4>
     
     
 </dt>
@@ -1584,7 +1586,7 @@ an item of the list will be used as value for check</li>
             
 <hr>
 <dt>
-    <h4 class="name" id=".getFields"><span class="type-signature">&lt;static> </span>getFields(obj, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".getFields"><span class="type-signature">&lt;static> </span>getFields(obj [, settings])</h4>
     
     
 </dt>
@@ -1806,7 +1808,7 @@ an item of the list will be used as value for check</li>
             
 <hr>
 <dt>
-    <h4 class="name" id=".getFreeField"><span class="type-signature">&lt;static> </span>getFreeField(obj, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".getFreeField"><span class="type-signature">&lt;static> </span>getFreeField(obj [, settings])</h4>
     
     
 </dt>
@@ -2183,7 +2185,7 @@ an item of the list will be used as value for check</li>
             
 <hr>
 <dt>
-    <h4 class="name" id=".getSize"><span class="type-signature">&lt;static> </span>getSize(obj, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".getSize"><span class="type-signature">&lt;static> </span>getSize(obj [, settings])</h4>
     
     
 </dt>
@@ -2564,7 +2566,7 @@ an item of the list will be used as value for check</li>
             
 <hr>
 <dt>
-    <h4 class="name" id=".getValueKey"><span class="type-signature">&lt;static> </span>getValueKey(obj, value, <span class="optional">bAll</span>)</h4>
+    <h4 class="name" id=".getValueKey"><span class="type-signature">&lt;static> </span>getValueKey(obj, value [, bAll])</h4>
     
     
 </dt>
@@ -2810,7 +2812,7 @@ an item of the list will be used as value for check</li>
             
 <hr>
 <dt>
-    <h4 class="name" id=".getValues"><span class="type-signature">&lt;static> </span>getValues(obj, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".getValues"><span class="type-signature">&lt;static> </span>getValues(obj [, settings])</h4>
     
     
 </dt>
@@ -3287,17 +3289,28 @@ an item of the list will be used as value for check</li>
             <td class="description last"><p>Type or class for check. Can be any value that is returned by <a href="module-adam.html#.getType">getType</a> 
      and <a href="module-adam.html#.getClass">getClass</a>, or one of the following:</p>
 <ul>
-<li><code>empty</code> - check whether the value is empty (see <a href="module-adam.html#.isEmpty">isEmpty</a>)</li>
-<li><code>even</code> - check whether the value is an even integer</li>
-<li><code>false</code> - check whether the value is a false value</li>
-<li><code>infinity</code> - check whether the value is a number representing positive or negative infinity</li>
-<li><code>integer</code> - check whether the value is an integer number</li>
-<li><code>negative</code> - check whether the value is a negative number</li>
-<li><code>numeric</code> - check whether the value is a number or a string that can be converted to number</li>
-<li><code>odd</code> - check whether the value is an odd integer</li>
-<li><code>positive</code> - check whether the value is a positive number</li>
-<li><code>real</code> - check whether the value is a real number</li>
-<li><code>true</code> - check whether the value is a true value</li>
+<li><p><code>empty</code> - check whether the value is empty (see <a href="module-adam.html#.isEmpty">isEmpty</a>)</p>
+</li>
+<li><p><code>even</code> - check whether the value is an even integer</p>
+</li>
+<li><p><code>false</code> - check whether the value is a false value</p>
+</li>
+<li><p><code>infinity</code> - check whether the value is a number representing positive or negative infinity</p>
+</li>
+<li><p><code>integer</code> - check whether the value is an integer number</p>
+</li>
+<li><p><code>negative</code> - check whether the value is a negative number</p>
+</li>
+<li><p><code>numeric</code> - check whether the value is a number or a string that can be converted to number</p>
+</li>
+<li><p><code>odd</code> - check whether the value is an odd integer</p>
+</li>
+<li><p><code>positive</code> - check whether the value is a positive number</p>
+</li>
+<li><p><code>real</code> - check whether the value is a real number</p>
+</li>
+<li><p><code>true</code> - check whether the value is a true value</p>
+</li>
 <li><p><code>zero</code> - check whether the value is <code>0</code></p>
 <p>If exclamation mark (<code>!</code>) is set before the kind, it means that the check should be negated
 i.e. check whether given value does not have the specified kind.
@@ -3416,7 +3429,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
             
 <hr>
 <dt>
-    <h4 class="name" id=".isSizeMore"><span class="type-signature">&lt;static> </span>isSizeMore(obj, nValue, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".isSizeMore"><span class="type-signature">&lt;static> </span>isSizeMore(obj, nValue [, settings])</h4>
     
     
 </dt>
@@ -3667,7 +3680,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
             
 <hr>
 <dt>
-    <h4 class="name" id=".map"><span class="type-signature">&lt;static> </span>map(obj, action, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".map"><span class="type-signature">&lt;static> </span>map(obj, action [, settings])</h4>
     
     
 </dt>
@@ -3929,7 +3942,7 @@ applying specified action/transformation for field values.</p>
             
 <hr>
 <dt>
-    <h4 class="name" id=".remove"><span class="type-signature">&lt;static> </span>remove(obj, filter, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".remove"><span class="type-signature">&lt;static> </span>remove(obj, filter [, settings])</h4>
     
     
 </dt>
@@ -4356,7 +4369,7 @@ applying specified action/transformation for field values.</p>
             
 <hr>
 <dt>
-    <h4 class="name" id=".split"><span class="type-signature">&lt;static> </span>split(obj, firstObjFields, <span class="optional">settings</span>)</h4>
+    <h4 class="name" id=".split"><span class="type-signature">&lt;static> </span>split(obj, firstObjFields [, settings])</h4>
     
     
 </dt>
@@ -4847,32 +4860,34 @@ applying specified action/transformation for field values.</p>
 </div>
 </div>
 
-<div class="modal fade" id="searchResults">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Search results</h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div>
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 
 <footer>
 
 
 	<span class="copyright">
-	Copyright (c) 2014-2016 Denis Sikuler
+	Copyright (c) 2014-2020 Denis Sikuler
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
 	
-		on 2016-04-16T19:40:17+03:00
+		on 2020-03-18T23:09:57+03:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
@@ -4880,7 +4895,9 @@ applying specified action/transformation for field values.</p>
 
 <script src="scripts/docstrap.lib.js"></script>
 <script src="scripts/toc.js"></script>
-<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
 
 <script>
 $( function () {
@@ -4890,7 +4907,7 @@ $( function () {
 		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
 	} );
 
-	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
 		var $this = $( this );
 
 		var example = $this.find( "code" );
@@ -4926,8 +4943,7 @@ $( function () {
 	} );
 	$( "#toc" ).toc( {
 		anchorName  : function ( i, heading, prefix ) {
-			var id = $( heading ).attr( "id" );
-			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+			return $( heading ).attr( "id" ) || ( prefix + i );
 		},
 		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
 		showAndHide : false,
@@ -4953,11 +4969,13 @@ $( function () {
 <!--Google Analytics-->
 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		SearcherDisplay.init();
-	});
-</script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
 
 </body>
 </html>

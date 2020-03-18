@@ -78,13 +78,14 @@ module.exports = function(grunt) {
             }
         },
         
-        push: {
+        bump: {
             options: {
-                files: ["package.json", "bower.json", "component.json"],
+                files: ["package.json", "package-lock.json", "bower.json", "component.json"],
                 commitMessage: "Release version %VERSION%",
                 commitFiles: ["-a"],
                 tagName: "%VERSION%",
-                tagMessage: "Version %VERSION%"
+                tagMessage: "Version %VERSION%",
+                pushTo: "origin"
             }
         },
         
@@ -103,9 +104,9 @@ module.exports = function(grunt) {
     grunt.registerTask("default", ["jshint", "test"]);
     grunt.registerTask("all", ["default", "build", "doc"]);
     
-    grunt.registerTask("release", ["push"]);
-    grunt.registerTask("release-minor", ["push:minor"]);
-    grunt.registerTask("release-major", ["push:major"]);
+    grunt.registerTask("release", ["bump"]);
+    grunt.registerTask("release-minor", ["bump:minor"]);
+    grunt.registerTask("release-major", ["bump:major"]);
     
     // For Travis CI service
     grunt.registerTask("travis", ["all"]);

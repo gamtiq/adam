@@ -17,19 +17,7 @@ Functions to create, process and test objects.
 
     npm install adam
 
-### [JSPM](http://jspm.io)
-
-    jspm install adam
-
-### [Component](https://github.com/component/component)
-
-    component install gamtiq/adam
-
-### [Jam](http://jamjs.org)
-
-    jam install adam
-
-### [Bower](http://bower.io)
+### [Bower](https://bower.io)
 
     bower install adam
 
@@ -39,18 +27,10 @@ Use `dist/adam.js` or `dist/adam.min.js` (minified version).
 
 ## Usage <a name="usage"></a> [&#x2191;](#start)
 
-### Node, JSPM, Component
+### Node
 
 ```js
 var adam = require("adam");
-```
-
-### Jam
-
-```js
-require(["adam"], function(adam) {
-    ...
-});
 ```
 
 ### AMD
@@ -260,5 +240,5 @@ Add unit tests for any new or changed functionality.
 Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## License
-Copyright (c) 2014-2016 Denis Sikuler  
+Copyright (c) 2014-2020 Denis Sikuler  
 Licensed under the MIT license.
