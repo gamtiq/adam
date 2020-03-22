@@ -4,7 +4,7 @@
     "dist/adam.js", 
     "dist/adam.min.js"
   ],
-  "version": "0.4.1",
+  "version": "1.0.0",
   "homepage": "https://github.com/gamtiq/adam",
   "authors": [
     "Denis Sikuler"

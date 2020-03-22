@@ -1,3 +1,7 @@
+### 1.0.0 / 2020-03-22
+
+* add `select` function
+
 ### 0.4.1 / 2016-04-12
 
 * improve filtering for property keys in `checkField`
