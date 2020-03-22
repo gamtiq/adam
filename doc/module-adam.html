@@ -345,7 +345,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-936">line 936</a>
+				 <a href="adam.js.html#sunlight-1-line-994">line 994</a>
 			</li>
 		</ul>
 	</dd>
@@ -924,7 +924,7 @@ it means that the field corresponds to this filter</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-887">line 887</a>
+				 <a href="adam.js.html#sunlight-1-line-945">line 945</a>
 			</li>
 		</ul>
 	</dd>
@@ -1102,7 +1102,7 @@ it means that the field corresponds to this filter</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-729">line 729</a>
+				 <a href="adam.js.html#sunlight-1-line-787">line 787</a>
 			</li>
 		</ul>
 	</dd>
@@ -3876,7 +3876,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-968">line 968</a>
+				 <a href="adam.js.html#sunlight-1-line-1026">line 1026</a>
 			</li>
 		</ul>
 	</dd>
@@ -4132,7 +4132,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-692">line 692</a>
+				 <a href="adam.js.html#sunlight-1-line-750">line 750</a>
 			</li>
 		</ul>
 	</dd>
@@ -4312,7 +4312,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-770">line 770</a>
+				 <a href="adam.js.html#sunlight-1-line-828">line 828</a>
 			</li>
 		</ul>
 	</dd>
@@ -4342,6 +4342,262 @@ applying specified action/transformation for field values.</p>
             
 <div class="param-desc">
     <p>Processed value.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Any</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".select"><span class="type-signature">&lt;static> </span>select(filter, from [, settings])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Return the value of the first element in the passed array that satisfies the specified filter(s).</p>
+<p>If value passed for selection is not an array, the value will be returned as is.
+If no element in the passed array satisfies the specified filter(s),
+<code>settings.defaultValue</code> or the last element of the array (or <code>undefined</code> when the array is empty) will be returned.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Filter that should be used to select a value (see <a href="module-adam.html#.checkField">checkField</a> for details).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>from</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>An array from which a value should be selected.
+     If passed value is not an array, the value will be returned as is.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
+    The following settings are supported (setting's default value is specified in parentheses):</p>
+<ul>
+<li><code>defaultValue</code>: <code>Any</code> - default value that should be used when no element in the passed array
+ satisfies the specified filter(s)</li>
+<li><code>filterConnect</code>: <code>String</code> (<code>and</code>) - a boolean connector that should be used when array of filters is specified
+ in <code>filter</code> parameter (see <a href="module-adam.html#.checkField">checkField</a> for details)</li>
+</ul></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="adam.js.html">adam.js</a>,
+				 <a href="adam.js.html#sunlight-1-line-651">line 651</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
+			</ul>
+	</dd>
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>The first element in the passed array that satisfies the specified filter(s),<br>     or <code>settings.defaultValue</code> or the last element of the array when no element in the array satisfies the specified filter(s),<br>     or <code>settings.defaultValue</code> or <code>undefined</code> when the array is empty,<br>     or the value of <code>from</code> parameter when passed value is not an array.</p>
 </div>
 
 
@@ -4566,7 +4822,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-646">line 646</a>
+				 <a href="adam.js.html#sunlight-1-line-704">line 704</a>
 			</li>
 		</ul>
 	</dd>
@@ -4771,7 +5027,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-822">line 822</a>
+				 <a href="adam.js.html#sunlight-1-line-880">line 880</a>
 			</li>
 		</ul>
 	</dd>
@@ -4887,7 +5143,7 @@ applying specified action/transformation for field values.</p>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
 	
-		on 2020-03-18T23:09:57+03:00
+		on 2020-03-22T17:21:54+03:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

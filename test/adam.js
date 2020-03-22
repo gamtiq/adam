@@ -1610,6 +1610,71 @@ describe("adam", function() {
     });
 
     
+    describe(".select", function() {
+        var select = adam.select,
+            numList = [3, -4, 7, 10, 5, 19];
+        
+        it("should return the first element from the passed array that satisfies the specified filter(s)", function() {
+            expect( select("positive", [false, -10, null, "test", -3, 0, 4, adam, 5, true, numList]) )
+                .equal( 4 );
+            expect( select("Array", [false, null, "test", 3, numList, 5, [true], "zero"]) )
+                .equal( numList );
+            expect( select(function(value) {return value > 7;}, numList) )
+                .equal( 10 );
+            expect( select(["negative", "odd"], [numList, -10, NaN, "-7", 3, 0, -4, null, -7, true, -5]) )
+                .equal( -7 );
+            expect( select(["negative", "odd"], [numList, 10, 0, "-7", 3, 0, -4, null, -7, true, -5], {filterConnect: "or"}) )
+                .equal( 3 );
+        });
+        
+        it("should return the last element from the passed array", function() {
+            expect( select("negative", [false, 1, null, "test", 3, 0, 4, 5, true, numList, 8]) )
+                .equal( 8 );
+            expect( select("Array", [false, null, "test", undef, 3, "zero", numList]) )
+                .equal( numList );
+            expect( select("Array", [false, null, "test", 3, "zero"]) )
+                .equal( "zero" );
+            expect( select(function(value) {return typeof value === "boolean";}, numList) )
+                .equal( numList[numList.length - 1] );
+            expect( select(["negative", "odd"], [numList, 10, NaN, "-7", 3, undef, 0, -4, null, 7, true, Date]) )
+                .equal( Date );
+            expect( select(["negative", "odd"], [numList, 10, 0, "-7", 32, 0, 4, null, 8, true], {filterConnect: "or"}) )
+                .equal( true );
+        });
+        
+        it("should return undefined", function() {
+            expect( select("positive", []) )
+                .equal( undef );
+            expect( select(["positive", "even"], [undef, undef, undef]) )
+                .equal( undef );
+        });
+        
+        it("should return default value specified in settings", function() {
+            expect( select("negative", [false, 1, null, "test", 3, 0, 4, 5, true, numList, 8], {defaultValue: -1}) )
+                .equal( -1 );
+            expect( select("Array", [false, null, "test", 3, "zero"], {defaultValue: numList}) )
+                .equal( numList );
+            expect( select(function(value) {return typeof value === "boolean";}, numList, {defaultValue: false}) )
+                .equal( false );
+            expect( select(["negative", "odd"], [numList, 10, NaN, "-7", 3, undef, 0, -4, null, 7], {defaultValue: -5}) )
+                .equal( -5 );
+            expect( select(["negative", "odd"], [numList, 10, 0, "-7", 32, 0, 4, null, 8, true], {filterConnect: "or", defaultValue: 3}) )
+                .equal( 3 );
+        });
+        
+        it("should return passed value", function() {
+            expect( select("positive", -7) )
+                .equal( -7 );
+            expect( select("even", true) )
+                .equal( true );
+            expect( select("!false", false) )
+                .equal( false );
+            expect( select("object", null) )
+                .equal( null );
+        });
+    });
+
+    
     describe(".remove(obj, filter, [settings])", function() {
         var remove = adam.remove;
         

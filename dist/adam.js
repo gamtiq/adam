@@ -263,7 +263,7 @@ function isKindOf(value, sKind) {
                 || (sKind === "false" && ! value)
                 || (sKind === "empty" && isEmpty(value))
                 || (sKind === "numeric"
-                    && ( (sType === "number" && ! isNaN(value))
+                    && ( sType === "number"
                             || (sType === "string" && value && ! isNaN(Number(value))) ) )
                 || (sType === "number"
                     && ((sKind === "zero" && value === 0)
@@ -630,6 +630,61 @@ function fromArray(list, keyField, settings) {
                 }
                 result[field] = item;
             }
+        }
+    }
+    return result;
+}
+
+/**
+ * Return the value of the first element in the passed array that satisfies the specified filter(s).
+ * If value passed for selection is not an array, the value will be returned as is.
+ * If no element in the passed array satisfies the specified filter(s),
+ * `settings.defaultValue` or the last element of the array (or `undefined` when the array is empty) will be returned.
+ *
+ * @param {Any} filter
+ *      Filter that should be used to select a value (see {@link module:adam.checkField checkField} for details).
+ * @param {Any} from
+ *      An array from which a value should be selected.
+ *      If passed value is not an array, the value will be returned as is.
+ * @param {Object} [settings]
+ *     Operation settings. Keys are settings names, values are corresponding settings values.
+ *     The following settings are supported (setting's default value is specified in parentheses):
+ *     
+ *   * `defaultValue`: `Any` - default value that should be used when no element in the passed array
+ *      satisfies the specified filter(s)
+ *   * `filterConnect`: `String` (`and`) - a boolean connector that should be used when array of filters is specified
+ *      in `filter` parameter; valid values are the following: `and`, `or` (case-insensitive); any other value is treated as `and`
+ * @return {Any}
+ *      The first element in the passed array that satisfies the specified filter(s),
+ *      or `settings.defaultValue` or the last element of the array when no element in the array satisfies the specified filter(s),
+ *      or `settings.defaultValue` or `undefined` when the array is empty,
+ *      or the value of `from` parameter when passed value is not an array.
+ */
+function select(filter, from, settings) {
+    /*jshint laxbreak:true*/
+    var result = from,
+        options = settings || {},
+        nI, nL, nLast;
+    if (getClass(from) === "Array") {
+        nL = from.length;
+        if (nL) {
+            nLast = nL - 1;
+            for (nI = 0; nI < nL; nI++) {
+                if (checkField(from, nI, filter, options)) {
+                    result = from[nI];
+                    break;
+                }
+                else if (nI === nLast) {
+                    result = "defaultValue" in options
+                        ? options.defaultValue
+                        : from[nI];
+                }
+            }
+        }
+        else {
+            result = "defaultValue" in options
+                ? options.defaultValue
+                : nI;
         }
     }
     return result;
@@ -1013,6 +1068,7 @@ module.exports = {
     map: map,
     remove: remove,
     reverse: reverse,
+    select: select,
     split: split,
     transform: transform
 };

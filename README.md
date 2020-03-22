@@ -108,6 +108,10 @@ adam.getValueKey(obj, 3);   // "c"
 
 adam.fromArray([{id: "a", value: 11}, {id: "b", value: 7}, {id: "c", value: 10}], "id");   // {a: {id: "a", value: 11}, b: {id: "b", value: 7}, c: {id: "c", value: 10}}
 
+adam.select(["negative", "odd"], [null, 4, NaN, 7, false, -2, "", 0, -5, 3, null, -9]);   // -5
+adam.select(["negative", "odd"], [null, 4, NaN, 8, false, 2, "", 0, 30, 4, false], {filterConnect: "or"});   // false
+adam.select(["negative", "odd"], [null, 4, NaN, 8, false, 2, "", 0, 30, 4, false], {filterConnect: "or", defaultValue: -3});   // -3
+
 adam.split(obj, ["a", "d"]);   // [{a: 1, d: 4}, {b: 2, c: 3, e: 5}]
 adam.split(obj, null, {filter: "odd"});   // [{a: 1, c: 3, e: 5}, {b: 2, d: 4}]
 adam.split(obj, null, {filter: ["even", /3/], filterConnect: "or"});   // [{b: 2, c: 3, d: 4}, {a: 1, e: 5}]
@@ -217,6 +221,10 @@ Remove filtered fields/elements from specified object/array.
 ### reverse(value: Any): Any
 
 Reverse or negate the given value.
+
+### select(filter: Any, from: Any, [settings: Object]): Any
+
+Return the value of the first element in the passed array that satisfies the specified filter(s).
 
 ### split(obj: Object, firstObjFields: Array | Object | null, [settings: Object]): Array
 

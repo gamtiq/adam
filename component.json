@@ -19,6 +19,7 @@
     "split",
     "filter",
     "select",
+    "find",
     "copy",
     "change",
     "map",
