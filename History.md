@@ -1,3 +1,10 @@
+### 1.1.0 / 2020-03-25
+
+* rework `select` function to support search in objects
+* add `promise`, `resolve` and `reject` actions for `transform`
+* pass operation settings as parameter of function for `checkField`'s `filter`, `fromArray`'s `keyField`
+  and `copy`'s `transform`
+
 ### 1.0.0 / 2020-03-22
 
 * add `select` function
