@@ -292,7 +292,7 @@ function isKindOf(value, sKind) {
  *      A filter or array of filters specifying conditions that should be checked. A filter can be:
  *      
  *    * a function; if the function returns a true value it means that the field corresponds to this filter;
- *      the following parameters will be passed into the function: field value, field name and reference to the object
+ *      the following parameters will be passed into the function: field value, field name, reference to the object and operation settings
  *    * a regular expression; if the field value (converted to string) matches the regular expression it means
  *      that the field corresponds to this filter
  *    * a string; value can be one of the following:
@@ -345,7 +345,7 @@ function checkField(obj, field, filter, settings) {
         test = filter[nI];
         switch (getClass(test)) {
             case "Function":
-                test = Boolean(test(value, field, obj));
+                test = Boolean(test(value, field, obj, settings));
                 break;
             case "String":
                 if (test === "own") {
@@ -580,7 +580,7 @@ function getFreeField(obj, settings) {
  *      Specifies names of fields of the created object. Can be name of field or method whose value is used
  *      as field name of the created object, or function that returns the field name.
  *      In the latter case the following parameters will be passed in the function:
- *      the source object (an item of the list), the created object, the index of the source object.
+ *      the source object (an item of the list), the created object, the index of the source object, operation settings.
  *      When the parameter is not set, items of the list are used as field names.
  * @param {Object} [settings]
  *     Operation settings. Keys are settings names, values are corresponding settings values.
@@ -616,7 +616,7 @@ function fromArray(list, keyField, settings) {
         for (nI = 0; nI < nL; nI++) {
             item = list[nI];
             if (bFuncKey) {
-                field = sKeyName = keyField(item, result, nI);
+                field = sKeyName = keyField(item, result, nI, settings);
             }
             else {
                 field = sKeyName ? item[sKeyName] : item;
@@ -636,55 +636,67 @@ function fromArray(list, keyField, settings) {
 }
 
 /**
- * Return the value of the first element in the passed array that satisfies the specified filter(s).
- * If value passed for selection is not an array, the value will be returned as is.
+ * Return the value of the first element/field in the passed array/object that satisfies the specified filter(s).
+ * 
+ * If value passed for selection is not an array nor an object and `settings.defaultValue` is not set, the value will be returned as is.
  * If no element in the passed array satisfies the specified filter(s),
  * `settings.defaultValue` or the last element of the array (or `undefined` when the array is empty) will be returned.
+ * If no field in the passed object satisfies the specified filter(s), `settings.defaultValue` or `undefined` will be returned.
  *
  * @param {Any} filter
  *      Filter that should be used to select a value (see {@link module:adam.checkField checkField} for details).
  * @param {Any} from
- *      An array from which a value should be selected.
- *      If passed value is not an array, the value will be returned as is.
+ *      An array/object from which a value should be selected.
  * @param {Object} [settings]
  *     Operation settings. Keys are settings names, values are corresponding settings values.
  *     The following settings are supported (setting's default value is specified in parentheses):
  *     
- *   * `defaultValue`: `Any` - default value that should be used when no element in the passed array
- *      satisfies the specified filter(s)
+ *   * `defaultValue`: `Any` - default value that should be used when no element/field in the passed array/object
+ *      satisfies the specified filter(s) or when value of `from` parameter is not an array nor an object
  *   * `filterConnect`: `String` (`and`) - a boolean connector that should be used when array of filters is specified
- *      in `filter` parameter; valid values are the following: `and`, `or` (case-insensitive); any other value is treated as `and`
+ *      in `filter` parameter (see {@link module:adam.checkField checkField} for details)
  * @return {Any}
- *      The first element in the passed array that satisfies the specified filter(s),
- *      or `settings.defaultValue` or the last element of the array when no element in the array satisfies the specified filter(s),
- *      or `settings.defaultValue` or `undefined` when the array is empty,
- *      or the value of `from` parameter when passed value is not an array.
+ *      The value of first element/field in the passed array/object that satisfies the specified filter(s),
+ *      or `settings.defaultValue`, or the value of `from` parameter or `undefined`.
+ * @alias module:adam.select
+ * @see {@link module:adam.checkField checkField}
  */
 function select(filter, from, settings) {
-    /*jshint laxbreak:true*/
-    var result = from,
-        options = settings || {},
-        nI, nL, nLast;
+    /*jshint latedef:false, laxbreak:true*/
+    function getDefaultValue(value) {
+        return "defaultValue" in options
+            ? options.defaultValue
+            : value;
+    }
+
+    var options = settings || {},
+        result = getDefaultValue(from),
+        key, nL, nLast;
     if (getClass(from) === "Array") {
         nL = from.length;
         if (nL) {
             nLast = nL - 1;
-            for (nI = 0; nI < nL; nI++) {
-                if (checkField(from, nI, filter, options)) {
-                    result = from[nI];
+            for (key = 0; key < nL; key++) {
+                if (checkField(from, key, filter, options)) {
+                    result = from[key];
                     break;
                 }
-                else if (nI === nLast) {
-                    result = "defaultValue" in options
-                        ? options.defaultValue
-                        : from[nI];
+                else if (key === nLast) {
+                    result = getDefaultValue(from[key]);
                 }
             }
         }
         else {
-            result = "defaultValue" in options
-                ? options.defaultValue
-                : nI;
+            result = getDefaultValue(key);
+        }
+    }
+    else if (getType(from) === "object") {
+        result = getDefaultValue(key);
+        for (key in from) {
+            if (checkField(from, key, filter, options)) {
+                result = from[key];
+                break;
+            }
         }
     }
     return result;
@@ -880,6 +892,8 @@ function reverse(value) {
  *    * `integer` - try to convert the value to an integer number (using `Math.round(Number(value)`)
  *    * `number` - try to convert the value to number (using `Number(value)`)
  *    * `object` - convert the value to object (using `Object(value)`)
+ *    * `promise` or `resolve` - convert the value to resolved promise (using `Promise.resolve(value)`)
+ *    * `reject` - convert the value to rejected promise (using `Promise.reject(value)`)
  *    * `reverse` - reverse the value (see {@link module:adam.reverse reverse})
  *    * `string` - convert the value to string (using `String(value)`)
  *    * otherwise - source value
@@ -913,6 +927,13 @@ function transform(value, sAction) {
             break;
         case "object":
             result = Object(value);
+            break;
+        case "promise":
+        case "resolve":
+            result = Promise.resolve(value);
+            break;
+        case "reject":
+            result = Promise.reject(value);
             break;
         case "reverse":
             result = reverse(value);
@@ -948,6 +969,7 @@ function transform(value, sAction) {
  *      - `value` field value from source object
  *      - `source` - reference to the source object
  *      - `target` - reference to the target object
+ *      - `settings` - operation settings
  * @return {Object}
  *      Reference to the target object (value of `target` parameter).
  * @alias module:adam.copy
@@ -973,7 +995,7 @@ function copy(source, target, settings) {
         if (bAll || checkField(source, key, filter, settings)) {
             target[key] = action
                             ? (bFuncAction
-                                ? action({source: source, target: target, field: key, value: source[key]})
+                                ? action({source: source, target: target, field: key, value: source[key], settings: settings})
                                 : transform(source[key], action))
                             : source[key];
         }

@@ -84,13 +84,18 @@ describe("adam", function() {
         for (nI = 0; nI < nL; nI++) {
             if (nI in expectedResult) {
                 expect( result )
-                    .include(expectedResult[nI]);
+                    .deep.include(expectedResult[nI]);
             }
         }
     }
     
     function inc(data) {
-        return ++data.value;
+        /*jshint laxbreak:true*/
+        var settings = data.settings,
+            update = "update" in settings
+                ? settings.update
+                : 1;
+        return data.value + update;
     }
     
     
@@ -605,6 +610,16 @@ describe("adam", function() {
                 checkTrue({a: 1, b: 2, c: 3}, "b", function(value, field, obj) {
                     return adam.isSizeMore(obj, value);
                 });
+                checkTrue(
+                    {a: 1, b: 2, c: 3},
+                    "b",
+                    function(value, field, obj, settings) {
+                        return value >= settings.min;
+                    },
+                    {
+                        min: 2
+                    }
+                );
             });
             
             it("should return false", function() {
@@ -616,6 +631,17 @@ describe("adam", function() {
                 checkFalse({a: 1, b: 2, c: 3}, "c", function(value, field, obj) {
                     return adam.isSizeMore(obj, value);
                 });
+                checkFalse(
+                    {a: 1, b: 2, c: 3},
+                    "c",
+                    function(value, field, obj, settings) {
+                        return value > settings.min || field === settings.exception;
+                    },
+                    {
+                        min: 10,
+                        exception: "b"
+                    }
+                );
             });
         });
         
@@ -1514,17 +1540,18 @@ describe("adam", function() {
         
         describe("fromArray(list, func)", function() {
             it("should return object whose keys are results of calling of specified function and values are objects", function() {
-                function getKey(source, target, index) {
+                function getKey(source, target, index, settings) {
                     /*jshint unused:vars*/
-                    return source.name + " (" + source.quantity + ")";
+                    return settings.prefix + source.name + " (" + source.quantity + ")";
                 }
-                var obj = fromArray(categoryList, getKey),
+                var settings = {prefix: "_"},
+                    obj = fromArray(categoryList, getKey, settings),
                     nL = categoryList.length,
                     item, nI;
                 for (nI = 0; nI < nL; nI++) {
                     item = categoryList[nI];
                     expect(obj)
-                        .have.property(getKey(item), item);
+                        .have.property(getKey(item, null, nI, settings), item);
                 }
             });
         });
@@ -1642,10 +1669,29 @@ describe("adam", function() {
                 .equal( true );
         });
         
+        it("should return the first field from the passed object that satisfies the specified filter(s)", function() {
+            expect( select("positive", {a: -1, b: false, c: true, d: "test", e: 5, fin: 9}) )
+                .equal( 5 );
+            expect( select("Array", {a: false, b: null, c: "test", d: 3, e: numList, f: 5, g: [true], h: "zero"}) )
+                .equal( numList );
+            expect( select(function(value) {return value > 7;}, {a: -3, b: 10, c: 20}) )
+                .equal( 10 );
+            expect( select(["negative", "odd"], {a: numList, b: -10, c: NaN, d: "-7", e: 3, f: 0, g: -4, h: null, i: -7, j: true, k: -5}) )
+                .equal( -7 );
+            expect( select(["negative", "odd"], {a: numList, b: 10, c: 0, d: "-7", e: 3, f: 0, g: -4, h: null, i: -7, j: true, k: -5}, {filterConnect: "or"}) )
+                .equal( 3 );
+            expect( select([{field: /[c-g]/}, "odd"], {a: numList, b: 1, c: 0, d: "-7", e: 4, f: -2, g: -1, h: null, i: -7, j: true, k: -5}) )
+                .equal( -1 );
+        });
+        
         it("should return undefined", function() {
             expect( select("positive", []) )
                 .equal( undef );
             expect( select(["positive", "even"], [undef, undef, undef]) )
+                .equal( undef );
+            expect( select("even", {a: 1, b: false, c: adam, e: -3, d: true}) )
+                .equal( undef );
+            expect( select(["negative", "even"], {a: 2, b: 3, c: true, d: 8}) )
                 .equal( undef );
         });
         
@@ -1660,6 +1706,10 @@ describe("adam", function() {
                 .equal( -5 );
             expect( select(["negative", "odd"], [numList, 10, 0, "-7", 32, 0, 4, null, 8, true], {filterConnect: "or", defaultValue: 3}) )
                 .equal( 3 );
+            expect( select("even", false, {defaultValue: 8}) )
+                .equal( 8 );
+            expect( select("number", 1, {defaultValue: 7}) )
+                .equal( 7 );
         });
         
         it("should return passed value", function() {
@@ -1903,6 +1953,31 @@ describe("adam", function() {
             check("some text", "String");
         });
         
+        it("should return resolved promise", function() {
+            function getPromise(value, sAction) {
+                return transform(value, sAction)
+                    .then(function(val) {
+                        expect( val )
+                            .equal( value );
+                    });
+            }
+
+            return Promise.all([
+                getPromise("test", "promise"),
+                getPromise(false, "resolve")
+            ]);
+        });
+        
+        it("should return rejected promise", function() {
+            var reason = "some message";
+
+            return transform(reason, "reject")
+                .catch(function(val) {
+                    expect( val )
+                        .equal( reason );
+                });
+        });
+        
         it("should reverse value", function() {
             expect( transform("adam", "reverse") )
                 .equal("mada");
@@ -1984,21 +2059,33 @@ describe("adam", function() {
         
         describe("copy(source, target, {transform: ...})", function() {
             it("should copy transformed fields", function() {
-                check({a: 2, b: 100, c: 4, t: "eam"},
-                        {a: 1, c: 3},
-                        {a: 7, b: 100, t: "eam"},
-                        {transform: inc});
-                check({a: "-1", b: 100, c: "3", f: "fire"},
-                        {a: -1, c: 3},
-                        {a: 5, b: 100, f: "fire"},
-                        {transform: "string"});
-                checkArray(copy,
-                            [
-                                 [1, 2, 3],
-                                 [1, 2, 3, 40, 50],
-                                 {transform: inc}
-                             ],
-                             [2, 3, 4, 40, 50]);
+                check(
+                    {a: 2, b: 100, c: 4, t: "eam"},
+                    {a: 1, c: 3},
+                    {a: 7, b: 100, t: "eam"},
+                    {transform: inc}
+                );
+                check(
+                    {a: 5, b: 100, c: 7, t: "eam"},
+                    {a: 1, c: 3},
+                    {a: 7, b: 100, t: "eam"},
+                    {transform: inc, update: 4}
+                );
+                check(
+                    {a: "-1", b: 100, c: "3", f: "fire"},
+                    {a: -1, c: 3},
+                    {a: 5, b: 100, f: "fire"},
+                    {transform: "string"}
+                );
+                checkArray(
+                    copy,
+                    [
+                        [1, 2, 3],
+                        [1, 2, 3, 40, 50],
+                        {transform: inc}
+                    ],
+                    [2, 3, 4, 40, 50]
+                );
             });
         });
         

@@ -345,7 +345,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-994">line 994</a>
+				 <a href="adam.js.html#sunlight-1-line-1013">line 1013</a>
 			</li>
 		</ul>
 	</dd>
@@ -551,7 +551,7 @@
             <td class="description last"><p>A filter or array of filters specifying conditions that should be checked. A filter can be:</p>
 <ul>
 <li>a function; if the function returns a true value it means that the field corresponds to this filter;
-the following parameters will be passed into the function: field value, field name and reference to the object</li>
+the following parameters will be passed into the function: field value, field name, reference to the object and operation settings</li>
 <li>a regular expression; if the field value (converted to string) matches the regular expression it means
 that the field corresponds to this filter</li>
 <li>a string; value can be one of the following:<ul>
@@ -877,6 +877,7 @@ it means that the field corresponds to this filter</li>
 <li><code>value</code> field value from source object</li>
 <li><code>source</code> - reference to the source object</li>
 <li><code>target</code> - reference to the target object</li>
+<li><code>settings</code> - operation settings</li>
 </ul>
 </li>
 </ul></td>
@@ -924,7 +925,7 @@ it means that the field corresponds to this filter</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-945">line 945</a>
+				 <a href="adam.js.html#sunlight-1-line-964">line 964</a>
 			</li>
 		</ul>
 	</dd>
@@ -1102,7 +1103,7 @@ it means that the field corresponds to this filter</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-787">line 787</a>
+				 <a href="adam.js.html#sunlight-1-line-796">line 796</a>
 			</li>
 		</ul>
 	</dd>
@@ -1271,7 +1272,7 @@ values of the created object are corresponding items of the list.</p>
             <td class="description last"><p>Specifies names of fields of the created object. Can be name of field or method whose value is used
      as field name of the created object, or function that returns the field name.
      In the latter case the following parameters will be passed in the function:
-     the source object (an item of the list), the created object, the index of the source object.
+     the source object (an item of the list), the created object, the index of the source object, operation settings.
      When the parameter is not set, items of the list are used as field names.</p></td>
         </tr>
 
@@ -3876,7 +3877,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-1026">line 1026</a>
+				 <a href="adam.js.html#sunlight-1-line-1045">line 1045</a>
 			</li>
 		</ul>
 	</dd>
@@ -4132,7 +4133,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-750">line 750</a>
+				 <a href="adam.js.html#sunlight-1-line-759">line 759</a>
 			</li>
 		</ul>
 	</dd>
@@ -4312,7 +4313,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-828">line 828</a>
+				 <a href="adam.js.html#sunlight-1-line-837">line 837</a>
 			</li>
 		</ul>
 	</dd>
@@ -4377,10 +4378,11 @@ applying specified action/transformation for field values.</p>
 
     
     <div class="description">
-        <p>Return the value of the first element in the passed array that satisfies the specified filter(s).</p>
-<p>If value passed for selection is not an array, the value will be returned as is.
+        <p>Return the value of the first element/field in the passed array/object that satisfies the specified filter(s).</p>
+<p>If value passed for selection is not an array nor an object and <code>settings.defaultValue</code> is not set, the value will be returned as is.
 If no element in the passed array satisfies the specified filter(s),
-<code>settings.defaultValue</code> or the last element of the array (or <code>undefined</code> when the array is empty) will be returned.</p>
+<code>settings.defaultValue</code> or the last element of the array (or <code>undefined</code> when the array is empty) will be returned.
+If no field in the passed object satisfies the specified filter(s), <code>settings.defaultValue</code> or <code>undefined</code> will be returned.</p>
     </div>
     
 
@@ -4474,8 +4476,7 @@ If no element in the passed array satisfies the specified filter(s),
 
             
 
-            <td class="description last"><p>An array from which a value should be selected.
-     If passed value is not an array, the value will be returned as is.</p></td>
+            <td class="description last"><p>An array/object from which a value should be selected.</p></td>
         </tr>
 
     
@@ -4512,8 +4513,8 @@ If no element in the passed array satisfies the specified filter(s),
             <td class="description last"><p>Operation settings. Keys are settings names, values are corresponding settings values.
     The following settings are supported (setting's default value is specified in parentheses):</p>
 <ul>
-<li><code>defaultValue</code>: <code>Any</code> - default value that should be used when no element in the passed array
- satisfies the specified filter(s)</li>
+<li><code>defaultValue</code>: <code>Any</code> - default value that should be used when no element/field in the passed array/object
+ satisfies the specified filter(s) or when value of <code>from</code> parameter is not an array nor an object</li>
 <li><code>filterConnect</code>: <code>String</code> (<code>and</code>) - a boolean connector that should be used when array of filters is specified
  in <code>filter</code> parameter (see <a href="module-adam.html#.checkField">checkField</a> for details)</li>
 </ul></td>
@@ -4561,7 +4562,7 @@ If no element in the passed array satisfies the specified filter(s),
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-651">line 651</a>
+				 <a href="adam.js.html#sunlight-1-line-649">line 649</a>
 			</li>
 		</ul>
 	</dd>
@@ -4597,7 +4598,8 @@ If no element in the passed array satisfies the specified filter(s),
     
             
 <div class="param-desc">
-    <p>The first element in the passed array that satisfies the specified filter(s),<br>     or <code>settings.defaultValue</code> or the last element of the array when no element in the array satisfies the specified filter(s),<br>     or <code>settings.defaultValue</code> or <code>undefined</code> when the array is empty,<br>     or the value of <code>from</code> parameter when passed value is not an array.</p>
+    <p>The value of first element/field in the passed array/object that satisfies the specified filter(s),
+     or <code>settings.defaultValue</code>, or the value of <code>from</code> parameter or <code>undefined</code>.</p>
 </div>
 
 
@@ -4822,7 +4824,7 @@ If no element in the passed array satisfies the specified filter(s),
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-704">line 704</a>
+				 <a href="adam.js.html#sunlight-1-line-713">line 713</a>
 			</li>
 		</ul>
 	</dd>
@@ -4979,6 +4981,8 @@ If no element in the passed array satisfies the specified filter(s),
 <li><code>integer</code> - try to convert the value to an integer number (using <code>Math.round(Number(value)</code>)</li>
 <li><code>number</code> - try to convert the value to number (using <code>Number(value)</code>)</li>
 <li><code>object</code> - convert the value to object (using <code>Object(value)</code>)</li>
+<li><code>promise</code> or <code>resolve</code> - convert the value to resolved promise (using <code>Promise.resolve(value)</code>)</li>
+<li><code>reject</code> - convert the value to rejected promise (using <code>Promise.reject(value)</code>)</li>
 <li><code>reverse</code> - reverse the value (see <a href="module-adam.html#.reverse">reverse</a>)</li>
 <li><code>string</code> - convert the value to string (using <code>String(value)</code>)</li>
 <li>otherwise - source value</li>
@@ -5027,7 +5031,7 @@ If no element in the passed array satisfies the specified filter(s),
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-880">line 880</a>
+				 <a href="adam.js.html#sunlight-1-line-891">line 891</a>
 			</li>
 		</ul>
 	</dd>
@@ -5143,7 +5147,7 @@ If no element in the passed array satisfies the specified filter(s),
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
 	
-		on 2020-03-22T17:21:54+03:00
+		on 2020-03-25T19:59:27+03:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

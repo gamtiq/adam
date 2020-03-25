@@ -111,6 +111,7 @@ adam.fromArray([{id: "a", value: 11}, {id: "b", value: 7}, {id: "c", value: 10}]
 adam.select(["negative", "odd"], [null, 4, NaN, 7, false, -2, "", 0, -5, 3, null, -9]);   // -5
 adam.select(["negative", "odd"], [null, 4, NaN, 8, false, 2, "", 0, 30, 4, false], {filterConnect: "or"});   // false
 adam.select(["negative", "odd"], [null, 4, NaN, 8, false, 2, "", 0, 30, 4, false], {filterConnect: "or", defaultValue: -3});   // -3
+adam.select([{field: /[c-g]/}, "odd"], {a: [3, 5, 2], b: 1, c: 0, d: "-7", e: 4, f: -2, g: -1, h: null, i: -7, j: true, k: -5});   // -1
 
 adam.split(obj, ["a", "d"]);   // [{a: 1, d: 4}, {b: 2, c: 3, e: 5}]
 adam.split(obj, null, {filter: "odd"});   // [{a: 1, c: 3, e: 5}, {b: 2, d: 4}]
@@ -224,7 +225,7 @@ Reverse or negate the given value.
 
 ### select(filter: Any, from: Any, [settings: Object]): Any
 
-Return the value of the first element in the passed array that satisfies the specified filter(s).
+Return the value of the first element/field in the passed array/object that satisfies the specified filter(s).
 
 ### split(obj: Object, firstObjFields: Array | Object | null, [settings: Object]): Array
 
