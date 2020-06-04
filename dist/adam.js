@@ -301,7 +301,7 @@ function isKindOf(value, sKind) {
  *      - any other value - is used as the check when calling {@link module:adam.isKindOf isKindOf};
  *        if {@link module:adam.isKindOf isKindOf} returns `true` for the given field value and the filter
  *        it means that the field corresponds to this filter
- *    * an object;
+ *    * an object (referred below as condition);
  *      - if the object has `and` or `or` field, its value is used as subfilter and will be passed in recursive call of `checkField`
  *        as value of `filter` parameter; the field name (`and` or `or`) will be used as value of `filterConnect` setting (see below);
  *        if the result of the recursive call is `true` it means that the field corresponds to this filter
@@ -310,7 +310,17 @@ function isKindOf(value, sKind) {
  *        as if the key is a tested field value of special object that is created for the check purposes
  *        (i.e. `checkField({field: field}, "field", filter.field, {filterConnect: settings.filterConnect})`)
  *      - if the object has `value` field, its value is used as filter; if the field value strictly equals to the filter value
- *        it means that the field corresponds to this filter
+ *      - if the object has `inside` field, its value is used as filter; if the filter value "contains" the field value
+ *        it means that the field corresponds to this filter;
+ *        the filter value can be:
+ *        -- an array or a string; in such case `indexOf` is used to check presence of the field value in the filter value;
+ *        -- a set; in such case `has` is used to check presence of the field value in the filter value;
+ *        -- a map or an object; when `key` field is specified in the condition, the filter value will be checked
+ *           for presence of such key/value pair; if `true` is set as value for `key` field,
+ *           value of `field` parameter will be used as the key;
+ *           when `key` field is absent in the condition, the field value will be checked for presence
+ *           in the list of values of the map/object;
+ *        -- any other value; in such case the field value is not inside the filter value;
  *      - in any other case if the field value strictly equals to the object it means that the field corresponds to this filter
  *    * any other value; if the field value strictly equals to the filter value it means that the field corresponds to this filter
  * @param {Object} [settings]
@@ -329,7 +339,7 @@ function isKindOf(value, sKind) {
 function checkField(obj, field, filter, settings) {
     /*jshint laxbreak:true*/
     var test = true,
-        bAnd, nI, nL, value;
+        bAnd, data, nI, nL, sKey, sType, value;
     if (! settings) {
         settings = {};
     }
@@ -374,6 +384,38 @@ function checkField(obj, field, filter, settings) {
                 else if ("value" in test) {
                     test = test.value === value;
                 }
+                else if ("inside" in test) {
+                    data = test.inside;
+                    sType = getClass(data);
+                    switch (sType) {
+                        case "Array":
+                        case "String":
+                            test = data.indexOf(value) > -1;
+                            break;
+                        case "Map":
+                        case "Object":
+                            sKey = test.key;
+                            if (sKey) {
+                                if (sKey === true) {
+                                    sKey = field;
+                                }
+                                test = sType === "Map"
+                                    ? (data.has(sKey) && data.get(sKey) === value)
+                                    : ((sKey in data) && data[sKey] === value);
+                            }
+                            else {
+                                test = sType === "Map"
+                                    ? (Array.from(data.values()).indexOf(value) > -1)
+                                    : (getValueKey(data, value) !== null);
+                            }
+                            break;
+                        case "Set":
+                            test = data.has(value);
+                            break;
+                        default:
+                            test = false;
+                    }
+                }
                 else {
                     test = test === value;
                 }
@@ -386,6 +428,30 @@ function checkField(obj, field, filter, settings) {
         }
     }
     return test;
+}
+
+/**
+ * Check whether the value corresponds to specified condition(s) or filter(s).
+ * 
+ * This function is a "wrap" for the following code:
+ * ```js
+ * checkField({value: value}, "value", filter, settings);
+ * ```
+ * 
+ * @param {Any} value
+ *      Value that should be checked.
+ * @param {Any} filter
+ *      A filter or array of filters specifying conditions that should be checked.
+ *      See {@link module:adam.checkField checkField} for details.
+ * @param {Object} [settings]
+ *     Operation settings. See {@link module:adam.checkField checkField} for details.
+ * @return {Boolean}
+ *      `true` if the value corresponds to specified filter(s), otherwise `false`.
+ * @alias module:adam.checkValue
+ * @see {@link module:adam.checkField checkField}
+ */
+function checkValue(value, filter, settings) {
+    return checkField({value: value}, "value", filter, settings);
 }
 
 /**
@@ -1073,6 +1139,7 @@ function map(obj, action, settings) {
 module.exports = {
     change: change,
     checkField: checkField,
+    checkValue: checkValue,
     copy: copy,
     empty: empty,
     fromArray: fromArray,

@@ -345,7 +345,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-1013">line 1013</a>
+				 <a href="adam.js.html#sunlight-1-line-1079">line 1079</a>
 			</li>
 		</ul>
 	</dd>
@@ -562,7 +562,7 @@ if <a href="module-adam.html#.isKindOf">isKindOf</a> returns <code>true</code> f
 it means that the field corresponds to this filter</li>
 </ul>
 </li>
-<li>an object;<ul>
+<li>an object (referred below as condition);<ul>
 <li>if the object has <code>and</code> or <code>or</code> field, its value is used as subfilter and will be passed in recursive call of <code>checkField</code>
 as value of <code>filter</code> parameter; the field name (<code>and</code> or <code>or</code>) will be used as value of <code>filterConnect</code> setting (see below);
 if the result of the recursive call is <code>true</code> it means that the field corresponds to this filter</li>
@@ -570,8 +570,20 @@ if the result of the recursive call is <code>true</code> it means that the field
 the filter is applied to the field name (property key) in recursive call of <code>checkField</code>
 as if the key is a tested field value of special object that is created for the check purposes
 (i.e. <code>checkField({field: field}, &quot;field&quot;, filter.field, {filterConnect: settings.filterConnect})</code>)</li>
-<li>if the object has <code>value</code> field, its value is used as filter; if the field value strictly equals to the filter value
-it means that the field corresponds to this filter</li>
+<li>if the object has <code>value</code> field, its value is used as filter; if the field value strictly equals to the filter value</li>
+<li>if the object has <code>inside</code> field, its value is used as filter; if the filter value &quot;contains&quot; the field value
+it means that the field corresponds to this filter;
+the filter value can be:<ul>
+<li>an array or a string; in such case <code>indexOf</code> is used to check presence of the field value in the filter value;</li>
+<li>a set; in such case <code>has</code> is used to check presence of the field value in the filter value;</li>
+<li>a map or an object; when <code>key</code> field is specified in the condition, the filter value will be checked
+ for presence of such key/value pair; if <code>true</code> is set as value for <code>key</code> field,
+ value of <code>field</code> parameter will be used as the key;
+ when <code>key</code> field is absent in the condition, the field value will be checked for presence
+ in the list of values of the map/object;</li>
+<li>any other value; in such case the field value is not inside the filter value;</li>
+</ul>
+</li>
 <li>in any other case if the field value strictly equals to the object it means that the field corresponds to this filter</li>
 </ul>
 </li>
@@ -661,7 +673,7 @@ it means that the field corresponds to this filter</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-314">line 314</a>
+				 <a href="adam.js.html#sunlight-1-line-324">line 324</a>
 			</li>
 		</ul>
 	</dd>
@@ -700,6 +712,254 @@ it means that the field corresponds to this filter</li>
             
 <div class="param-desc">
     <p><code>true</code> if the field corresponds to specified filter(s), otherwise <code>false</code>.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".checkValue"><span class="type-signature">&lt;static> </span>checkValue(value, filter [, settings])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Check whether the value corresponds to specified condition(s) or filter(s).</p>
+<p>This function is a &quot;wrap&quot; for the following code:</p>
+<pre class="prettyprint source lang-js"><code>checkField({value: value}, &quot;value&quot;, filter, settings);</code></pre>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Value that should be checked.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>filter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>A filter or array of filters specifying conditions that should be checked.
+     See <a href="module-adam.html#.checkField">checkField</a> for details.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Operation settings. See <a href="module-adam.html#.checkField">checkField</a> for details.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="adam.js.html">adam.js</a>,
+				 <a href="adam.js.html#sunlight-1-line-438">line 438</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li><a href="module-adam.html#.checkField">checkField</a></li>
+			</ul>
+	</dd>
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p><code>true</code> if the value corresponds to specified filter(s), otherwise <code>false</code>.</p>
 </div>
 
 
@@ -925,7 +1185,7 @@ it means that the field corresponds to this filter</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-964">line 964</a>
+				 <a href="adam.js.html#sunlight-1-line-1030">line 1030</a>
 			</li>
 		</ul>
 	</dd>
@@ -1103,7 +1363,7 @@ it means that the field corresponds to this filter</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-796">line 796</a>
+				 <a href="adam.js.html#sunlight-1-line-862">line 862</a>
 			</li>
 		</ul>
 	</dd>
@@ -1361,7 +1621,7 @@ an item of the list will be used as value for check</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-585">line 585</a>
+				 <a href="adam.js.html#sunlight-1-line-651">line 651</a>
 			</li>
 		</ul>
 	</dd>
@@ -1745,7 +2005,7 @@ an item of the list will be used as value for check</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-397">line 397</a>
+				 <a href="adam.js.html#sunlight-1-line-463">line 463</a>
 			</li>
 		</ul>
 	</dd>
@@ -1966,7 +2226,7 @@ an item of the list will be used as value for check</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-528">line 528</a>
+				 <a href="adam.js.html#sunlight-1-line-594">line 594</a>
 			</li>
 		</ul>
 	</dd>
@@ -2749,7 +3009,7 @@ an item of the list will be used as value for check</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-461">line 461</a>
+				 <a href="adam.js.html#sunlight-1-line-527">line 527</a>
 			</li>
 		</ul>
 	</dd>
@@ -2968,7 +3228,7 @@ an item of the list will be used as value for check</li>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-497">line 497</a>
+				 <a href="adam.js.html#sunlight-1-line-563">line 563</a>
 			</li>
 		</ul>
 	</dd>
@@ -3877,7 +4137,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-1045">line 1045</a>
+				 <a href="adam.js.html#sunlight-1-line-1111">line 1111</a>
 			</li>
 		</ul>
 	</dd>
@@ -4133,7 +4393,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-759">line 759</a>
+				 <a href="adam.js.html#sunlight-1-line-825">line 825</a>
 			</li>
 		</ul>
 	</dd>
@@ -4313,7 +4573,7 @@ applying specified action/transformation for field values.</p>
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-837">line 837</a>
+				 <a href="adam.js.html#sunlight-1-line-903">line 903</a>
 			</li>
 		</ul>
 	</dd>
@@ -4562,7 +4822,7 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-649">line 649</a>
+				 <a href="adam.js.html#sunlight-1-line-715">line 715</a>
 			</li>
 		</ul>
 	</dd>
@@ -4824,7 +5084,7 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-713">line 713</a>
+				 <a href="adam.js.html#sunlight-1-line-779">line 779</a>
 			</li>
 		</ul>
 	</dd>
@@ -5031,7 +5291,7 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 		<ul class="dummy">
 			<li>
 				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-891">line 891</a>
+				 <a href="adam.js.html#sunlight-1-line-957">line 957</a>
 			</li>
 		</ul>
 	</dd>
@@ -5147,7 +5407,7 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
 	
-		on 2020-03-25T19:59:27+03:00
+		on 2020-06-04T21:25:52+03:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

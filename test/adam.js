@@ -746,6 +746,163 @@ describe("adam", function() {
             });
         });
         
+        describe("checkField(obj, field, {inside: ...})", function() {
+            var obj = {a: 1, b: 2, c: -3, d: "data", e: false, f: null, g: "test"};
+            
+            describe("checkField(obj, field, {inside: <array>})", function() {
+                it("should return true", function() {
+                    checkTrue(obj, "a", {inside: [0, -4, 1, 5]});
+                    checkTrue(obj, "d", {inside: ["input", "data", "end"]});
+                });
+                
+                it("should return false", function() {
+                    checkFalse(obj, "c", {inside: [3, null, false, "abc"]});
+                    checkFalse(obj, "d", {inside: ["number", "empty"]});
+                });
+            });
+            
+            describe("checkField(obj, field, {inside: <set>})", function() {
+                var dataSet = new Set([
+                    0, -4, 1, "b2", 5, 2, -8, false, "input", new Date(), "data", {a: -3}, "end"
+                ]);
+
+                it("should return true", function() {
+                    checkTrue(obj, "b", {inside: dataSet});
+                    checkTrue(obj, "d", {inside: dataSet});
+                    checkTrue(obj, "e", {inside: dataSet});
+                });
+                
+                it("should return false", function() {
+                    checkFalse(obj, "c", {inside: dataSet});
+                    checkFalse(obj, "f", {inside: dataSet});
+                    checkFalse(obj, "g", {inside: dataSet});
+                });
+            });
+            
+            describe("checkField(obj, field, {inside: <string>})", function() {
+                it("should return true", function() {
+                    checkTrue(obj, "a", {inside: "alfa-1"});
+                    checkTrue(obj, "d", {inside: "data set"});
+                    checkTrue(obj, "g", {inside: "This is a test string."});
+                });
+                
+                it("should return false", function() {
+                    checkFalse(obj, "c", {inside: "123"});
+                    checkFalse(obj, "f", {inside: "nul"});
+                });
+            });
+            
+            describe("checkField(obj, field, {inside: <map>...})", function() {
+                var dataMap = new Map([
+                    ["a", 0],
+                    ["b", 2],
+                    ["by", "name"],
+                    ["d", true],
+                    ["f", null],
+                    ["end", "test"],
+                    ["mega", "data"],
+                    ["z", -3]
+                ]);
+
+                describe("checkField(obj, field, {inside: <map>})", function() {
+                    it("should return true", function() {
+                        checkTrue(obj, "b", {inside: dataMap});
+                        checkTrue(obj, "c", {inside: dataMap});
+                        checkTrue(obj, "d", {inside: dataMap});
+                        checkTrue(obj, "f", {inside: dataMap});
+                        checkTrue(obj, "g", {inside: dataMap});
+                    });
+                    
+                    it("should return false", function() {
+                        checkFalse(obj, "a", {inside: dataMap});
+                        checkFalse(obj, "e", {inside: dataMap});
+                    });
+                });
+                
+                describe("checkField(obj, field, {inside: <map>, key: true})", function() {
+                    it("should return true", function() {
+                        checkTrue(obj, "b", {inside: dataMap, key: true});
+                        checkTrue(obj, "f", {inside: dataMap, key: true});
+                    });
+                    
+                    it("should return false", function() {
+                        checkFalse(obj, "c", {inside: dataMap, key: true});
+                        checkFalse(obj, "d", {inside: dataMap, key: true});
+                        checkFalse(obj, "???", {inside: dataMap, key: true});
+                    });
+                });
+                
+                describe("checkField(obj, field, {inside: <map>, key: <field>})", function() {
+                    it("should return true", function() {
+                        checkTrue(obj, "c", {inside: dataMap, key: "z"});
+                        checkTrue(obj, "d", {inside: dataMap, key: "mega"});
+                        checkTrue(obj, "g", {inside: dataMap, key: "end"});
+                    });
+                    
+                    it("should return false", function() {
+                        checkFalse(obj, "b", {inside: dataMap, key: "by"});
+                        checkFalse(obj, "e", {inside: dataMap, key: "f"});
+                        checkFalse(obj, "???", {inside: dataMap, key: "xyz"});
+                    });
+                });
+            });
+            
+            describe("checkField(obj, field, {inside: <object>...})", function() {
+                var dataObj = {
+                    a: 0,
+                    b: 2,
+                    by: "name",
+                    d: true,
+                    f: null,
+                    end: "test",
+                    mega: "data",
+                    z: -3
+                };
+
+                describe("checkField(obj, field, {inside: <object>})", function() {
+                    it("should return true", function() {
+                        checkTrue(obj, "b", {inside: dataObj});
+                        checkTrue(obj, "c", {inside: dataObj});
+                        checkTrue(obj, "d", {inside: dataObj});
+                        checkTrue(obj, "f", {inside: dataObj});
+                        checkTrue(obj, "g", {inside: dataObj});
+                    });
+                    
+                    it("should return false", function() {
+                        checkFalse(obj, "a", {inside: dataObj});
+                        checkFalse(obj, "e", {inside: dataObj});
+                    });
+                });
+                
+                describe("checkField(obj, field, {inside: <object>, key: true})", function() {
+                    it("should return true", function() {
+                        checkTrue(obj, "b", {inside: dataObj, key: true});
+                        checkTrue(obj, "f", {inside: dataObj, key: true});
+                    });
+                    
+                    it("should return false", function() {
+                        checkFalse(obj, "c", {inside: dataObj, key: true});
+                        checkFalse(obj, "d", {inside: dataObj, key: true});
+                        checkFalse(obj, "???", {inside: dataObj, key: true});
+                    });
+                });
+                
+                describe("checkField(obj, field, {inside: <object>, key: <field>})", function() {
+                    it("should return true", function() {
+                        checkTrue(obj, "c", {inside: dataObj, key: "z"});
+                        checkTrue(obj, "d", {inside: dataObj, key: "mega"});
+                        checkTrue(obj, "g", {inside: dataObj, key: "end"});
+                    });
+                    
+                    it("should return false", function() {
+                        checkFalse(obj, "b", {inside: dataObj, key: "by"});
+                        checkFalse(obj, "e", {inside: dataObj, key: "f"});
+                        checkFalse(obj, "???", {inside: dataObj, key: "xyz"});
+                    });
+                });
+            });
+        });
+        
         describe("checkField(obj, field, {...})", function() {
             var filter = {f: 1},
                 obj = {a: filter, b: adam};
@@ -785,13 +942,14 @@ describe("adam", function() {
             
             it("should return true", function() {
                 checkTrue(obj, "a", ["own", "string", /\d/, {or: [/5$/, /1/, /7/]}]);
-                checkTrue(obj, "b", ["integer", /3$/]);
+                checkTrue(obj, "b", ["integer", /3$/, {inside: [1, 12, 123, 1234, 12345]}]);
                 checkTrue(obj, "c", ["Number", "!integer", /^3/]);
             });
             
             it("should return false", function() {
                 checkFalse(obj, "a", ["own", "string", /^5/]);
                 checkFalse(obj, "b", [/2/, "real"]);
+                checkFalse(obj, "b", [/2/, {inside: [1, 2, 11, 12, 21, 22]}, "positive"]);
                 checkFalse(child, "a", [/\d/, "number", "own"]);
                 checkFalse(obj, "c", ["number", {or: ["integer", "negative"]}]);
             });
@@ -803,13 +961,13 @@ describe("adam", function() {
             
             it("should return true", function() {
                 checkTrue(obj, "a", ["!own", "number", /a/], settings);
-                checkTrue(obj, "b", ["real", /2/], settings);
+                checkTrue(obj, "b", ["real", /2/, {inside: [1, 2, 3]}], settings);
                 checkTrue(obj, "c", ["integer", "false"], settings);
                 checkTrue(obj, "d", [0, null, "empty"], settings);
             });
             
             it("should return false", function() {
-                checkFalse(obj, "a", ["!own", "!string", /^\d/], settings);
+                checkFalse(obj, "a", ["!own", "!string", /^\d/, {inside: "1800-1815"}], settings);
                 checkFalse(obj, "b", [/777/, "nan"], settings);
                 checkFalse(obj, "c", [/nil/, "true", "!null"], settings);
                 checkFalse(obj, "d", ["object", /\w/, "!empty"], settings);
@@ -830,6 +988,57 @@ describe("adam", function() {
                 checkFalse(obj, "a", ["string", "!empty"], settings);
                 checkFalse(obj, "b", "Array", settings);
                 checkFalse(obj, "c", /null/, settings);
+            });
+        });
+    });
+    
+    describe(".checkValue", function() {
+        var checkValue = adam.checkValue;
+        
+        function checkTrue(obj, field, filter, settings) {
+            /*jshint unused:vars*/
+            expect( checkValue.apply(null, arguments) )
+                .equal(true);
+        }
+        
+        function checkFalse(obj, field, filter, settings) {
+            /*jshint unused:vars*/
+            expect( checkValue.apply(null, arguments) )
+                .equal(false);
+        }
+        
+        describe("checkValue(value, filter)", function() {
+            it("should return true", function() {
+                checkTrue(1, "number");
+                checkTrue(true, "boolean");
+                checkTrue([1], "Array");
+                checkTrue(new Map(), "Map");
+                checkTrue(parent, "object");
+                checkTrue(parent, "!empty");
+                checkTrue(14, ["positive", /4/, {inside: [-3, 5, 14, false, 8]}]);
+            });
+            
+            it("should return false", function() {
+                checkFalse("", ["string", "!empty"]);
+                checkFalse(parent, "Array");
+                checkFalse(new Set(), /null/);
+                checkFalse("at", ["string", {inside: "somewhere in the universe"}, {inside: ["in", "to", "at"]}]);
+            });
+        });
+
+        describe("checkValue(value, filter, {filterConnect: 'or'})", function() {
+            var settings = {filterConnect: "or"};
+            
+            it("should return true", function() {
+                checkTrue(1, "number", settings);
+                checkTrue(true, ["boolean"], settings);
+                checkTrue(14, ["negative", /4/, {inside: [-3, 5, false, 8]}], settings);
+                checkTrue("at", [{inside: "somewhere in the universe"}, {inside: ["in", "to", "at"]}], settings);
+            });
+            
+            it("should return false", function() {
+                checkFalse(57, ["string", "empty"], settings);
+                checkFalse("at", [/\d/, {inside: "somewhere in the universe"}], settings);
             });
         });
     });

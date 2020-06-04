@@ -85,6 +85,10 @@ adam.isKindOf(".321e+2", "numeric");   // true
 adam.checkField(obj, "c", ["positive", "odd"]);   // true
 adam.checkField(obj, "b", ["real", /^7/], {filterConnect: "or"});   // false
 
+adam.checkValue(-15, ["negative", /5/, {inside: [2, -7, -15, 12, 9]}]);   // true
+adam.checkValue("73", [/^\d+$/, {inside: {a: 1, b: "43", c: null}}]);   // false
+adam.checkValue("73", [/^\d+$/, {inside: {a: 1, b: "43", c: null}}], {filterConnect: "or"});   // true
+
 adam.getFreeField({a5: 5, a2: 2, a7: 7, a3: 3}, {prefix: "a", startNum: 2});   // "a4"
 
 adam.getSize(obj);   // 5
@@ -150,6 +154,10 @@ Change all or filtered fields of object, applying specified action/transformatio
 ### checkField(obj: Object, field: String | Symbol, filter: Any, [settings: Object]): Boolean
 
 Check whether the field of given object corresponds to specified condition(s) or filter(s).
+
+### checkValue(value: Any, filter: Any, [settings: Object]): Boolean
+
+Check whether the value corresponds to specified condition(s) or filter(s).
 
 ### copy(source: Object, target: Object, [settings: Object]): Object
 
