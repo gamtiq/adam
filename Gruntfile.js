@@ -38,11 +38,8 @@ module.exports = function(grunt) {
         
         jsdoc: {
             dist: {
-                src: ["<%= src %>", "README.md"],
                 options: {
-                    destination: "doc",
-                    template: "node_modules/ink-docstrap/template",
-                    configure: "jsdoc-conf.json"
+                    configure: "jsdoc-conf.js"
                 }
             }
         },

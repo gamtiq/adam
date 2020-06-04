@@ -1,139 +1,146 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>adam Module: adam</title>
-
-	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
-
-	<link type="text/css" rel="stylesheet" href="styles/site.spacelab.css">
-
+    
+    <meta charset="utf-8">
+    <title>adam - adam</title>
+    
+    <meta name="description" content="Functions to create, process and test objects" />
+    
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
 <body>
 
-<div class="navbar navbar-default navbar-fixed-top ">
-<div class="container">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html">adam</a>
-		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-        </button>
-	</div>
-	<div class="navbar-collapse collapse" id="topNavigation">
-		<ul class="nav navbar-nav">
-			
-			<li class="dropdown">
-				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="module-adam.html">adam</a></li>
-				</ul>
-			</li>
-			
-		</ul>
-        
-            <div class="col-sm-3 col-md-3">
-                <form class="navbar-form" role="search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        
-	</div>
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
 
-</div>
-</div>
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/gamtiq/adam" target="_blank" id="github_link" >GitHub repo</a></h2><h3>Modules</h3><ul><li><a href="module-adam.html">adam</a><ul class='methods'><li data-type='method'><a href="module-adam.html#.change">change</a></li><li data-type='method'><a href="module-adam.html#.checkField">checkField</a></li><li data-type='method'><a href="module-adam.html#.checkValue">checkValue</a></li><li data-type='method'><a href="module-adam.html#.copy">copy</a></li><li data-type='method'><a href="module-adam.html#.empty">empty</a></li><li data-type='method'><a href="module-adam.html#.fromArray">fromArray</a></li><li data-type='method'><a href="module-adam.html#.getClass">getClass</a></li><li data-type='method'><a href="module-adam.html#.getFields">getFields</a></li><li data-type='method'><a href="module-adam.html#.getFreeField">getFreeField</a></li><li data-type='method'><a href="module-adam.html#.getPropertySymbols">getPropertySymbols</a></li><li data-type='method'><a href="module-adam.html#.getSize">getSize</a></li><li data-type='method'><a href="module-adam.html#.getType">getType</a></li><li data-type='method'><a href="module-adam.html#.getValueKey">getValueKey</a></li><li data-type='method'><a href="module-adam.html#.getValues">getValues</a></li><li data-type='method'><a href="module-adam.html#.isEmpty">isEmpty</a></li><li data-type='method'><a href="module-adam.html#.isKindOf">isKindOf</a></li><li data-type='method'><a href="module-adam.html#.isSizeMore">isSizeMore</a></li><li data-type='method'><a href="module-adam.html#.map">map</a></li><li data-type='method'><a href="module-adam.html#.remove">remove</a></li><li data-type='method'><a href="module-adam.html#.reverse">reverse</a></li><li data-type='method'><a href="module-adam.html#.select">select</a></li><li data-type='method'><a href="module-adam.html#.split">split</a></li><li data-type='method'><a href="module-adam.html#.transform">transform</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">adam</h1>
+    
+
+    
 
 
-<div class="container" id="toc-content">
-<div class="row">
 
-	
-	<div class="col-md-8">
-	
-		<div id="main">
-			
 
-	<h1 class="page-title">Module: adam</h1>
 <section>
 
 <header>
     
+        
+            
+        
+    
 </header>
 
-
 <article>
-    <div class="container-overview">
     
+        <div class="container-overview">
         
-            <div class="description"><p>Functions to create, process and test objects.</p></div>
-        
+            
+                <div class="description usertext"><p>Functions to create, process and test objects.</p></div>
+            
 
-        
+            
+                
+
+
+
+
 <dl class="details">
-    
-
-	
-
-	
-
-	
 
     
-
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line10">line 10</a>
+    </li></ul></dd>
     
 
     
 
     
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
 
+    
 
+    
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-10">line 10</a>
-			</li>
-		</ul>
-	</dd>
-	
+    
 
-	
+    
 
-	
+    
 
-	
+    
+
+    
+
+    
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
         
-    
-    </div>
-
+        </div>
     
 
     
@@ -141,6 +148,10 @@
     
 
     
+    
+    
+
+     
 
     
 
@@ -149,32 +160,89 @@
     
         <h3 class="subsection-title">Methods</h3>
 
-        <dl>
-            
-<hr>
-<dt>
-    <h4 class="name" id=".change"><span class="type-signature">&lt;static> </span>change(obj, action [, settings])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Change all or filtered fields of object, applying specified action/transformation.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
         
+            
 
-<table class="params table table-striped">
+    
+
+    <h4 class="name" id=".change"><span class="type-signature">(static) </span>change<span class="signature">(obj, action, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line1079">line 1079</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.checkField">checkField</a></li>
+        
+            <li><a href="module-adam.html#.copy">copy</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Change all or filtered fields of object, applying specified action/transformation.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -184,7 +252,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -205,7 +273,6 @@
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -242,7 +309,6 @@
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -273,7 +339,6 @@
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -307,88 +372,31 @@
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-1079">line 1079</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.checkField">checkField</a></li>
-			
-			<li><a href="module-adam.html#.copy">copy</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Modified object (value of <code>obj</code> parameter).</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -397,42 +405,96 @@
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".checkField"><span class="type-signature">&lt;static> </span>checkField(obj, field, filter [, settings])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Check whether the field of given object corresponds to specified condition(s) or filter(s).</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".checkField"><span class="type-signature">(static) </span>checkField<span class="signature">(obj, field, filter, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line324">line 324</a>
+    </li></ul></dd>
     
 
     
+
     
-        <h5>Parameters:</h5>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.getClass">getClass</a></li>
         
+            <li><a href="module-adam.html#.isKindOf">isKindOf</a></li>
+        </ul>
+    </dd>
+    
 
-<table class="params table table-striped">
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Check whether the field of given object corresponds to specified condition(s) or filter(s).</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -442,7 +504,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -463,7 +525,6 @@
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -500,7 +561,6 @@
 <span class="param-type">Symbol</span>
 
 
-
             
             </td>
 
@@ -530,7 +590,6 @@
             
                 
 <span class="param-type">Any</span>
-
 
 
             
@@ -604,7 +663,6 @@ the filter value can be:<ul>
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -635,88 +693,31 @@ the filter value can be:<ul>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-324">line 324</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.getClass">getClass</a></li>
-			
-			<li><a href="module-adam.html#.isKindOf">isKindOf</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p><code>true</code> if the field corresponds to specified filter(s), otherwise <code>false</code>.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -725,44 +726,96 @@ the filter value can be:<ul>
 <span class="param-type">Boolean</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".checkValue"><span class="type-signature">&lt;static> </span>checkValue(value, filter [, settings])</h4>
-    
-    
-</dt>
-<dd>
 
     
-    <div class="description">
-        <p>Check whether the value corresponds to specified condition(s) or filter(s).</p>
+
+    <h4 class="name" id=".checkValue"><span class="type-signature">(static) </span>checkValue<span class="signature">(value, filter, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line438">line 438</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.checkField">checkField</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Check whether the value corresponds to specified condition(s) or filter(s).</p>
 <p>This function is a &quot;wrap&quot; for the following code:</p>
 <pre class="prettyprint source lang-js"><code>checkField({value: value}, &quot;value&quot;, filter, settings);</code></pre>
-    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
 
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -772,7 +825,7 @@ the filter value can be:<ul>
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -793,7 +846,6 @@ the filter value can be:<ul>
             
                 
 <span class="param-type">Any</span>
-
 
 
             
@@ -825,7 +877,6 @@ the filter value can be:<ul>
             
                 
 <span class="param-type">Any</span>
-
 
 
             
@@ -860,7 +911,6 @@ the filter value can be:<ul>
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -885,86 +935,31 @@ the filter value can be:<ul>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-438">line 438</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.checkField">checkField</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p><code>true</code> if the value corresponds to specified filter(s), otherwise <code>false</code>.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -973,42 +968,96 @@ the filter value can be:<ul>
 <span class="param-type">Boolean</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".copy"><span class="type-signature">&lt;static> </span>copy(source, target [, settings])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Copy all or filtered fields from source object into target object, applying specified transformation if necessary.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".copy"><span class="type-signature">(static) </span>copy<span class="signature">(source, target, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line1030">line 1030</a>
+    </li></ul></dd>
     
 
     
+
     
-        <h5>Parameters:</h5>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.checkField">checkField</a></li>
         
+            <li><a href="module-adam.html#.transform">transform</a></li>
+        </ul>
+    </dd>
+    
 
-<table class="params table table-striped">
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Copy all or filtered fields from source object into target object, applying specified transformation if necessary.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -1018,7 +1067,7 @@ the filter value can be:<ul>
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -1039,7 +1088,6 @@ the filter value can be:<ul>
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -1073,7 +1121,6 @@ the filter value can be:<ul>
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -1103,7 +1150,6 @@ the filter value can be:<ul>
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -1147,88 +1193,31 @@ the filter value can be:<ul>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-1030">line 1030</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.checkField">checkField</a></li>
-			
-			<li><a href="module-adam.html#.transform">transform</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Reference to the target object (value of <code>target</code> parameter).</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -1237,29 +1226,71 @@ the filter value can be:<ul>
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".empty"><span class="type-signature">&lt;static> </span>empty(value)</h4>
-    
-    
-</dt>
-<dd>
 
     
-    <div class="description">
-        <p>Empty the given value according to the following rules:</p>
+
+    <h4 class="name" id=".empty"><span class="type-signature">(static) </span>empty<span class="signature">(value)</span><span class="type-signature"> &rarr; {Any}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line862">line 862</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Empty the given value according to the following rules:</p>
 <ul>
 <li>for array: removes all elements from the value</li>
 <li>for object: removes all own fields from the value</li>
@@ -1267,19 +1298,22 @@ the filter value can be:<ul>
 <li>for number: returns <code>0</code></li>
 <li>otherwise: returns <code>undefined</code></li>
 </ul>
-    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
 
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -1310,7 +1344,6 @@ the filter value can be:<ul>
 <span class="param-type">Any</span>
 
 
-
             
             </td>
 
@@ -1325,79 +1358,31 @@ the filter value can be:<ul>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-862">line 862</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Processed value (for array or object) or empty value corresponding to the given value.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -1406,44 +1391,96 @@ the filter value can be:<ul>
 <span class="param-type">Any</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".fromArray"><span class="type-signature">&lt;static> </span>fromArray(list [, keyField] [, settings])</h4>
-    
-    
-</dt>
-<dd>
 
     
-    <div class="description">
-        <p>Create object (map) from list of objects.
+
+    <h4 class="name" id=".fromArray"><span class="type-signature">(static) </span>fromArray<span class="signature">(list, keyField<span class="signature-attributes">opt</span>, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line651">line 651</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.checkField">checkField</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Create object (map) from list of objects.
 Fields of the created object are values of specified field of objects,
 values of the created object are corresponding items of the list.</p>
-    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
 
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -1453,7 +1490,7 @@ values of the created object are corresponding items of the list.</p>
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -1474,7 +1511,6 @@ values of the created object are corresponding items of the list.</p>
             
                 
 <span class="param-type">Array</span>
-
 
 
             
@@ -1509,7 +1545,6 @@ values of the created object are corresponding items of the list.</p>
 |
 
 <span class="param-type">String</span>
-
 
 
             
@@ -1549,7 +1584,6 @@ values of the created object are corresponding items of the list.</p>
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -1583,86 +1617,31 @@ an item of the list will be used as value for check</li>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-651">line 651</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.checkField">checkField</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Object created from the given list.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -1671,42 +1650,87 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".getClass"><span class="type-signature">&lt;static> </span>getClass(value)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Return class of given value (namely value of internal property <code>[[Class]]</code>).</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".getClass"><span class="type-signature">(static) </span>getClass<span class="signature">(value)</span><span class="type-signature"> &rarr; {String}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line110">line 110</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Return class of given value (namely value of internal property <code>[[Class]]</code>).</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -1737,7 +1761,6 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Any</span>
 
 
-
             
             </td>
 
@@ -1752,79 +1775,31 @@ an item of the list will be used as value for check</li>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-110">line 110</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>String indicating value class.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -1833,43 +1808,95 @@ an item of the list will be used as value for check</li>
 <span class="param-type">String</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".getFields"><span class="type-signature">&lt;static> </span>getFields(obj [, settings])</h4>
-    
-    
-</dt>
-<dd>
 
     
-    <div class="description">
-        <p>Return list of all or filtered fields of specified object.</p>
+
+    <h4 class="name" id=".getFields"><span class="type-signature">(static) </span>getFields<span class="signature">(obj, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line463">line 463</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.checkField">checkField</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Return list of all or filtered fields of specified object.</p>
 <p>Fields are searched (checked) in the object itself and in its prototype chain.</p>
-    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
 
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -1879,7 +1906,7 @@ an item of the list will be used as value for check</li>
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -1900,7 +1927,6 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -1932,7 +1958,6 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -1967,86 +1992,31 @@ an item of the list will be used as value for check</li>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-463">line 463</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.checkField">checkField</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>List of all or filtered fields of specified object.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -2055,43 +2025,88 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Array</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".getFreeField"><span class="type-signature">&lt;static> </span>getFreeField(obj [, settings])</h4>
-    
-    
-</dt>
-<dd>
 
     
-    <div class="description">
-        <p>Return name of first free (absent) field of specified object, that conforms to the following pattern:
+
+    <h4 class="name" id=".getFreeField"><span class="type-signature">(static) </span>getFreeField<span class="signature">(obj, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {String}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line594">line 594</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Return name of first free (absent) field of specified object, that conforms to the following pattern:
 &lt;prefix&gt;&lt;number&gt;</p>
-    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
 
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -2101,7 +2116,7 @@ an item of the list will be used as value for check</li>
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -2122,7 +2137,6 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -2157,7 +2171,6 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -2188,79 +2201,31 @@ an item of the list will be used as value for check</li>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-594">line 594</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Name of field which is absent in the specified object and conforms to the pattern.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -2269,43 +2234,88 @@ an item of the list will be used as value for check</li>
 <span class="param-type">String</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".getPropertySymbols"><span class="type-signature">&lt;static> </span>getPropertySymbols(obj)</h4>
-    
-    
-</dt>
-<dd>
 
     
-    <div class="description">
-        <p>Return list of all symbol property keys for given object including keys from prototype chain.</p>
+
+    <h4 class="name" id=".getPropertySymbols"><span class="type-signature">(static) </span>getPropertySymbols<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line77">line 77</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Return list of all symbol property keys for given object including keys from prototype chain.</p>
 <p>This function is defined only when <code>Object.getOwnPropertySymbols</code> is available.</p>
-    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
 
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -2334,7 +2344,6 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -2351,79 +2360,31 @@ an item of the list will be used as value for check</li>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-77">line 77</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>List of all found symbol property keys.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -2432,42 +2393,94 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Array</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".getSize"><span class="type-signature">&lt;static> </span>getSize(obj [, settings])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Return number of all or filtered fields of specified object.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".getSize"><span class="type-signature">(static) </span>getSize<span class="signature">(obj, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Integer}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line149">line 149</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.getFields">getFields</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Return number of all or filtered fields of specified object.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -2477,7 +2490,7 @@ an item of the list will be used as value for check</li>
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -2498,7 +2511,6 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -2532,7 +2544,6 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -2563,86 +2574,31 @@ an item of the list will be used as value for check</li>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-149">line 149</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.getFields">getFields</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Number of all or filtered fields of specified object.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -2651,42 +2607,87 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Integer</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".getType"><span class="type-signature">&lt;static> </span>getType(value)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Return type of given value.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".getType"><span class="type-signature">(static) </span>getType<span class="signature">(value)</span><span class="type-signature"> &rarr; {String}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line124">line 124</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Return type of given value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -2717,7 +2718,6 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Any</span>
 
 
-
             
             </td>
 
@@ -2732,79 +2732,31 @@ an item of the list will be used as value for check</li>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-124">line 124</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>For <code>NaN</code> - <code>'nan'</code>, for <code>null</code> - <code>'null'</code>, otherwise - result of <code>typeof</code> operator.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -2813,42 +2765,87 @@ an item of the list will be used as value for check</li>
 <span class="param-type">String</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".getValueKey"><span class="type-signature">&lt;static> </span>getValueKey(obj, value [, bAll])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Return the name of field (or list of names) having the specified value in the given object.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".getValueKey"><span class="type-signature">(static) </span>getValueKey<span class="signature">(obj, value, bAll<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array|String|null}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line527">line 527</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Return the name of field (or list of names) having the specified value in the given object.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -2858,7 +2855,7 @@ an item of the list will be used as value for check</li>
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -2879,7 +2876,6 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -2913,7 +2909,6 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Any</span>
 
 
-
             
             </td>
 
@@ -2945,7 +2940,6 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Boolean</span>
 
 
-
             
             </td>
 
@@ -2971,72 +2965,24 @@ an item of the list will be used as value for check</li>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-527">line 527</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Names of fields (when <code>bAll</code> is <code>true</code>) or a field name having the specified value,
      or <code>null</code> when the object do not contain the specified value.</p>
@@ -3044,7 +2990,7 @@ an item of the list will be used as value for check</li>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -3059,42 +3005,94 @@ an item of the list will be used as value for check</li>
 <span class="param-type">null</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".getValues"><span class="type-signature">&lt;static> </span>getValues(obj [, settings])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Return list of all or filtered field values of specified object.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".getValues"><span class="type-signature">(static) </span>getValues<span class="signature">(obj, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line563">line 563</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.checkField">checkField</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Return list of all or filtered field values of specified object.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -3104,7 +3102,7 @@ an item of the list will be used as value for check</li>
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -3125,7 +3123,6 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -3159,7 +3156,6 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -3190,86 +3186,31 @@ an item of the list will be used as value for check</li>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-563">line 563</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.checkField">checkField</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>List of all or filtered field values of specified object.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -3278,42 +3219,96 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Array</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".isEmpty"><span class="type-signature">&lt;static> </span>isEmpty(value)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Check whether given value is an empty value i.e. <code>null</code>, <code>undefined</code>, <code>0</code>, empty object, empty array or empty string.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".isEmpty"><span class="type-signature">(static) </span>isEmpty<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line196">line 196</a>
+    </li></ul></dd>
     
 
     
+
     
-        <h5>Parameters:</h5>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.getClass">getClass</a></li>
         
+            <li><a href="module-adam.html#.isSizeMore">isSizeMore</a></li>
+        </ul>
+    </dd>
+    
 
-<table class="params table table-striped">
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Check whether given value is an empty value i.e. <code>null</code>, <code>undefined</code>, <code>0</code>, empty object, empty array or empty string.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -3342,7 +3337,6 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Any</span>
-
 
 
             
@@ -3359,88 +3353,31 @@ an item of the list will be used as value for check</li>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-196">line 196</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.getClass">getClass</a></li>
-			
-			<li><a href="module-adam.html#.isSizeMore">isSizeMore</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p><code>true</code> if the value is an empty value, otherwise <code>false</code>.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -3449,42 +3386,98 @@ an item of the list will be used as value for check</li>
 <span class="param-type">Boolean</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".isKindOf"><span class="type-signature">&lt;static> </span>isKindOf(value, sKind)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Check whether given value has (or does not have) specified kind (type or class).</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".isKindOf"><span class="type-signature">(static) </span>isKindOf<span class="signature">(value, sKind)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line237">line 237</a>
+    </li></ul></dd>
     
 
     
+
     
-        <h5>Parameters:</h5>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.getClass">getClass</a></li>
         
+            <li><a href="module-adam.html#.getType">getType</a></li>
+        
+            <li><a href="module-adam.html#.isEmpty">isEmpty</a></li>
+        </ul>
+    </dd>
+    
 
-<table class="params table table-striped">
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Check whether given value has (or does not have) specified kind (type or class).</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -3513,7 +3506,6 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">Any</span>
-
 
 
             
@@ -3537,7 +3529,6 @@ an item of the list will be used as value for check</li>
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -3584,90 +3575,31 @@ For example, <code>!real</code> means: check whether the value is not a real num
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-237">line 237</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.getClass">getClass</a></li>
-			
-			<li><a href="module-adam.html#.getType">getType</a></li>
-			
-			<li><a href="module-adam.html#.isEmpty">isEmpty</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p><code>true</code> if value has the specified kind (or does not have when the check is negated), otherwise <code>false</code>.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -3676,42 +3608,94 @@ For example, <code>!real</code> means: check whether the value is not a real num
 <span class="param-type">Boolean</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".isSizeMore"><span class="type-signature">&lt;static> </span>isSizeMore(obj, nValue [, settings])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Check whether number of all or filtered fields of specified object is more than the given value.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".isSizeMore"><span class="type-signature">(static) </span>isSizeMore<span class="signature">(obj, nValue, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line172">line 172</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.getFields">getFields</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Check whether number of all or filtered fields of specified object is more than the given value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -3721,7 +3705,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -3742,7 +3726,6 @@ For example, <code>!real</code> means: check whether the value is not a real num
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -3776,7 +3759,6 @@ For example, <code>!real</code> means: check whether the value is not a real num
 <span class="param-type">Number</span>
 
 
-
             
             </td>
 
@@ -3806,7 +3788,6 @@ For example, <code>!real</code> means: check whether the value is not a real num
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -3839,86 +3820,31 @@ For example, <code>!real</code> means: check whether the value is not a real num
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-172">line 172</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.getFields">getFields</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p><code>true</code>, when number of all or filtered fields is more than the given value, otherwise <code>false</code>.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -3927,43 +3853,97 @@ For example, <code>!real</code> means: check whether the value is not a real num
 <span class="param-type">Boolean</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".map"><span class="type-signature">&lt;static> </span>map(obj, action [, settings])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Create new object containing all or filtered fields of the source object/array,
-applying specified action/transformation for field values.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".map"><span class="type-signature">(static) </span>map<span class="signature">(obj, action, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line1111">line 1111</a>
+    </li></ul></dd>
     
 
     
+
     
-        <h5>Parameters:</h5>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.checkField">checkField</a></li>
         
+            <li><a href="module-adam.html#.copy">copy</a></li>
+        </ul>
+    </dd>
+    
 
-<table class="params table table-striped">
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Create new object containing all or filtered fields of the source object/array,
+applying specified action/transformation for field values.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -3973,7 +3953,7 @@ applying specified action/transformation for field values.</p>
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -3997,7 +3977,6 @@ applying specified action/transformation for field values.</p>
 |
 
 <span class="param-type">Object</span>
-
 
 
             
@@ -4034,7 +4013,6 @@ applying specified action/transformation for field values.</p>
 <span class="param-type">String</span>
 
 
-
             
             </td>
 
@@ -4065,7 +4043,6 @@ applying specified action/transformation for field values.</p>
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -4099,88 +4076,31 @@ applying specified action/transformation for field values.</p>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-1111">line 1111</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.checkField">checkField</a></li>
-			
-			<li><a href="module-adam.html#.copy">copy</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Created object containing processed fields.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -4189,42 +4109,94 @@ applying specified action/transformation for field values.</p>
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".remove"><span class="type-signature">&lt;static> </span>remove(obj, filter [, settings])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Remove filtered fields/elements from specified object/array.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".remove"><span class="type-signature">(static) </span>remove<span class="signature">(obj, filter, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array|Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line825">line 825</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.checkField">checkField</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Remove filtered fields/elements from specified object/array.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -4234,7 +4206,7 @@ applying specified action/transformation for field values.</p>
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -4258,7 +4230,6 @@ applying specified action/transformation for field values.</p>
 |
 
 <span class="param-type">Object</span>
-
 
 
             
@@ -4290,7 +4261,6 @@ applying specified action/transformation for field values.</p>
             
                 
 <span class="param-type">Any</span>
-
 
 
             
@@ -4325,7 +4295,6 @@ applying specified action/transformation for field values.</p>
 <span class="param-type">Object</span>
 
 
-
             
             </td>
 
@@ -4355,86 +4324,31 @@ applying specified action/transformation for field values.</p>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-825">line 825</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.checkField">checkField</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Processed array or object.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -4446,29 +4360,71 @@ applying specified action/transformation for field values.</p>
 <span class="param-type">Object</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".reverse"><span class="type-signature">&lt;static> </span>reverse(value)</h4>
-    
-    
-</dt>
-<dd>
 
     
-    <div class="description">
-        <p>Reverse or negate the given value according to the following rules:</p>
+
+    <h4 class="name" id=".reverse"><span class="type-signature">(static) </span>reverse<span class="signature">(value)</span><span class="type-signature"> &rarr; {Any}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line903">line 903</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Reverse or negate the given value according to the following rules:</p>
 <ul>
 <li>for array: reverses order of its elements</li>
 <li>for object: swaps fields with their values (i.e. for <code>{a: &quot;b&quot;, c: &quot;d&quot;}</code> returns <code>{b: &quot;a&quot;, d: &quot;c&quot;}</code>)</li>
@@ -4477,19 +4433,22 @@ applying specified action/transformation for field values.</p>
 <li>for boolean: returns negated value (i.e. <code>! value</code>)</li>
 <li>otherwise: returns source value without modification</li>
 </ul>
-    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
 
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -4520,7 +4479,6 @@ applying specified action/transformation for field values.</p>
 <span class="param-type">Any</span>
 
 
-
             
             </td>
 
@@ -4535,79 +4493,31 @@ applying specified action/transformation for field values.</p>
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-903">line 903</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Processed value.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -4616,46 +4526,98 @@ applying specified action/transformation for field values.</p>
 <span class="param-type">Any</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".select"><span class="type-signature">&lt;static> </span>select(filter, from [, settings])</h4>
-    
-    
-</dt>
-<dd>
 
     
-    <div class="description">
-        <p>Return the value of the first element/field in the passed array/object that satisfies the specified filter(s).</p>
+
+    <h4 class="name" id=".select"><span class="type-signature">(static) </span>select<span class="signature">(filter, from, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Any}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line715">line 715</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.checkField">checkField</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Return the value of the first element/field in the passed array/object that satisfies the specified filter(s).</p>
 <p>If value passed for selection is not an array nor an object and <code>settings.defaultValue</code> is not set, the value will be returned as is.
 If no element in the passed array satisfies the specified filter(s),
 <code>settings.defaultValue</code> or the last element of the array (or <code>undefined</code> when the array is empty) will be returned.
 If no field in the passed object satisfies the specified filter(s), <code>settings.defaultValue</code> or <code>undefined</code> will be returned.</p>
-    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
 
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
+<table class="params">
     <thead>
     <tr>
         
@@ -4665,7 +4627,7 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -4686,7 +4648,6 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
             
                 
 <span class="param-type">Any</span>
-
 
 
             
@@ -4720,7 +4681,6 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 <span class="param-type">Any</span>
 
 
-
             
             </td>
 
@@ -4750,7 +4710,6 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -4784,79 +4743,24 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-715">line 715</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.checkField">checkField</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>The value of first element/field in the passed array/object that satisfies the specified filter(s),
      or <code>settings.defaultValue</code>, or the value of <code>from</code> parameter or <code>undefined</code>.</p>
@@ -4864,7 +4768,7 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -4873,42 +4777,94 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 <span class="param-type">Any</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".split"><span class="type-signature">&lt;static> </span>split(obj, firstObjFields [, settings])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".split"><span class="type-signature">(static) </span>split<span class="signature">(obj, firstObjFields, settings<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line779">line 779</a>
+    </li></ul></dd>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.checkField">checkField</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -4918,7 +4874,7 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
         <th>Type</th>
 
         
-        <th>Argument</th>
+        <th>Attributes</th>
         
 
         
@@ -4939,7 +4895,6 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -4979,7 +4934,6 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 <span class="param-type">null</span>
 
 
-
             
             </td>
 
@@ -5011,7 +4965,6 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
             
                 
 <span class="param-type">Object</span>
-
 
 
             
@@ -5046,86 +4999,31 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-779">line 779</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.checkField">checkField</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Created parts: item with index 0 is the first part, item with index 1 is the second part.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -5134,42 +5032,96 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 <span class="param-type">Array</span>
 
 
-
     </dd>
 </dl>
 
-
-        
-
     
-</dd>
+
+
 
         
             
-<hr>
-<dt>
-    <h4 class="name" id=".transform"><span class="type-signature">&lt;static> </span>transform(value, sAction)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Transform the given value applying the specified operation.</p>
-    </div>
-    
 
     
 
+    <h4 class="name" id=".transform"><span class="type-signature">(static) </span>transform<span class="signature">(value, sAction)</span><span class="type-signature"> &rarr; {Any}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line957">line 957</a>
+    </li></ul></dd>
     
 
     
+
     
-        <h5>Parameters:</h5>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-adam.html#.empty">empty</a></li>
         
+            <li><a href="module-adam.html#.reverse">reverse</a></li>
+        </ul>
+    </dd>
+    
 
-<table class="params table table-striped">
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Transform the given value applying the specified operation.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -5200,7 +5152,6 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 <span class="param-type">Any</span>
 
 
-
             
             </td>
 
@@ -5222,7 +5173,6 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
             
                 
 <span class="param-type">String</span>
-
 
 
             
@@ -5253,88 +5203,31 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
     </tbody>
 </table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
 
 
 
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="adam.js.html">adam.js</a>,
-				 <a href="adam.js.html#sunlight-1-line-957">line 957</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-adam.html#.empty">empty</a></li>
-			
-			<li><a href="module-adam.html#.reverse">reverse</a></li>
-			</ul>
-	</dd>
-	
-
-	
-</dl>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     <p>Transformed value.</p>
 </div>
 
 
 
-<dl>
+<dl class="param-type">
     <dt>
         Type
     </dt>
@@ -5343,17 +5236,14 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 <span class="param-type">Any</span>
 
 
-
     </dd>
 </dl>
 
+    
+
+
 
         
-
-    
-</dd>
-
-        </dl>
     
 
     
@@ -5366,135 +5256,20 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 
 
 
-		</div>
-	</div>
-
-	<div class="clearfix"></div>
-
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
-	
-
-</div>
+    
+    
 </div>
 
-
-    <div class="modal fade" id="searchResults">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Search results</h4>
-          </div>
-          <div class="modal-body"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div>
-
+<br class="clear">
 
 <footer>
-
-
-	<span class="copyright">
-	Copyright (c) 2014-2020 Denis Sikuler
-	</span>
-
-<span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
-	
-		on 2020-06-04T21:25:52+03:00
-	
-	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
-</span>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Jun 04 2020 23:49:23 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
-<script src="scripts/docstrap.lib.js"></script>
-<script src="scripts/toc.js"></script>
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
 
-    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
-
-
-<script>
-$( function () {
-	$( "[id*='$']" ).each( function () {
-		var $this = $( this );
-
-		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
-	} );
-
-	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
-		var $this = $( this );
-
-		var example = $this.find( "code" );
-		exampleText = example.html();
-		var lang = /{@lang (.*?)}/.exec( exampleText );
-		if ( lang && lang[1] ) {
-			exampleText = exampleText.replace( lang[0], "" );
-			example.html( exampleText );
-			lang = lang[1];
-		} else {
-			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
-			lang = langClassMatch ? langClassMatch[1] : "javascript";
-		}
-
-		if ( lang ) {
-
-			$this
-			.addClass( "sunlight-highlight-" + lang )
-			.addClass( "linenums" )
-			.html( example.html() );
-
-		}
-	} );
-
-	Sunlight.highlightAll( {
-		lineNumbers : true,
-		showMenu : true,
-		enableDoclinks : true
-	} );
-
-	$.catchAnchorLinks( {
-        navbarOffset: 10
-	} );
-	$( "#toc" ).toc( {
-		anchorName  : function ( i, heading, prefix ) {
-			return $( heading ).attr( "id" ) || ( prefix + i );
-		},
-		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
-		showAndHide : false,
-		smoothScrolling: true
-	} );
-
-	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
-	$( '.dropdown-toggle' ).dropdown();
-
-    $( "table" ).each( function () {
-      var $this = $( this );
-      $this.addClass('table');
-    } );
-
-} );
-</script>
-
-
-
-<!--Navigation and Symbol Display-->
-
-
-<!--Google Analytics-->
-
-
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            SearcherDisplay.init();
-        });
-    </script>
 
 
 </body>
