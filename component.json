@@ -2,7 +2,7 @@
   "name": "adam",
   "repo": "gamtiq/adam",
   "description": "Functions to create, process and test objects",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "keywords": [
     "object",
     "process",
@@ -27,7 +27,10 @@
     "reverse",
     "empty",
     "transform",
-    "test"
+    "test",
+    "util",
+    "utility",
+    "library"
   ],
   "dependencies": {},
   "development": {},

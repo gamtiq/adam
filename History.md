@@ -1,3 +1,8 @@
+### 1.2.0 / 2020-06-05
+
+* add `checkValue` function
+* support for `inside` filter in `checkField`
+
 ### 1.1.0 / 2020-03-25
 
 * rework `select` function to support search in objects
