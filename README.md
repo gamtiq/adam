@@ -243,7 +243,7 @@ Divide given object into 2 parts: the first part includes specified fields, the 
 
 Transform the given value applying the specified operation.
 
-See `doc` folder for details.
+See [`docs`](https://gamtiq.github.io/adam/) for details.
 
 ## Related projects <a name="related"></a> [&#x2191;](#start)
 
