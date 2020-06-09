@@ -66,8 +66,8 @@ describe("adam", function() {
         testObj = Object.create(testProto);
         testObj[symA] = true;
         testObj[symB] = symA;
-        testObj.d = null;
         testObj.b = undef;
+        testObj.d = null;
         testObj.f = "frozen";
         testObj.h = "symbolic value";
         testObj.iValue = 789;
@@ -1147,6 +1147,39 @@ describe("adam", function() {
                             ["a", "c", "f", "g"]);
             });
             
+            it("should return array of field-value pairs conforming to the given filter and/or limit", function() {
+                checkArray(getFields,
+                            [child, {limit: 2, pairs: true}],
+                            [{key: "c", value: "abc"}, {key: "d", value: 4}]);
+                checkArray(getFields,
+                            [child, {filter: "odd", pairs: "list"}],
+                            [["e", 5], ["a", 1]]);
+                checkArray(getFields,
+                            [child, {filter: ["!own", "even"], filterConnect: "or", pairs: "list"}],
+                            [["d", 4], ["a", 1], ["b", 2]]);
+                checkArray(getFields,
+                            [child, {filter: ["!own", "even"], filterConnect: "or", limit: 2, pairs: "list"}],
+                            [["d", 4], ["a", 1]]);
+                checkArray(getFields,
+                            [child, {filter: "odd", pairs: {}}],
+                            [{key: "e", value: 5}, {key: "a", value: 1}]);
+                checkArray(getFields,
+                            [grandchild, {filter: "number", limit: 2, pairs: {type: "some"}}],
+                            [{key: "d", value: 4}, {key: "e", value: 5}]);
+                checkArray(getFields,
+                            [grandchild, {filter: "number", limit: 2, pairs: {form: "object", key: "f"}}],
+                            [{f: "d", value: 4}, {f: "e", value: 5}]);
+                checkArray(getFields,
+                            [grandchild, {filter: "number", pairs: {type: "o", key: "f", value: "v"}}],
+                            [{f: "d", v: 4}, {f: "e", v: 5}, {f: "b", v: 2}]);
+                checkArray(getFields,
+                            [grandchild, {filter: ["!own", "string"], filterConnect: "or", limit: 5, pairs: {type: "list"}}],
+                            [["a", "a"], ["c", "C++"], ["f", "field"], ["g", "gnome"], ["d", 4]]);
+                checkArray(getFields,
+                            [grandchild, {filter: ["own", "number"], filterConnect: "or", limit: 10, pairs: {type: "list"}}],
+                            [["a", "a"], ["c", "C++"], ["f", "field"], ["g", "gnome"], ["d", 4], ["e", 5], ["b", 2]]);
+            });
+            
             if (testSymbols) {
                 it("should return array of object's fields conforming to the given settings (including symbol property keys)", function() {
                     checkArray(getFields,
@@ -1180,6 +1213,10 @@ describe("adam", function() {
                     checkArray(getFields,
                                 [testObj, {filter: [{field: "symbol"}, "!own"]}],
                                 [symC]);
+                    
+                    checkArray(getFields,
+                                [testObj, {filter: ["symbol", "number"], filterConnect: "or", limit: 5, pairs: "list"}],
+                                [[symB, symA], ["iValue", 789], ["symD", symD], ["e", 5]]);
                 });
             }
         });

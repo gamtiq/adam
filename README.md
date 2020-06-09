@@ -105,6 +105,8 @@ adam.getFields(obj2);   // ["b", "c", "d", s2, "a", s1]
 adam.getFields(obj2, {filter: ["string", "false"], filterConnect: "or"});   // ["c", "d", s2, s1]
 adam.getFields(obj2, {filter: "number", limit: 2});   // ["b", "d"]
 adam.getFields(obj2, {filter: {field: "symbol"}})   // [s2, s1]
+adam.getFields(obj2, {filter: "number", limit: 7, pairs: true});   // [{key: "b", value: 2}, {key: "d", value: 0}, {key: "a", value: 1}]
+adam.getFields(obj2, {filter: "number", pairs: "list"});   // [["b", 2], ["d", 0], ["a", 1]]
 
 adam.getValues(obj);   // [1, 2, 3, 4, 5]
 adam.getValues(obj, {filter: {field: /a|c/}});   // [1, 3]

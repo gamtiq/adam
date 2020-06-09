@@ -50,7 +50,9 @@ getOwnPropertyNames = typeof Object.getOwnPropertyNames === "function"
     var result = [],
         sKey;
     for (sKey in obj) {
-        result.push(sKey);
+        if (obj.hasOwnProperty(sKey)) {
+            result.push(sKey);
+        }
     }
     return result;
 };
@@ -313,14 +315,14 @@ function isKindOf(value, sKind) {
  *      - if the object has `inside` field, its value is used as filter; if the filter value "contains" the field value
  *        it means that the field corresponds to this filter;
  *        the filter value can be:
- *        -- an array or a string; in such case `indexOf` is used to check presence of the field value in the filter value;
- *        -- a set; in such case `has` is used to check presence of the field value in the filter value;
- *        -- a map or an object; when `key` field is specified in the condition, the filter value will be checked
+ *        + an array or a string; in such case `indexOf` is used to check presence of the field value in the filter value;
+ *        + a set; in such case `has` is used to check presence of the field value in the filter value;
+ *        + a map or an object; when `key` field is specified in the condition, the filter value will be checked
  *           for presence of such key/value pair; if `true` is set as value for `key` field,
  *           value of `field` parameter will be used as the key;
  *           when `key` field is absent in the condition, the field value will be checked for presence
  *           in the list of values of the map/object;
- *        -- any other value; in such case the field value is not inside the filter value;
+ *        + any other value; in such case the field value is not inside the filter value;
  *      - in any other case if the field value strictly equals to the object it means that the field corresponds to this filter
  *    * any other value; if the field value strictly equals to the filter value it means that the field corresponds to this filter
  * @param {Object} [settings]
@@ -470,6 +472,19 @@ function checkValue(value, filter, settings) {
  *      in `filter` setting (see {@link module:adam.checkField checkField})
  *   * `limit` - a maximum number of fields that should be included into result;
  *      after the specified number of fields is attained, the search will be stopped
+ *   * `pairs`: `object | boolean | 'list' | 'obj'` - whether list of field-value pairs should be returned
+ *      instead of list of fields; when `true` is set it is the same as `{form: 'obj'}`;
+ *      when a string is set it is the same as `{form: <string>}`;
+ *      an object value specifies a form of field-value pairs and can have
+ *      the following fields:
+ *      - `form`: `'list' | 'obj'` - whether an item of the result list should be `[field, value]` array
+ *          or `{key: field, value: value}` object; default value is `'obj'`;
+ *          any string that is different from `'list'` is treated as `'obj'`;
+ *      - `type` - the same as `form`;
+ *      - `key`: `string` - for object items of the result list specifies name of field
+ *          that contains processed object's field; default value is `key`;
+ *      - `value`: `string` - for object items of the result list specifies name of field
+ *          that contains processed object's field value; default value is `value`;
  * @return {Array}
  *      List of all or filtered fields of specified object.
  * @alias module:adam.getFields
@@ -483,11 +498,22 @@ function getFields(obj, settings) {
     }
     
     function processKeyList(keyList) {
-        var key, nI, nL;
+        var key, nI, nL, pair;
         for (nI = 0, nL = keyList.length; nI < nL; nI++) {
             key = keyList[nI];
-            if ((bAll || checkField(obj, key, filter, settings)) && ! (key in addedKeyMap)) {
-                result.push(key);
+            if (! (key in addedKeyMap) && (bAll || checkField(obj, key, filter, options))) {
+                if (sPairType === "obj") {
+                    pair = {};
+                    pair[sPairKey] = key;
+                    pair[sPairValue] = obj[key];
+                }
+                else if (sPairType === "list") {
+                    pair = [key, obj[key]];
+                }
+                else {
+                    pair = key;
+                }
+                result.push(pair);
                 if (isLimitReached()) {
                     break;
                 }
@@ -498,15 +524,33 @@ function getFields(obj, settings) {
     
     var addedKeyMap = {},
         bAll = ! settings || ! ("filter" in settings),
+        options = settings || {},
         getOwnPropertySymbols = Object.getOwnPropertySymbols,
         bProcessSymbols = typeof getOwnPropertySymbols === "function",
-        filter = bAll ? null : settings.filter,
+        filter = bAll ? null : options.filter,
         bOwn = bAll ? false : filter === "own",
         bNotOwn = bAll ? false : filter === "!own",
         bUseFilter = bAll ? false : ! bOwn && ! bNotOwn,
-        nLimit = (settings && settings.limit) || 0,
+        nLimit = options.limit || 0,
+        pairs = options.pairs,
         result = [],
-        target = obj;
+        target = obj,
+        sPairKey, sPairType, sPairValue;
+    if (pairs) {
+        sPairType = typeof pairs;
+        if (sPairType === "boolean") {
+            pairs = {form: "obj"};
+        }
+        else if (sPairType === "string") {
+            pairs = {form: pairs};
+        }
+        sPairType = pairs.form || pairs.type || "obj";
+        if (sPairType.toLowerCase() !== "list") {
+            sPairType = "obj";
+        }
+        sPairKey = pairs.key || "key";
+        sPairValue = pairs.value || "value";
+    }
     while (target) {
         if (bAll || bUseFilter || (bOwn && target === obj) || (bNotOwn && target !== obj)) {
             processKeyList(getOwnPropertyNames(target));

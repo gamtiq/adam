@@ -177,7 +177,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line1079">line 1079</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line1123">line 1123</a>
     </li></ul></dd>
     
 
@@ -429,7 +429,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line324">line 324</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line326">line 326</a>
     </li></ul></dd>
     
 
@@ -750,7 +750,7 @@ the filter value can be:<ul>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line438">line 438</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line440">line 440</a>
     </li></ul></dd>
     
 
@@ -992,7 +992,7 @@ the filter value can be:<ul>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line1030">line 1030</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line1074">line 1074</a>
     </li></ul></dd>
     
 
@@ -1250,7 +1250,7 @@ the filter value can be:<ul>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line862">line 862</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line906">line 906</a>
     </li></ul></dd>
     
 
@@ -1415,7 +1415,7 @@ the filter value can be:<ul>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line651">line 651</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line695">line 695</a>
     </li></ul></dd>
     
 
@@ -1674,7 +1674,7 @@ an item of the list will be used as value for check</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line110">line 110</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line112">line 112</a>
     </li></ul></dd>
     
 
@@ -1832,7 +1832,7 @@ an item of the list will be used as value for check</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line463">line 463</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line478">line 478</a>
     </li></ul></dd>
     
 
@@ -1985,6 +1985,21 @@ an item of the list will be used as value for check</li>
  in <code>filter</code> setting (see <a href="module-adam.html#.checkField">checkField</a>)</li>
 <li><code>limit</code> - a maximum number of fields that should be included into result;
  after the specified number of fields is attained, the search will be stopped</li>
+<li><code>pairs</code>: <code>object | boolean | 'list' | 'obj'</code> - whether list of field-value pairs should be returned
+ instead of list of fields; when <code>true</code> is set it is the same as <code>{form: 'obj'}</code>;
+ when a string is set it is the same as <code>{form: &lt;string&gt;}</code>;
+ an object value specifies a form of field-value pairs and can have
+ the following fields:<ul>
+<li><code>form</code>: <code>'list' | 'obj'</code> - whether an item of the result list should be <code>[field, value]</code> array
+  or <code>{key: field, value: value}</code> object; default value is <code>'obj'</code>;
+  any string that is different from <code>'list'</code> is treated as <code>'obj'</code>;</li>
+<li><code>type</code> - the same as <code>form</code>;</li>
+<li><code>key</code>: <code>string</code> - for object items of the result list specifies name of field
+  that contains processed object's field; default value is <code>key</code>;</li>
+<li><code>value</code>: <code>string</code> - for object items of the result list specifies name of field
+  that contains processed object's field value; default value is <code>value</code>;</li>
+</ul>
+</li>
 </ul></td>
         </tr>
 
@@ -2049,7 +2064,7 @@ an item of the list will be used as value for check</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line594">line 594</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line638">line 638</a>
     </li></ul></dd>
     
 
@@ -2258,7 +2273,7 @@ an item of the list will be used as value for check</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line77">line 77</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line79">line 79</a>
     </li></ul></dd>
     
 
@@ -2417,7 +2432,7 @@ an item of the list will be used as value for check</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line149">line 149</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line151">line 151</a>
     </li></ul></dd>
     
 
@@ -2631,7 +2646,7 @@ an item of the list will be used as value for check</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line124">line 124</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line126">line 126</a>
     </li></ul></dd>
     
 
@@ -2789,7 +2804,7 @@ an item of the list will be used as value for check</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line527">line 527</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line571">line 571</a>
     </li></ul></dd>
     
 
@@ -3029,7 +3044,7 @@ an item of the list will be used as value for check</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line563">line 563</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line607">line 607</a>
     </li></ul></dd>
     
 
@@ -3243,7 +3258,7 @@ an item of the list will be used as value for check</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line196">line 196</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line198">line 198</a>
     </li></ul></dd>
     
 
@@ -3410,7 +3425,7 @@ an item of the list will be used as value for check</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line237">line 237</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line239">line 239</a>
     </li></ul></dd>
     
 
@@ -3632,7 +3647,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line172">line 172</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line174">line 174</a>
     </li></ul></dd>
     
 
@@ -3877,7 +3892,7 @@ For example, <code>!real</code> means: check whether the value is not a real num
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line1111">line 1111</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line1155">line 1155</a>
     </li></ul></dd>
     
 
@@ -4133,7 +4148,7 @@ applying specified action/transformation for field values.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line825">line 825</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line869">line 869</a>
     </li></ul></dd>
     
 
@@ -4384,7 +4399,7 @@ applying specified action/transformation for field values.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line903">line 903</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line947">line 947</a>
     </li></ul></dd>
     
 
@@ -4550,7 +4565,7 @@ applying specified action/transformation for field values.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line715">line 715</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line759">line 759</a>
     </li></ul></dd>
     
 
@@ -4801,7 +4816,7 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line779">line 779</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line823">line 823</a>
     </li></ul></dd>
     
 
@@ -5056,7 +5071,7 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line957">line 957</a>
+        <a href="adam.js.html">adam.js</a>, <a href="adam.js.html#line1001">line 1001</a>
     </li></ul></dd>
     
 
@@ -5263,7 +5278,7 @@ If no field in the passed object satisfies the specified filter(s), <code>settin
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Jun 04 2020 23:49:23 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Jun 09 2020 20:43:00 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
