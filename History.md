@@ -1,3 +1,7 @@
+### 1.2.1 / 2020-06-17
+
+* support of `pairs` setting for `getFields`
+
 ### 1.2.0 / 2020-06-05
 
 * add `checkValue` function
