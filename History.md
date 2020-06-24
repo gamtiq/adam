@@ -1,3 +1,7 @@
+### 1.3.0 / 2020-06-24
+
+* support for `Map`s and `Set`s
+
 ### 1.2.1 / 2020-06-17
 
 * support of `pairs` setting for `getFields`

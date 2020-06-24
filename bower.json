@@ -4,14 +4,15 @@
     "dist/adam.js", 
     "dist/adam.min.js"
   ],
-  "version": "1.2.1",
+  "version": "1.3.0",
   "homepage": "https://github.com/gamtiq/adam",
   "authors": [
     "Denis Sikuler"
   ],
-  "description": "Functions to create, process and test objects",
+  "description": "Functions to create, process and test objects, maps, arrays, sets",
   "keywords": [
     "object",
+    "array",
     "process",
     "create",
     "check",
@@ -24,6 +25,7 @@
     "kind",
     "size",
     "split",
+    "divide",
     "filter",
     "select",
     "find",
