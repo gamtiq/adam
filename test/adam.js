@@ -10,7 +10,7 @@ describe("adam", function() {
         Klass = function() {},
         AnotherKlass = function() {},
         parent = {a: 1, b: 2, c: 3},
-        child, 
+        child,
         grandchild,
         symA,
         symB,
@@ -74,6 +74,25 @@ describe("adam", function() {
         testObj.xyz = parent;
     }
     
+    function getTestMap() {
+        return new Map([
+            ["a5", 5],
+            ["a2", "adfs"],
+            ["a3", "---"],
+            ["b3", 3],
+            ["b4", "some"],
+            ["b0", "build best"],
+            ["b", "To be, or not to be: that's the question"],
+            ["c", 0],
+            ["d1", 120],
+            ["d2", new Date()],
+            ["e", 2],
+            ["f", false],
+            ["g", null],
+            [parent, child],
+            [null, true]
+        ]);
+    }
     
     function checkArray(func, paramList, expectedResult) {
         var result = func.apply(null, paramList),
@@ -88,7 +107,55 @@ describe("adam", function() {
             }
         }
     }
-    
+
+    function checkMap(map, expectedMap) {
+        var keyList = Array.from(expectedMap.keys()),
+            nL = keyList.length,
+            key, nI;
+
+        expect( adam.getClass(map) )
+            .equal( "Map" );
+        for (nI = 0; nI < nL; nI++) {
+            key = keyList[nI];
+            expect( map.has(key) )
+                .equal( true );
+            expect( map.get(key) )
+                .equal( expectedMap.get(key) );
+        }
+        expect( map.size )
+            .equal( nL );
+    }
+
+    function checkSet(set, expectedSet) {
+        var keyList = Array.from(expectedSet.keys()),
+            nL = keyList.length,
+            key, nI;
+
+        expect( adam.getClass(set) )
+            .equal( "Set" );
+        for (nI = 0; nI < nL; nI++) {
+            key = keyList[nI];
+            expect( set.has(key) )
+                .equal( true );
+        }
+        expect( set.size )
+            .equal( nL );
+    }
+        
+    function checkValue(value, expectedValue) {
+        switch (adam.getClass(value)) {
+            case "Map":
+                checkMap(value, expectedValue);
+                break;
+            case "Set":
+                checkSet(value, expectedValue);
+                break;
+            default:
+                expect( value )
+                    .eql( expectedValue );
+        }
+    }
+
     function inc(data) {
         /*jshint laxbreak:true*/
         var settings = data.settings,
@@ -212,6 +279,55 @@ describe("adam", function() {
                 .equal("Object");
         });
     });
+    
+    
+    describe(".isMap", function() {
+        var isMap = adam.isMap;
+        
+        function checkTrue(value, bWeak) {
+            /*jshint unused:vars*/
+            expect( isMap.apply(null, arguments) )
+                .equal(true);
+        }
+        
+        function checkFalse(value, bWeak) {
+            /*jshint unused:vars*/
+            expect( isMap.apply(null, arguments) )
+                .equal(false);
+        }
+        
+        describe(".isMap(value)", function() {
+            it("should return true", function() {
+                checkTrue(new Map());
+                checkTrue(new Map([[1, "a"], [parent, "b"]]));
+            });
+
+            it("should return false", function() {
+                checkFalse(new Set());
+                checkFalse(new WeakMap());
+                checkFalse(child);
+                checkFalse(false);
+                checkFalse(adam);
+            });
+        });
+        
+        describe(".isMap(value, bWeak)", function() {
+            it("should return true", function() {
+                checkTrue(new Map(), true);
+                checkTrue(new Map([[1, "a"], [parent, "b"]]), true);
+                checkTrue(new Map([[1, "a"], [parent, "b"]]), false);
+                checkTrue(new WeakMap([[parent, "a"], [child, "b"]]), true);
+            });
+
+            it("should return false", function() {
+                checkFalse(new Set(), true);
+                checkFalse(child, true);
+                checkFalse(false, true);
+                checkFalse(adam, true);
+                checkFalse(new WeakMap(), false);
+            });
+        });
+    });
 
     
     describe(".getType(value)", function() {
@@ -305,6 +421,14 @@ describe("adam", function() {
                         .equal(15);
                 });
             }
+
+            it("should return quantity of all keys of map", function() {
+                expect( getSize(new Map([[1, 1], [parent, child], ["some", null]])) )
+                    .equal(3);
+                
+                expect( getSize(new Map()) )
+                    .equal(0);
+            });
         });
         
         describe("getSize(obj, settings)", function() {
@@ -315,6 +439,8 @@ describe("adam", function() {
                     .equal(1);
                 expect( getSize(child, {filter: ["odd", "string"], filterConnect: "or"}) )
                     .equal(3);
+                expect( getSize(new Map([[1, 1], [parent, child], ["some", ""]]), {filter: ["odd", "string"], filterConnect: "or"}) )
+                    .equal(2);
             });
             
             if (testSymbols) {
@@ -354,6 +480,8 @@ describe("adam", function() {
                     .be["true"];
                 expect( isSizeMore(grandchild, 6) )
                     .be["true"];
+                expect( isSizeMore(new Map([[1, 1], [parent, child], [null, false]]), 2) )
+                    .be["true"];
             });
             
             it("should return false (obj has less fields than nQty)", function() {
@@ -371,6 +499,8 @@ describe("adam", function() {
                 expect( isSizeMore(child, 50000) )
                     .be["false"];
                 expect( isSizeMore(grandchild, 7) )
+                    .be["false"];
+                expect( isSizeMore(new Map([[1, 1], [parent, child], [null, false]]), 3) )
                     .be["false"];
             });
             
@@ -396,6 +526,8 @@ describe("adam", function() {
                     .be["true"];
                 expect( isSizeMore(child, 2, {filter: ["odd", "string"], filterConnect: "or"}) )
                     .be["true"];
+                expect( isSizeMore(new Map([["a", false], [1, 2], [false, true], [child, true]]), 2, {filter: "boolean"}) )
+                    .be["true"];
             });
             
             it("should return false (obj has less filtered fields than nQty)", function() {
@@ -403,6 +535,8 @@ describe("adam", function() {
                 expect( isSizeMore(child, 4, {filter: "integer"}) )
                     .be["false"];
                 expect( isSizeMore(child, 3, {filter: ["even", "null"], filterConnect: "or"}) )
+                    .be["false"];
+                expect( isSizeMore(new Map([["a", false], [1, "2"], [child, true]]), 1, {filter: "string"}) )
                     .be["false"];
             });
             
@@ -438,6 +572,8 @@ describe("adam", function() {
             check(undef);
             check([]);
             check({});
+            check(new Map());
+            check(new Set());
         });
         
         it("should return false", function() {
@@ -456,12 +592,14 @@ describe("adam", function() {
             check({a: 9});
             check(adam);
             check(check);
+            check(new Map([["a1", "b2"], ["c3", "d4"]]));
+            check(new Set([1, 2, null, false]));
         });
         
         if (testSymbols) {
             it("should return false if object has symbol property keys", function() {
                 var obj = {};
-                obj[symA] = 1; 
+                obj[symA] = 1;
                 expect( isEmpty(obj) )
                     .equal(false);
             });
@@ -514,6 +652,8 @@ describe("adam", function() {
             check("", "empty");
             check([], "empty");
             check({}, "empty");
+            check(new Map(), "empty");
+            check(new Set(), "empty");
             check(-893.217, "numeric");
             check("-27891.09873", "numeric");
             check("5.92e4", "numeric");
@@ -569,6 +709,8 @@ describe("adam", function() {
             check(NaN, "empty");
             check(adam, "empty");
             check("adam", "empty");
+            check(new Map([[1, 2]]), "empty");
+            check(new Set([false]), "empty");
             check([1, 2, 3], "Object");
             check(Math, "Object");
             check(true, "numeric");
@@ -603,6 +745,8 @@ describe("adam", function() {
         describe("checkField(obj, field, function)", function() {
             it("should return true", function() {
                 checkTrue({a: null, b: 4}, "a", adam.isEmpty);
+                checkTrue(new Map([["a", new Set()]]), "a", adam.isEmpty);
+                checkTrue(new Set(["a", ""]), "", adam.isEmpty);
                 checkTrue(adam, "isEmpty", function(value, field, obj) {
                     /*jshint unused:vars*/
                     return /^is/i.test(field);
@@ -624,6 +768,8 @@ describe("adam", function() {
             
             it("should return false", function() {
                 checkFalse({a: null, b: 4}, "b", adam.isEmpty);
+                checkFalse(new Map([["a", new Set([1, 2, 3])]]), "a", adam.isEmpty);
+                checkFalse(new Set(["a", 2, false]), 2, adam.isEmpty);
                 checkFalse(adam, "getSize", function(value, field, obj) {
                     /*jshint unused:vars*/
                     return /^is/i.test(field);
@@ -646,16 +792,36 @@ describe("adam", function() {
         });
         
         describe("checkField(obj, field, regexp)", function() {
-            var obj = {a: null, b: 4};
+            var obj = {
+                a: null,
+                b: 4,
+                toString: function toString() {
+                    return "some value";
+                }
+            };
             
             it("should return true", function() {
                 checkTrue(obj, "a", /^nu/);
                 checkTrue(obj, "b", /\d/);
+                checkTrue(new Map([["c", "a 3"]]), "c", /\d/);
+                checkTrue(new Set(["c", "a 3"]), "a 3", /\d/);
+                checkTrue(new Set(["c", obj, true]), obj, /val/);
+
+                if (testSymbols) {
+                    checkTrue(testObj, symB, /sym/);
+                }
             });
             
             it("should return false", function() {
                 checkFalse(obj, "a", /^\s/);
                 checkFalse(obj, "b", /[a-z]/);
+                checkFalse(new Map([["c", "a 3"]]), "c", /xyz/);
+                checkFalse(new Set(["c", 5, "a 3"]), 5, /xyz/);
+                checkFalse(new WeakSet([testObj, obj, child]), obj, /no/);
+
+                if (testSymbols) {
+                    checkFalse(testObj, "symD", /sym/);
+                }
             });
         });
         
@@ -669,6 +835,11 @@ describe("adam", function() {
                 checkTrue(obj, "check", "function");
                 checkTrue(obj, "a", "null");
                 checkTrue(obj, "b", "integer");
+                checkTrue(new Map([["a", 1]]), "a", "own");
+                checkTrue(new WeakMap([[obj, 2]]), child, "!own");
+                checkTrue(new Set(["a", 1]), 1, "own");
+                checkTrue(new Set(["a", 1]), true, "!own");
+                checkTrue(new WeakSet([child, parent, grandchild]), parent, "own");
             });
             
             it("should return false", function() {
@@ -676,6 +847,13 @@ describe("adam", function() {
                 checkFalse(obj, "toString", "own");
                 checkFalse(obj, "b", "!own");
                 checkFalse(obj, "a", "object");
+                checkFalse(new Map([["a", 1]]), "no", "own");
+                checkFalse(new WeakMap([[obj, 2]]), obj, "!own");
+                checkFalse(new Set(["a", false, null]), true, "own");
+                checkFalse(new Set(["a", false, null]), false, "!own");
+                checkFalse(new WeakSet([child, parent, grandchild]), obj, "own");
+                checkFalse(new WeakSet([child, parent, grandchild]), null, "own");
+                checkFalse(new WeakSet([child, parent, grandchild]), "child", "own");
             });
         });
         
@@ -1044,6 +1222,36 @@ describe("adam", function() {
     });
 
     
+    describe("getKeys(value)", function() {
+        var getKeys = adam.getKeys;
+
+        function check(value, expected) {
+            expect( getKeys(value) )
+                .eql( arguments.length > 1 ? expected : null );
+        }
+
+        it("should return key list", function() {
+            var list = new Array(5);
+            list[1] = child;
+            list[3] = "value";
+            check({a: 1, b: 2}, ["a", "b"]);
+            check(["a", "b", 8], ["0", "1", "2"]);
+            check(list, ["1", "3"]);
+            check(new Map([["a", false], [parent, child]]), ["a", parent]);
+            check(new Set(["a", false, child, null]), ["a", false, child, null]);
+        });
+        
+        it("should return null", function() {
+            check("at");
+            check(5);
+            check(true);
+            check(false);
+            check(null);
+            check(undef);
+        });
+    });
+
+    
     describe(".getFields", function() {
         var getFields = adam.getFields;
         
@@ -1117,6 +1325,19 @@ describe("adam", function() {
                                 ["a", "b", "c", "d", "e", "pro", symA, symC, symB, "omega"]);
                 });
             }
+
+            it("should return array of all keys of map", function() {
+                checkArray(
+                    getFields,
+                    [new Map([["a", 1], [null, true], [child, false]])],
+                    ["a", null, child]
+                );
+                checkArray(
+                    getFields,
+                    [new Map()],
+                    []
+                );
+            });
         });
         
         describe("getFields(obj, settings)", function() {
@@ -1133,6 +1354,54 @@ describe("adam", function() {
                 checkArray(getFields,
                             [grandchild, {filter: ["!own", /\d/], filterConnect: "and"}],
                             ["b", "d", "e"]);
+                checkArray(
+                    getFields,
+                    [
+                        new Map([
+                            ["a", "some"],
+                            ["b", null],
+                            [child, 2],
+                            [null, ""],
+                            [parent, 1]
+                        ]),
+                        {filter: ["even", "string"], filterConnect: "or"}
+                    ],
+                    ["a", child, null]
+                );
+                checkArray(
+                    getFields,
+                    [
+                        new Map([
+                            ["a", "some"],
+                            ["b", null],
+                            [child, 2],
+                            [null, ""],
+                            [parent, 1]
+                        ]),
+                        {filter: {field: "object"}}
+                    ],
+                    [child, parent]
+                );
+
+                if (testSymbols) {
+                    checkArray(
+                        getFields,
+                        [
+                            new Map([
+                                ["a", "some"],
+                                [symC, "symC"],
+                                ["b", null],
+                                [symD, parent],
+                                [child, 2],
+                                [null, ""],
+                                [grandchild, 1],
+                                [symA, symB]
+                            ]),
+                            {filter: [{field: "object"}, {field: "symbol"}], filterConnect: "or"}
+                        ],
+                        [symC, symD, child, grandchild, symA]
+                    );
+                }
             });
             
             it("should return array of object's fields with length not exceeding given limit", function() {
@@ -1145,6 +1414,20 @@ describe("adam", function() {
                 checkArray(getFields,
                             [grandchild, {filter: ["own", "string"], filterConnect: "or", limit: 10}],
                             ["a", "c", "f", "g"]);
+                checkArray(
+                    getFields,
+                    [
+                        new Map([
+                            ["a", "some"],
+                            ["b", null],
+                            [child, 2],
+                            [null, ""],
+                            [parent, 1]
+                        ]),
+                        {filter: "empty", limit: 1}
+                    ],
+                    ["b"]
+                );
             });
             
             it("should return array of field-value pairs conforming to the given filter and/or limit", function() {
@@ -1178,6 +1461,34 @@ describe("adam", function() {
                 checkArray(getFields,
                             [grandchild, {filter: ["own", "number"], filterConnect: "or", limit: 10, pairs: {type: "list"}}],
                             [["a", "a"], ["c", "C++"], ["f", "field"], ["g", "gnome"], ["d", 4], ["e", 5], ["b", 2]]);
+                checkArray(
+                    getFields,
+                    [
+                        new Map([
+                            ["a", "some"],
+                            ["b", null],
+                            [child, 2],
+                            [null, ""],
+                            [parent, 1]
+                        ]),
+                        {filter: "empty", pairs: true}
+                    ],
+                    [{key: "b", value: null}, {key: null, value: ""}]
+                );
+                checkArray(
+                    getFields,
+                    [
+                        new Map([
+                            ["a", "some"],
+                            ["b", null],
+                            [child, 2],
+                            [null, ""],
+                            [parent, 1]
+                        ]),
+                        {filter: ["empty", "number"], filterConnect: "or", limit: 3, pairs: "list"}
+                    ],
+                    [["b", null], [child, 2], [null, ""]]
+                );
             });
             
             if (testSymbols) {
@@ -1287,6 +1598,13 @@ describe("adam", function() {
                     .equal("9");
             });
             
+            it("should return map's key for the specified value", function() {
+                expect( getValueKey(new Map([[parent, child], ["some", "value"]]), child) )
+                    .equal(parent);
+                expect( getValueKey(new Map([["a", child], ["some", child]]), child) )
+                    .equal("a");
+            });
+
             it("should return null", function() {
                 /*jshint expr:true*/
                 expect( getValueKey(parent, 10) )
@@ -1303,6 +1621,11 @@ describe("adam", function() {
                 expect( getValueKey(obj, "undefined") )
                     .be["null"];
                 expect( getValueKey(obj, NaN) )
+                    .be["null"];
+                
+                expect( getValueKey(new Map([[parent, null], [child, parent]]), child) )
+                    .be["null"];
+                expect( getValueKey(new Map(), "a") )
                     .be["null"];
             });
         });
@@ -1345,6 +1668,11 @@ describe("adam", function() {
                     .eql(["date", "dt"]);
             });
             
+            it("should return array of map's keys having the specified value", function() {
+                expect( getValueKey(new Map([[123, 1], [false, 2], [parent, 1]]), 1, true) )
+                    .eql([123, parent]);
+            });
+            
             it("should return null", function() {
                 /*jshint expr:true*/
                 expect( getValueKey(list, 0, true) )
@@ -1364,6 +1692,9 @@ describe("adam", function() {
                 expect( getValueKey(o, null, true) )
                     .be["null"];
                 expect( getValueKey(o, true, true) )
+                    .be["null"];
+                
+                expect( getValueKey(new Map([["a", false], [parent, null], [1, 2]]), "", true) )
                     .be["null"];
             });
         });
@@ -1416,6 +1747,21 @@ describe("adam", function() {
                 expect( getValues(grandchild) )
                     .length(7);
             });
+
+            it("should return array of all values of map", function() {
+                checkArray(
+                    getValues,
+                    [
+                        new Map([
+                            [1, parent],
+                            ["2", child],
+                            [null, 3],
+                            [grandchild, true]
+                        ])
+                    ],
+                    [parent, child, 3, true]
+                );
+            });
         });
         
         describe("getValues(obj, settings)", function() {
@@ -1427,13 +1773,30 @@ describe("adam", function() {
                             [grandchild, {filter: {or: ["!string", /\W/]}}],
                             [2, 4, 5, "C++"]);
             });
+
+            it("should return array of map's values conforming to the given filter", function() {
+                checkArray(
+                    getValues,
+                    [
+                        new Map([
+                            [1, parent],
+                            ["2", child],
+                            [null, 3],
+                            [grandchild, true]
+                        ]),
+                        {filter: "object"}
+                    ],
+                    [parent, child]
+                );
+            });
         });
     });
 
     
     describe(".getFreeField", function() {
         var getFreeField = adam.getFreeField,
-            obj = {a5: 5, a2: "adfs", a3: "---", b3: 3, b4: "some", b0: "build best", b: "To be, or not to be: that's the question", c: 0, d1: 120, d2: new Date()};
+            obj = {a5: 5, a2: "adfs", a3: "---", b3: 3, b4: "some", b0: "build best", b: "To be, or not to be: that's the question", c: 0, d1: 120, d2: new Date()},
+            map = getTestMap();
         
         describe("getFreeField() / getFreeField(null) / getFreeField(<false value>)" + 
                  " / getFreeField(<false value>, {prefix: <not string>})" + 
@@ -1507,6 +1870,19 @@ describe("adam", function() {
                 expect( getFreeField({a: 1, b: 2, f2: 2, f0: 0}, {prefix: {}, startNum: false}) )
                     .equal("f1");
             });
+
+            it("should return field name 'f<number>' so that there are no such key in map", function() {
+                expect( getFreeField(new Map()) )
+                    .equal("f0");
+                expect( getFreeField(new Map([[parent, child]])) )
+                    .equal("f0");
+                expect( getFreeField(new Map([["f4", "child"]])) )
+                    .equal("f0");
+                expect( getFreeField(new Map([["f0", 0], ["f1", 7]]), {prefix: null}) )
+                    .equal("f2");
+                expect( getFreeField(new Map([["a", 1], ["f2", 5], ["b", 0], ["f0", 2]]), {prefix: {}, startNum: false}) )
+                    .equal("f1");
+            });
         });
         
         describe("getFreeField(obj, {prefix: sPrefix}) / getFreeField(obj, {prefix: sPrefix, startNum: <false value>})", function() {
@@ -1525,6 +1901,23 @@ describe("adam", function() {
                     .equal("getTime0");
                 expect( getFreeField(["a", new Date(), true, 111], {prefix: "", startNum: 0}) )
                     .equal("4");
+            });
+
+            it("should return field name sPrefix + '<number>' so that there are no such key in map", function() {
+                expect( getFreeField(new Map(), {prefix: "abc"}) )
+                    .equal("abc0");
+                expect( getFreeField(new Map([["f3", 6]]), {prefix: "abc"}) )
+                    .equal("abc0");
+                expect( getFreeField(new Map([["f3", 6]]), {prefix: "f"}) )
+                    .equal("f0");
+                expect( getFreeField(new Map([["f0", 0], ["$$$0", 1], ["$$$12", 12]]), {prefix: "$$$"}) )
+                    .equal("$$$1");
+                expect( getFreeField(new Map([[0, "a"], ["1", "b"]]), {prefix: ""}) )
+                    .equal("0");
+                expect( getFreeField(new Map([["0", "a"], ["1", "b"]]), {prefix: ""}) )
+                    .equal("2");
+                expect( getFreeField(new Map(), {prefix: "size", startNum: null}) )
+                    .equal("size0");
             });
         });
         
@@ -1547,6 +1940,27 @@ describe("adam", function() {
                 expect( getFreeField(obj, {prefix: "d", startNum: 1}) )
                     .equal("d3");
                 expect( getFreeField(obj, {prefix: "d", startNum: 100}) )
+                    .equal("d100");
+            });
+
+            it("should return field name sPrefix + '<number>' so that there are no such key in map (search is started from sPrefix + nStartNum)", function() {
+                expect( getFreeField(map, {prefix: "a", startNum: 5}) )
+                    .equal("a6");
+                expect( getFreeField(map, {prefix: "a", startNum: 1}) )
+                    .equal("a1");
+                expect( getFreeField(map, {prefix: "a", startNum: 2}) )
+                    .equal("a4");
+                expect( getFreeField(map, {prefix: "b", startNum: 1}) )
+                    .equal("b1");
+                expect( getFreeField(map, {prefix: "b", startNum: 3}) )
+                    .equal("b5");
+                expect( getFreeField(map, {prefix: "c", startNum: 0}) )
+                    .equal("c0");
+                expect( getFreeField(map, {prefix: "c", startNum: 8}) )
+                    .equal("c8");
+                expect( getFreeField(map, {prefix: "d", startNum: 1}) )
+                    .equal("d3");
+                expect( getFreeField(map, {prefix: "d", startNum: 100}) )
                     .equal("d100");
             });
         });
@@ -1598,6 +2012,53 @@ describe("adam", function() {
                 expect( getFreeField(obj, {prefix: "d", startNum: 2, checkPrefix: true}) )
                     .equal("d");
             });
+
+            it("should return field name <sPrefix>[<number>] so that there are no such key in map (search is started from sPrefix)", function() {
+                expect( getFreeField(map, {prefix: "", startNum: false, checkPrefix: true}) )
+                    .equal("");
+                expect( getFreeField(map, {prefix: "", startNum: 0, checkPrefix: true}) )
+                    .equal("");
+                expect( getFreeField(map, {prefix: "", startNum: 1, checkPrefix: true}) )
+                    .equal("");
+                expect( getFreeField(map, {prefix: "", startNum: 10, checkPrefix: true}) )
+                    .equal("");
+                expect( getFreeField(map, {prefix: "a", startNum: false, checkPrefix: true}) )
+                    .equal("a");
+                expect( getFreeField(map, {prefix: "a", startNum: 0, checkPrefix: true}) )
+                    .equal("a");
+                expect( getFreeField(map, {prefix: "a", startNum: 1, checkPrefix: true}) )
+                    .equal("a");
+                expect( getFreeField(map, {prefix: "a", startNum: 100, checkPrefix: true}) )
+                    .equal("a");
+                expect( getFreeField(map, {prefix: "b", startNum: null, checkPrefix: true}) )
+                    .equal("b1");
+                expect( getFreeField(map, {prefix: "b", startNum: 0, checkPrefix: true}) )
+                    .equal("b1");
+                expect( getFreeField(map, {prefix: "b", startNum: 1, checkPrefix: true}) )
+                    .equal("b1");
+                expect( getFreeField(map, {prefix: "b", startNum: 2, checkPrefix: true}) )
+                    .equal("b2");
+                expect( getFreeField(map, {prefix: "b", startNum: 3, checkPrefix: true}) )
+                    .equal("b5");
+                expect( getFreeField(map, {prefix: "b", startNum: 100, checkPrefix: true}) )
+                    .equal("b100");
+                expect( getFreeField(map, {prefix: "c", startNum: "", checkPrefix: true}) )
+                    .equal("c0");
+                expect( getFreeField(map, {prefix: "c", startNum: 0, checkPrefix: true}) )
+                    .equal("c0");
+                expect( getFreeField(map, {prefix: "c", startNum: 1, checkPrefix: true}) )
+                    .equal("c1");
+                expect( getFreeField(map, {prefix: "c", startNum: 7, checkPrefix: true}) )
+                    .equal("c7");
+                expect( getFreeField(map, {prefix: "d", startNum: undef, checkPrefix: true}) )
+                    .equal("d");
+                expect( getFreeField(map, {prefix: "d", startNum: 0, checkPrefix: true}) )
+                    .equal("d");
+                expect( getFreeField(map, {prefix: "d", startNum: 1, checkPrefix: true}) )
+                    .equal("d");
+                expect( getFreeField(map, {prefix: "d", startNum: 2, checkPrefix: true}) )
+                    .equal("d");
+            });
         });
         
     });
@@ -1627,6 +2088,35 @@ describe("adam", function() {
                     .eql([{a: 1, second: "second", delta: 123, time: nTime}, 
                           {b: 2, first: "first", d: date, func: method}]);
             });
+
+            it("should return array from 2 correct maps", function() {
+                var result = split(
+                    new Map([
+                        ["a", 1],
+                        [parent, child],
+                        ["b", false],
+                        [null, true],
+                        [4, adam]
+                    ]),
+                    [parent, null]
+                );
+                
+                checkMap(
+                    result[0],
+                    new Map([
+                        [parent, child],
+                        [null, true]
+                    ])
+                );
+                checkMap(
+                    result[1],
+                    new Map([
+                        ["a", 1],
+                        ["b", false],
+                        [4, adam]
+                    ])
+                );
+            });
         });
         
         describe("split(obj, null, {filter: ...})", function() {
@@ -1638,54 +2128,98 @@ describe("adam", function() {
                     .eql([{first: "first", second: "second", d: date}, 
                           {a: 1, b: 2, delta: 123, time: nTime, func: method}]);
             });
+
+            it("should return array from 2 correct maps", function() {
+                var result = split(
+                    new Map([
+                        ["a", 1],
+                        [parent, child],
+                        ["b", false],
+                        [null, true],
+                        [4, adam]
+                    ]),
+                    null,
+                    {
+                        filter: ["boolean", {field: "string"}],
+                        filterConnect: "or"
+                    }
+                );
+                
+                checkMap(
+                    result[0],
+                    new Map([
+                        ["a", 1],
+                        ["b", false],
+                        [null, true]
+                    ])
+                );
+                checkMap(
+                    result[1],
+                    new Map([
+                        [parent, child],
+                        [4, adam]
+                    ])
+                );
+            });
         });
     });
 
     
     describe(".fromArray", function() {
         var fromArray = adam.fromArray,
+            isMap = adam.isMap,
             categoryList = [
-                            {
-                              "id": 0,
-                              "name": "All",
-                              "quantity": 77
-                            },
-                            {
-                              "id": 1,
-                              "name": "Drama",
-                              "quantity": 1
-                            },
-                            {
-                              "id": 2,
-                              "name": "Thriller",
-                              "quantity": 14
-                            },
-                            {
-                              "id": 3,
-                              "name": "Comedy",
-                              "quantity": 6
-                            },
-                            {
-                              "id": 4,
-                              "name": "Cartoon",
-                              "quantity": 13
-                            },
-                            {
-                              "id": 5,
-                              "name": "Science fiction",
-                              "quantity": 21
-                            },
-                            {
-                              "id": 6,
-                              "name": "Action",
-                              "quantity": 17
-                            },
-                            {
-                              "id": 7,
-                              "name": "Fantasy",
-                              "quantity": 5
-                            }
-                          ];
+                {
+                    "id": 0,
+                    "name": "All",
+                    "quantity": 77
+                },
+                {
+                    "id": 1,
+                    "name": "Drama",
+                    "quantity": 1
+                },
+                {
+                    "id": 2,
+                    "name": "Thriller",
+                    "quantity": 14
+                },
+                {
+                    "id": 3,
+                    "name": "Comedy",
+                    "quantity": 6
+                },
+                {
+                    "id": 4,
+                    "name": "Cartoon",
+                    "quantity": 13
+                },
+                {
+                    "id": 5,
+                    "name": "Science fiction",
+                    "quantity": 21
+                },
+                {
+                    "id": 6,
+                    "name": "Action",
+                    "quantity": 17
+                },
+                {
+                    "id": 7,
+                    "name": "Fantasy",
+                    "quantity": 5
+                },
+                new Map([
+                    ["id", 8],
+                    ["name", "History"],
+                    ["quantity", 33]
+                ]),
+                new Map([
+                    ["id", 9],
+                    ["name", "Serial"],
+                    ["quantity", 9]
+                ])
+            ];
         
         function getCategoryListCopy() {
             var result = categoryList.slice(0),
@@ -1693,9 +2227,14 @@ describe("adam", function() {
                 copy, item, nI, sKey;
             for (nI = 0; nI < nL; nI++) {
                 item = result[nI];
-                copy = {};
-                for (sKey in item) {
-                    copy[sKey] = item[sKey];
+                if (isMap(item)) {
+                    copy = new Map( Array.from(item.entries()) );
+                }
+                else {
+                    copy = {};
+                    for (sKey in item) {
+                        copy[sKey] = item[sKey];
+                    }
                 }
                 result[nI] = copy;
             }
@@ -1708,7 +2247,12 @@ describe("adam", function() {
                 item, key, nI, nL;
             for (nI = 0, nL = list.length; nI < nL; nI++) {
                 item = list[nI];
-                key = sField ? item[sField] : item;
+                key = sField
+                    ? (isMap(item)
+                        ? item.get(sField)
+                        : item[sField]
+                    )
+                    : item;
                 key = String( typeof key === "function" && bCallFunc
                                 ? key()
                                 : key );
@@ -1788,7 +2332,10 @@ describe("adam", function() {
             it("should return object whose keys are results of calling of specified function and values are objects", function() {
                 function getKey(source, target, index, settings) {
                     /*jshint unused:vars*/
-                    return settings.prefix + source.name + " (" + source.quantity + ")";
+                    var bMap = isMap(source),
+                        sName = bMap ? source.get("name") : source.name,
+                        nQty = bMap ? source.get("quantity") : source.quantity;
+                    return settings.prefix + sName + " (" + nQty + ")";
                 }
                 var settings = {prefix: "_"},
                     obj = fromArray(categoryList, getKey, settings),
@@ -1805,16 +2352,24 @@ describe("adam", function() {
         describe("fromArray(list, sField, {deleteKeyField: true})", function() {
             it("should return object whose keys are equal to values of object fields and values are objects without the key field", function() {
                 var keys = [],
-                    nI, nL, obj, sKey;
+                    item, nI, nL, obj, sKey;
                 for (nI = 0, nL = categoryList.length; nI < nL; nI++) {
-                    keys.push( String(categoryList[nI].id) );
+                    item = categoryList[nI];
+                    keys.push( String(isMap(item) ? item.get("id") : item.id) );
                 }
-                obj = fromArray(getCategoryListCopy, "id", {deleteKeyField: true});
+                obj = fromArray(getCategoryListCopy(), "id", {deleteKeyField: true});
                 for (sKey in obj) {
                     expect(keys)
                         .contain(sKey);
-                    expect(obj)
-                        .not.contain.key("id");
+                    item = obj[sKey];
+                    if (isMap(item)) {
+                        expect( item.has("id") )
+                            .equal( false );
+                    }
+                    else {
+                        expect(item)
+                            .not.contain.key("id");
+                    }
                 }
             });
         });
@@ -1864,19 +2419,21 @@ describe("adam", function() {
                 
                 test(categoryList, "id", 
                         {filter: function(item) {
-                            return item.quantity < 10;
+                            return (isMap(item) ? item.get("quantity") : item.quantity) < 10;
                         }},
                         {
                             1: categoryList[1],
                             3: categoryList[3],
-                            7: categoryList[7]
+                            7: categoryList[7],
+                            9: categoryList[9]
                         });
                 
-                test(categoryList, "name", {filter: {field: /^(?:C|D)/}},
+                test(categoryList, "name", {filter: {field: /^(?:C|D|H)/}},
                         {
                             "Drama": categoryList[1],
                             "Comedy": categoryList[3],
-                            "Cartoon": categoryList[4]
+                            "Cartoon": categoryList[4],
+                            "History": categoryList[8]
                         });
             });
         });
@@ -1887,35 +2444,43 @@ describe("adam", function() {
         var select = adam.select,
             numList = [3, -4, 7, 10, 5, 19];
         
-        it("should return the first element from the passed array that satisfies the specified filter(s)", function() {
+        it("should return the first element from the passed array/set that satisfies the specified filter(s)", function() {
             expect( select("positive", [false, -10, null, "test", -3, 0, 4, adam, 5, true, numList]) )
                 .equal( 4 );
             expect( select("Array", [false, null, "test", 3, numList, 5, [true], "zero"]) )
                 .equal( numList );
             expect( select(function(value) {return value > 7;}, numList) )
                 .equal( 10 );
+            expect( select(function(value) {return value > 7;}, new Set(numList)) )
+                .equal( 10 );
             expect( select(["negative", "odd"], [numList, -10, NaN, "-7", 3, 0, -4, null, -7, true, -5]) )
                 .equal( -7 );
             expect( select(["negative", "odd"], [numList, 10, 0, "-7", 3, 0, -4, null, -7, true, -5], {filterConnect: "or"}) )
                 .equal( 3 );
+            expect( select(["negative", "odd"], new Set([numList, 10, 0, "-7", 3, 0, -4, null, -7, true, -5]), {filterConnect: "or"}) )
+                .equal( 3 );
         });
         
-        it("should return the last element from the passed array", function() {
+        it("should return the last element from the passed array/set", function() {
             expect( select("negative", [false, 1, null, "test", 3, 0, 4, 5, true, numList, 8]) )
                 .equal( 8 );
             expect( select("Array", [false, null, "test", undef, 3, "zero", numList]) )
                 .equal( numList );
             expect( select("Array", [false, null, "test", 3, "zero"]) )
                 .equal( "zero" );
+            expect( select("Array", new Set([false, null, "test", 3, "zero"])) )
+                .equal( "zero" );
             expect( select(function(value) {return typeof value === "boolean";}, numList) )
                 .equal( numList[numList.length - 1] );
             expect( select(["negative", "odd"], [numList, 10, NaN, "-7", 3, undef, 0, -4, null, 7, true, Date]) )
+                .equal( Date );
+            expect( select(["negative", "odd"], new Set([numList, 10, NaN, "-7", 3, undef, 0, -4, null, 7, true, Date])) )
                 .equal( Date );
             expect( select(["negative", "odd"], [numList, 10, 0, "-7", 32, 0, 4, null, 8, true], {filterConnect: "or"}) )
                 .equal( true );
         });
         
-        it("should return the first field from the passed object that satisfies the specified filter(s)", function() {
+        it("should return the first field from the passed object/map that satisfies the specified filter(s)", function() {
             expect( select("positive", {a: -1, b: false, c: true, d: "test", e: 5, fin: 9}) )
                 .equal( 5 );
             expect( select("Array", {a: false, b: null, c: "test", d: 3, e: numList, f: 5, g: [true], h: "zero"}) )
@@ -1928,6 +2493,8 @@ describe("adam", function() {
                 .equal( 3 );
             expect( select([{field: /[c-g]/}, "odd"], {a: numList, b: 1, c: 0, d: "-7", e: 4, f: -2, g: -1, h: null, i: -7, j: true, k: -5}) )
                 .equal( -1 );
+            expect( select("even", new Map([["a", false], [4, 1], ["c", 8], [false, 2]])) )
+                .equal( 8 );
         });
         
         it("should return undefined", function() {
@@ -1938,6 +2505,12 @@ describe("adam", function() {
             expect( select("even", {a: 1, b: false, c: adam, e: -3, d: true}) )
                 .equal( undef );
             expect( select(["negative", "even"], {a: 2, b: 3, c: true, d: 8}) )
+                .equal( undef );
+            expect( select("positive", new Map()) )
+                .equal( undef );
+            expect( select("positive", new Set()) )
+                .equal( undef );
+            expect( select("real", new Map([["a", 1], ["b", false]])) )
                 .equal( undef );
         });
         
@@ -1956,6 +2529,10 @@ describe("adam", function() {
                 .equal( 8 );
             expect( select("number", 1, {defaultValue: 7}) )
                 .equal( 7 );
+            expect( select("number", new Map([["a", true], ["b", parent]]), {defaultValue: 0}) )
+                .equal( 0 );
+            expect( select("object", new Set(["a", true, "b", select]), {defaultValue: child}) )
+                .equal( child );
         });
         
         it("should return passed value", function() {
@@ -1990,11 +2567,79 @@ describe("adam", function() {
                          [2, 11, -5]);
         });
         
+        it("should remove specified elements from set", function() {
+            function check(argList, expectedSet) {
+                var result = remove.apply(null, argList);
+
+                expect( result )
+                    .equal( argList[0] );
+                checkSet(result, expectedSet);
+            }
+
+            check(
+                [
+                    new Set([1, 2, 3, 4, 5]),
+                    "odd"
+                ],
+                new Set([2, 4])
+            );
+            check(
+                [
+                    new Set(["1", 2, null, 11, -5, 0, "29", undef]),
+                    ["string", "false"],
+                    {filterConnect: "or"}
+                ],
+                new Set([2, 11, -5])
+            );
+        });
+        
         it("should remove specified fields from object", function() {
             expect( remove({a: 1, z: 7, omega: 3, delta: 5, f: -7}, {field: /a/}) )
                 .eql({z: 7, f: -7});
             expect( remove({a: "a", b: "be", c: "omega", d: 7}, [/a/, "number"], {filterConnect: "or"}) )
                 .eql({b: "be"});
+        });
+        
+        it("should remove specified keys from map", function() {
+            function check(argList, expectedMap) {
+                var result = remove.apply(null, argList);
+
+                expect( result )
+                    .equal( argList[0] );
+                checkMap(result, expectedMap);
+            }
+
+            check(
+                [
+                    new Map([
+                        ["a", 1],
+                        ["z", 7],
+                        ["omega", 3],
+                        ["delta", 5],
+                        ["f", -7]
+                    ]),
+                    {field: /a/}
+                ],
+                new Map([
+                    ["z", 7],
+                    ["f", -7]
+                ])
+            );
+            check(
+                [
+                    new Map([
+                        ["a", "a"],
+                        ["b", "be"],
+                        ["c", "omega"],
+                        ["d", 7]
+                    ]),
+                    [/a/, "number"],
+                    {filterConnect: "or"}
+                ],
+                new Map([
+                    ["b", "be"]
+                ])
+            );
         });
     });
     
@@ -2014,6 +2659,22 @@ describe("adam", function() {
             expect( empty(obj) )
                 .equal(obj);
             expect( adam.getSize(obj) )
+                .equal(0);
+        });
+        
+        it("should return empty map", function() {
+            var map = new Map([["a", 1], ["b", true]]);
+            expect( empty(map) )
+                .equal(map);
+            expect( map.size )
+                .equal(0);
+        });
+        
+        it("should return empty set", function() {
+            var set = new Set(["a", 1, "b", false, null]);
+            expect( empty(set) )
+                .equal(set);
+            expect( set.size )
                 .equal(0);
         });
         
@@ -2058,11 +2719,35 @@ describe("adam", function() {
                 .eql([null, adam, parent, child, "a"]);
         });
         
+        it("should return reversed set", function() {
+            function check(value, expectedSet) {
+                var result = reverse(value);
+                expect( result )
+                    .not.equal( value );
+                checkSet(result, expectedSet);
+            }
+
+            check(new Set([1, null, true, adam]), new Set([adam, true, null, 1]));
+            check(new Set([false]), new Set([false]));
+        });
+        
         it("should return reversed object", function() {
             expect( reverse(parent) )
                 .eql({1: "a", 2: "b", 3: "c"});
             expect( reverse(grandchild) )
                 .eql({a: "a", 2: "b", "C++": "c", 4: "d", 5: "e", field: "f", gnome: "g"});
+        });
+        
+        it("should return reversed map", function() {
+            function check(value, expectedMap) {
+                var result = reverse(value);
+                expect( result )
+                    .not.equal( value );
+                checkMap(result, expectedMap);
+            }
+
+            check(new Map([[null, 5], [adam, 2]]), new Map([[5, null], [2, adam]]));
+            check(new Map([[checkSet, "set"]]), new Map([["set", checkSet]]));
         });
         
         it("should return reversed string", function() {
@@ -2166,6 +2851,17 @@ describe("adam", function() {
                 .equal(true);
         });
         
+        it("should return map", function() {
+            function check(value, expectedMap) {
+                checkMap(transform(value, "map"), expectedMap);
+            }
+
+            check("a", new Map([["a", "a"]]));
+            check(5, new Map([[5, 5]]));
+            check([["a", 1], ["b", 2]], new Map([["a", 1], ["b", 2]]));
+            check([], new Map());
+        });
+        
         it("should return number", function() {
             expect( transform("389", "number") )
                 .equal(389);
@@ -2233,6 +2929,17 @@ describe("adam", function() {
                 .equal(94);
         });
         
+        it("should return set", function() {
+            function check(value, expectedSet) {
+                checkSet(transform(value, "set"), expectedSet);
+            }
+
+            check("a", new Set(["a"]));
+            check(false, new Set([false]));
+            check(["a", 1, "b", 2], new Set(["a", 1, "b", 2]));
+            check([], new Set());
+        });
+        
         it("should return string", function() {
             expect( transform(false, "string") )
                 .equal("false");
@@ -2267,8 +2974,7 @@ describe("adam", function() {
             var result = copy.apply(null, Array.prototype.slice.call(arguments, 1));
             expect( result )
                 .equal(target);
-            expect( result )
-                .eql(expectedResult);
+            checkValue(result, expectedResult);
         }
         
         describe("copy(source, target)", function() {
@@ -2282,6 +2988,16 @@ describe("adam", function() {
                                  [1, 3, 5, child, null]
                              ],
                              ["a", 2, "c", child, null]);
+                check(
+                    new Map([[5, 6], [1, 2], [3, 4]]),
+                    new Map([[1, 2], [3, 4]]),
+                    new Map([[5, 6]])
+                );
+                check(
+                    new Set([parent, 1, 2, child, 4]),
+                    new Set([1, 2, child, 4]),
+                    new Set([parent])
+                );
             });
         });
         
@@ -2300,6 +3016,18 @@ describe("adam", function() {
                                  }}
                              ],
                              [1, 2, 3, 4, "e", "f", "g"]);
+                check(
+                    new Map([[1, 2], ["c", 0], ["d1", 120]]),
+                    getTestMap(),
+                    new Map([[1, 2]]),
+                    {filter: ["even", /0/]}
+                );
+                check(
+                    new Set(["a", false, "", null]),
+                    new Set([1, false, "", true, [], null]),
+                    new Set(["a"]),
+                    {filter: "false"}
+                );
             });
         });
         
@@ -2332,6 +3060,18 @@ describe("adam", function() {
                     ],
                     [2, 3, 4, 40, 50]
                 );
+                check(
+                    new Map([[1, 2], ["a", "false"]]),
+                    new Map([["a", false]]),
+                    new Map([[1, 2]]),
+                    {transform: "string"}
+                );
+                check(
+                    new Set(["a", -1, true]),
+                    new Set([1, false]),
+                    new Set(["a"]),
+                    {transform: "reverse"}
+                );
             });
         });
         
@@ -2352,6 +3092,18 @@ describe("adam", function() {
                                  {filter: ["odd", "null"], filterConnect: "or", transform: "string"}
                              ],
                              result);
+                check(
+                    new Map([[1, 2], ["c", 1], ["d1", 121]]),
+                    getTestMap(),
+                    new Map([[1, 2], ["c", false]]),
+                    {filter: ["even", /0/], transform: inc}
+                );
+                check(
+                    new Set(["a", -1, "cba", false]),
+                    new Set([1, false, "a", "abc", true, null]),
+                    new Set(["a"]),
+                    {filter: "true", transform: "reverse"}
+                );
             });
         });
     });
@@ -2405,8 +3157,7 @@ describe("adam", function() {
             var result = map.apply(null, Array.prototype.slice.call(arguments, 1));
             expect( result )
                 .not.equal(obj);
-            expect( result )
-                .eql(expectedResult);
+            checkValue(result, expectedResult);
         }
         
         it("should copy and transform all fields", function() {
@@ -2419,6 +3170,20 @@ describe("adam", function() {
                              "empty"
                          ],
                          ["", 0, {}]);
+            check(
+                new Map([["a", 3], [parent, 0]]),
+                new Map([["a", 2], [parent, -1]]),
+                inc
+            );
+
+            var obj = {x: "files"};
+            check(
+                new Set(["", 0, obj]),
+                new Set(["abc", -987, obj]),
+                "empty"
+            );
+            expect( "x" in obj )
+                .equal( false );
         });
         
         it("should copy and transform filtered fields", function() {
@@ -2441,6 +3206,18 @@ describe("adam", function() {
                              {filter: ["negative", "string"], filterConnect: "or"}
                          ],
                          result);
+            check(
+                new Map([["a5", 6], ["b3", 4]]),
+                getTestMap(),
+                inc,
+                {filter: "odd"}
+            );
+            check(
+                new Set(["cba", "xyz"]),
+                new Set([1, "abc", false, "zyx"]),
+                "reverse",
+                {filter: "string"}
+            );
         });
     });
 });

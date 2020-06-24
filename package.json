@@ -59,6 +59,7 @@
     "copy",
     "change",
     "map",
+    "set",
     "remove",
     "reverse",
     "empty",

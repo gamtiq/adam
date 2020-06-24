@@ -115,6 +115,24 @@ function getClass(value) {
 }
 
 /**
+ * Check whether given value is a `Map` or a `WeakMap`.
+ * 
+ * @param {Any} value
+ *      Value that should be checked.
+ * @param {Boolean} [bWeak=false]
+ *      By default the passed value is only checked for `Map`.
+ *      If you specify `true` for `bWeak`, the value will be also checked for `WeakMap`.
+ * @return {Boolean}
+ *      `true` when the passed value is a `Map` or `WeakMap`, otherwise `false`.
+ * @alias module:adam.isMap
+ * @see {@link module:adam.getClass getClass}
+ */
+function isMap(value, bWeak) {
+    var sClass = getClass(value);
+    return sClass === "Map" || (Boolean(bWeak) && sClass === "WeakMap");
+}
+
+/**
  * Return type of given value.
  * 
  * @param {Any} value
@@ -132,10 +150,10 @@ function getType(value) {
 }
 
 /**
- * Return number of all or filtered fields of specified object.
+ * Return number of all or filtered fields of specified object or map.
  * 
  * @param {Object} obj
- *      Object to be processed.
+ *      Object or map to be processed.
  * @param {Object} [settings]
  *     Operation settings. Keys are settings names, values are corresponding settings values.
  *     The following settings are supported:
@@ -153,10 +171,10 @@ function getSize(obj, settings) {
 }
 
 /**
- * Check whether number of all or filtered fields of specified object is more than the given value.
+ * Check whether number of all or filtered fields of specified object/map is more than the given value.
  * 
  * @param {Object} obj
- *      Object to be checked.
+ *      Object or map to be checked.
  * @param {Number} nValue
  *      Value that should be used for comparison with number of fields.
  * @param {Object} [settings]
@@ -185,7 +203,8 @@ function isSizeMore(obj, nValue, settings) {
 }
 
 /**
- * Check whether given value is an empty value i.e. `null`, `undefined`, `0`, empty object, empty array or empty string.
+ * Check whether given value is an empty value i.e. `null`, `undefined`, `0`, empty object, empty array,
+ * empty map, empty set or empty string.
  * 
  * @param {Any} value
  *      Value to be checked.
@@ -197,11 +216,13 @@ function isSizeMore(obj, nValue, settings) {
  */
 function isEmpty(value) {
     /*jshint eqeqeq:false, eqnull:true, laxbreak:true*/
+    var sClass = getClass(value);
     return value == null
             || value === 0
             || value === ""
             || (typeof value === "object" && ! isSizeMore(value, 0))
-            || (getClass(value) === "Array" && value.length === 0);
+            || (sClass === "Array" && value.length === 0)
+            || ((sClass === "Map" || sClass === "Set") && value.size === 0);
 }
 
 /**
@@ -269,10 +290,10 @@ function isKindOf(value, sKind) {
 }
 
 /**
- * Check whether the field of given object corresponds to specified condition(s) or filter(s).
+ * Check whether the field of given object/map/array/set corresponds to specified condition(s) or filter(s).
  * 
  * @param {Object} obj
- *      Object to be processed.
+ *      Object, map (including WeakMap), array or set (including WeakSet) to be processed.
  * @param {String | Symbol} field
  *      Field that should be checked.
  * @param {Any} filter
@@ -325,14 +346,26 @@ function isKindOf(value, sKind) {
  */
 function checkField(obj, field, filter, settings) {
     /*jshint laxbreak:true*/
-    var test = true,
+    var sClass = getClass(obj),
+        bMap = sClass === "Map" || sClass === "WeakMap",
+        bSet = sClass === "Set" || sClass === "WeakSet",
+        test = true,
         bAnd, data, nI, nL, sKey, sType, value;
     if (! settings) {
         settings = {};
     }
-    value = "value" in settings
-                ? settings.value
-                : obj[field];
+    if ("value" in settings) {
+        value = settings.value;
+    }
+    else if (bMap) {
+        value = obj.get(field);
+    }
+    else if (bSet) {
+        value = field;
+    }
+    else {
+        value = obj[field];
+    }
     bAnd = settings.filterConnect;
     bAnd = typeof bAnd !== "string" || bAnd.toLowerCase() !== "or";
     if (getClass(filter) !== "Array") {
@@ -346,10 +379,10 @@ function checkField(obj, field, filter, settings) {
                 break;
             case "String":
                 if (test === "own") {
-                    test = obj.hasOwnProperty(field);
+                    test = obj[bMap || bSet ? "has" : "hasOwnProperty"](field);
                 }
                 else if (test === "!own") {
-                    test = ! obj.hasOwnProperty(field);
+                    test = ! obj[bMap || bSet ? "has" : "hasOwnProperty"](field);
                 }
                 else {
                     test = isKindOf(value, test);
@@ -442,12 +475,33 @@ function checkValue(value, filter, settings) {
 }
 
 /**
- * Return list of all or filtered fields of specified object.
+ * Return list of all keys of specified object/map/array/set.
+ * 
+ * @param {Any} value
+ *      Value that should be processed.
+ * @return {Array | null}
+ *      List of all keys of specified object/map/array/set or `null` if another value is passed.
+ * @alias module:adam.getKeys
+ * @see {@link module:adam.getFields getFields}
+ */
+function getKeys(value) {
+    var sClass = getClass(value);
+    if (sClass === "Map" || sClass === "Set") {
+        return Array.from( value.keys() );
+    }
+    else if (sClass === "Array" || getType(value) === "object") {
+        return Object.keys(value);
+    }
+    return null;
+}
+
+/**
+ * Return list of all or filtered fields of specified object or map.
  * 
  * Fields are searched (checked) in the object itself and in its prototype chain.
  * 
  * @param {Object} obj
- *      Object to be processed.
+ *      Object or map to be processed.
  * @param {Object} [settings]
  *     Operation settings. Keys are settings names, values are corresponding settings values.
  *     The following settings are supported:
@@ -474,9 +528,16 @@ function checkValue(value, filter, settings) {
  *      List of all or filtered fields of specified object.
  * @alias module:adam.getFields
  * @see {@link module:adam.checkField checkField}
+ * @see {@link module:adam.getKeys getKeys}
  */
 function getFields(obj, settings) {
     /*jshint latedef:false, laxbreak:true*/
+    
+    function getValue(key) {
+        return bObject
+            ? obj[key]
+            : obj.get(key);
+    }
     
     function isLimitReached() {
         return nLimit > 0 && result.length >= nLimit;
@@ -486,14 +547,14 @@ function getFields(obj, settings) {
         var key, nI, nL, pair;
         for (nI = 0, nL = keyList.length; nI < nL; nI++) {
             key = keyList[nI];
-            if (! (key in addedKeyMap) && (bAll || checkField(obj, key, filter, options))) {
+            if ((bMap || ! (key in addedKeyMap)) && (bAll || checkField(obj, key, filter, options))) {
                 if (sPairType === "obj") {
                     pair = {};
                     pair[sPairKey] = key;
-                    pair[sPairValue] = obj[key];
+                    pair[sPairValue] = getValue(key);
                 }
                 else if (sPairType === "list") {
-                    pair = [key, obj[key]];
+                    pair = [key, getValue(key)];
                 }
                 else {
                     pair = key;
@@ -502,13 +563,17 @@ function getFields(obj, settings) {
                 if (isLimitReached()) {
                     break;
                 }
-                addedKeyMap[key] = null;
+                if (bObject) {
+                    addedKeyMap[key] = null;
+                }
             }
         }
     }
     
     var addedKeyMap = {},
         bAll = ! settings || ! ("filter" in settings),
+        bMap = isMap(obj),
+        bObject = ! bMap,
         options = settings || {},
         getOwnPropertySymbols = Object.getOwnPropertySymbols,
         bProcessSymbols = typeof getOwnPropertySymbols === "function",
@@ -537,16 +602,20 @@ function getFields(obj, settings) {
         sPairValue = pairs.value || "value";
     }
     while (target) {
-        if (bAll || bUseFilter || (bOwn && target === obj) || (bNotOwn && target !== obj)) {
-            processKeyList(getOwnPropertyNames(target));
-            if (bProcessSymbols && ! isLimitReached()) {
+        if (bAll || bUseFilter || ((bOwn || bMap) && target === obj) || (bNotOwn && target !== obj)) {
+            processKeyList(
+                bObject
+                    ? getOwnPropertyNames(target)
+                    : getKeys(target)
+            );
+            if (bObject && bProcessSymbols && ! isLimitReached()) {
                 processKeyList(getOwnPropertySymbols(target));
             }
             if (isLimitReached()) {
                 break;
             }
         }
-        target = bAll || bNotOwn || bUseFilter
+        target = bObject && (bAll || bNotOwn || bUseFilter)
                     ? getPrototypeOf(target)
                     : null;
     }
@@ -554,10 +623,10 @@ function getFields(obj, settings) {
 }
 
 /**
- * Return the name of field (or list of names) having the specified value in the given object.
+ * Return the name of field (or list of names) having the specified value in the given object or map.
  * 
  * @param {Object} obj
- *      Object to be checked.
+ *      Object or map to be checked.
  * @param {Any} value
  *      Value that should be searched for.
  * @param {Boolean} [bAll]
@@ -571,14 +640,30 @@ function getFields(obj, settings) {
 function getValueKey(obj, value, bAll) {
     /*jshint laxbreak:true*/
     var result = [],
-        sKey;
-    for (sKey in obj) {
-        if (obj[sKey] === value) {
-            if (bAll) {
-                result.push(sKey);
+        key, list, nI, nL;
+    if (isMap(obj)) {
+        list = Array.from(obj.entries());
+        for (nI = 0, nL = list.length; nI < nL; nI++) {
+            key = list[nI];
+            if (key[1] === value) {
+                if (bAll) {
+                    result.push(key[0]);
+                }
+                else {
+                    return key[0];
+                }
             }
-            else {
-                return sKey;
+        }
+    }
+    else {
+        for (key in obj) {
+            if (obj[key] === value) {
+                if (bAll) {
+                    result.push(key);
+                }
+                else {
+                    return key;
+                }
             }
         }
     }
@@ -588,10 +673,10 @@ function getValueKey(obj, value, bAll) {
 }
 
 /**
- * Return list of all or filtered field values of specified object.
+ * Return list of all or filtered field values of specified object or map.
  * 
  * @param {Object} obj
- *      Object to be processed.
+ *      Object or map to be processed.
  * @param {Object} [settings]
  *     Operation settings. Keys are settings names, values are corresponding settings values.
  *     The following settings are supported:
@@ -605,24 +690,42 @@ function getValueKey(obj, value, bAll) {
  * @see {@link module:adam.checkField checkField}
  */
 function getValues(obj, settings) {
+    /*jshint laxbreak:true*/
     var result = [],
+        bObject = ! isMap(obj),
         bAll = ! settings || ! ("filter" in settings),
         filter = bAll ? null : settings.filter,
-        sKey;
-    for (sKey in obj) {
-        if (bAll || checkField(obj, sKey, filter, settings)) {
-            result[result.length] = obj[sKey];
+        key, keyList, nI, nL;
+
+    function processKey(keyValue) {
+        if (bAll || checkField(obj, keyValue, filter, settings)) {
+            result[result.length] = bObject
+                ? obj[keyValue]
+                : obj.get(keyValue);
         }
     }
+
+    if (bObject) {
+        for (key in obj) {
+            processKey(key);
+        }
+    }
+    else {
+        keyList = getKeys(obj);
+        for (nI = 0, nL = keyList.length; nI < nL; nI++) {
+            processKey(keyList[nI]);
+        }
+    }
+    
     return result;
 }
 
 /**
- * Return name of first free (absent) field of specified object, that conforms to the following pattern:
+ * Return name of first free (absent) field/key of specified object/map, that conforms to the following pattern:
  * &lt;prefix&gt;&lt;number&gt;
  * 
  * @param {Object} obj
- *      Object in which a free field should be found.
+ *      Object or map in which a free field/key should be found.
  *      If `null` (or any false value) is set, the first value that conforms to the pattern will be returned.
  * @param {Object} [settings]
  *     Operation settings. Keys are settings names, values are corresponding settings values.
@@ -636,7 +739,8 @@ function getValues(obj, settings) {
  * @alias module:adam.getFreeField
  */
 function getFreeField(obj, settings) {
-    var bCheckPrefix, nStartNum, sField, sPrefix;
+    var bObject = ! isMap(obj),
+        bCheckPrefix, nStartNum, sField, sPrefix;
     if (! settings) {
         settings = {};
     }
@@ -657,7 +761,7 @@ function getFreeField(obj, settings) {
         sField = sPrefix + nStartNum;
     }
     if (obj) {
-        while (sField in obj) {
+        while (bObject ? (sField in obj) : obj.has(sField)) {
             sField = sPrefix + (++nStartNum);
         }
     }
@@ -665,8 +769,8 @@ function getFreeField(obj, settings) {
 }
 
 /**
- * Create object (map) from list of objects.
- * Fields of the created object are values of specified field of objects,
+ * Create object (map) from list of objects/maps.
+ * Fields of the created object are values of specified field/key of objects/maps,
  * values of the created object are corresponding items of the list.
  * 
  * @param {Array} list
@@ -693,9 +797,10 @@ function getFreeField(obj, settings) {
  * @see {@link module:adam.checkField checkField}
  */
 function fromArray(list, keyField, settings) {
+    /*jshint laxbreak:true*/
     var nL = list.length,
         result = {},
-        bAll, bDeleteKeyField, bFuncKey, filter, filterConnect, item, field, nI, sKeyName;
+        bAll, bMap, bDeleteKeyField, bFuncKey, filter, filterConnect, item, field, nI, sKeyName;
     if (nL) {
         if (! settings) {
             settings = {};
@@ -710,18 +815,29 @@ function fromArray(list, keyField, settings) {
         }
         for (nI = 0; nI < nL; nI++) {
             item = list[nI];
+            bMap = isMap(item, true);
             if (bFuncKey) {
                 field = sKeyName = keyField(item, result, nI, settings);
             }
             else {
-                field = sKeyName ? item[sKeyName] : item;
+                field = sKeyName
+                    ? (bMap
+                        ? item.get(sKeyName)
+                        : item[sKeyName]
+                    )
+                    : item;
                 if (typeof field === "function") {
                     field = field.call(item);
                 }
             }
             if (bAll || checkField(result, field, filter, {value: item, filterConnect: filterConnect})) {
                 if (bDeleteKeyField) {
-                    delete item[sKeyName];
+                    if (bMap) {
+                        item.delete(sKeyName);
+                    }
+                    else {
+                        delete item[sKeyName];
+                    }
                 }
                 result[field] = item;
             }
@@ -731,27 +847,27 @@ function fromArray(list, keyField, settings) {
 }
 
 /**
- * Return the value of the first element/field in the passed array/object that satisfies the specified filter(s).
+ * Return the value of the first element/field in the passed array/object/map/set that satisfies the specified filter(s).
  * 
- * If value passed for selection is not an array nor an object and `settings.defaultValue` is not set, the value will be returned as is.
- * If no element in the passed array satisfies the specified filter(s),
- * `settings.defaultValue` or the last element of the array (or `undefined` when the array is empty) will be returned.
- * If no field in the passed object satisfies the specified filter(s), `settings.defaultValue` or `undefined` will be returned.
+ * If value passed for selection is not an array/set nor an object/map and `settings.defaultValue` is not set, the value will be returned as is.
+ * If no element in the passed array/set satisfies the specified filter(s),
+ * `settings.defaultValue` or the last element of the array/set (or `undefined` when the array is empty) will be returned.
+ * If no field in the passed object/map satisfies the specified filter(s), `settings.defaultValue` or `undefined` will be returned.
  *
  * @param {Any} filter
  *      Filter that should be used to select a value (see {@link module:adam.checkField checkField} for details).
  * @param {Any} from
- *      An array/object from which a value should be selected.
+ *      An array/object/map/set from which a value should be selected.
  * @param {Object} [settings]
  *     Operation settings. Keys are settings names, values are corresponding settings values.
  *     The following settings are supported (setting's default value is specified in parentheses):
  *     
- *   * `defaultValue`: `Any` - default value that should be used when no element/field in the passed array/object
- *      satisfies the specified filter(s) or when value of `from` parameter is not an array nor an object
+ *   * `defaultValue`: `Any` - default value that should be used when no element/field in the passed array/object/map/set
+ *      satisfies the specified filter(s) or when value of `from` parameter is not an array/set nor an object/map
  *   * `filterConnect`: `String` (`and`) - a boolean connector that should be used when array of filters is specified
  *      in `filter` parameter (see {@link module:adam.checkField checkField} for details)
  * @return {Any}
- *      The value of first element/field in the passed array/object that satisfies the specified filter(s),
+ *      The value of first element/field in the passed array/object/map/set that satisfies the specified filter(s),
  *      or `settings.defaultValue`, or the value of `from` parameter or `undefined`.
  * @alias module:adam.select
  * @see {@link module:adam.checkField checkField}
@@ -764,25 +880,40 @@ function select(filter, from, settings) {
             : value;
     }
 
-    var options = settings || {},
+    var sClass = getClass(from),
+        options = settings || {},
         result = getDefaultValue(from),
-        key, nL, nLast;
-    if (getClass(from) === "Array") {
+        key, keyList, nI, nL, nLast;
+    if (sClass === "Array" || sClass === "Set") {
+        if (sClass === "Set") {
+            from = getKeys(from);
+        }
         nL = from.length;
         if (nL) {
             nLast = nL - 1;
-            for (key = 0; key < nL; key++) {
-                if (checkField(from, key, filter, options)) {
-                    result = from[key];
+            for (nI = 0; nI < nL; nI++) {
+                if (checkField(from, nI, filter, options)) {
+                    result = from[nI];
                     break;
                 }
-                else if (key === nLast) {
-                    result = getDefaultValue(from[key]);
+                else if (nI === nLast) {
+                    result = getDefaultValue(from[nI]);
                 }
             }
         }
         else {
             result = getDefaultValue(key);
+        }
+    }
+    else if (sClass === "Map") {
+        result = getDefaultValue(key);
+        keyList = getKeys(from);
+        for (nI = 0, nL = keyList.length; nI < nL; nI++) {
+            key = keyList[nI];
+            if (checkField(from, key, filter, options)) {
+                result = from.get(key);
+                break;
+            }
         }
     }
     else if (getType(from) === "object") {
@@ -798,10 +929,10 @@ function select(filter, from, settings) {
 }
 
 /**
- * Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.
+ * Divide given object or map into 2 parts: the first part includes specified fields, the second part includes all other fields.
  * 
  * @param {Object} obj
- *      Object to be divided.
+ *      Object or map to be divided.
  * @param {Array | Object | null} firstObjFields
  *      List of names of fields that should be included in the first part,
  *      or an object defining those fields.
@@ -822,10 +953,18 @@ function select(filter, from, settings) {
  */
 function split(obj, firstObjFields, settings) {
     /*jshint laxbreak:true*/
-    var first = {},
-        second = {},
+    var bObject = ! isMap(obj),
+        first = bObject ? {} : new Map(),
+        second = bObject ? {} : new Map(),
         result = [first, second],
-        bByName, filter, sKey;
+        bByName, filter, key, keyList, nI, nL;
+
+    function getTarget() {
+        return (bByName ? key in firstObjFields : checkField(obj, key, filter, settings))
+            ? first
+            : second;
+    }
+
     if (! settings) {
         settings = {};
     }
@@ -839,19 +978,26 @@ function split(obj, firstObjFields, settings) {
         bByName = false;
         filter = settings.filter;
     }
-    for (sKey in obj) {
-        ((bByName ? sKey in firstObjFields : checkField(obj, sKey, filter, settings)) 
-            ? first 
-            : second)[sKey] = obj[sKey];
+    if (bObject) {
+        for (key in obj) {
+            getTarget()[key] = obj[key];
+        }
+    }
+    else {
+        keyList = getKeys(obj);
+        for (nI = 0, nL = keyList.length; nI < nL; nI++) {
+            key = keyList[nI];
+            getTarget().set(key, obj.get(key));
+        }
     }
     return result;
 }
 
 /**
- * Remove filtered fields/elements from specified object/array.
+ * Remove filtered fields/elements from specified object/map/array/set.
  * 
  * @param {Array | Object} obj
- *      Array or object to be processed.
+ *      Array, set, object or map to be processed.
  * @param {Any} filter
  *      A filter or array of filters specifying fields or elements that should be removed
  *      (see {@link module:adam.checkField checkField}).
@@ -862,27 +1008,38 @@ function split(obj, firstObjFields, settings) {
  *   * `filterConnect`: `String` - a boolean connector that should be used when array of filters is specified
  *      in `filter` parameter (see {@link module:adam.checkField checkField})
  * @return {Array | Object}
- *      Processed array or object.
+ *      Processed array, set, object or map.
  * @alias module:adam.remove
  * @see {@link module:adam.checkField checkField}
  */
 function remove(obj, filter, settings) {
-    var field;
+    var key, keyList, nI, nL;
     if (obj && typeof obj === "object") {
-        if (getClass(obj) === "Array") {
-            field = obj.length;
-            while(field--) {
-                if (checkField(obj, field, filter, settings)) {
-                    obj.splice(field, 1);
+        switch (getClass(obj)) {
+            case "Array":
+                key = obj.length;
+                while(key--) {
+                    if (checkField(obj, key, filter, settings)) {
+                        obj.splice(key, 1);
+                    }
                 }
-            }
-        }
-        else {
-            for (field in obj) {
-                if (checkField(obj, field, filter, settings)) {
-                    delete obj[field];
+                break;
+            case "Map":
+            case "Set":
+                keyList = getKeys(obj);
+                for (nI = 0, nL = keyList.length; nI < nL; nI++) {
+                    key = keyList[nI];
+                    if (checkField(obj, key, filter, settings)) {
+                        obj.delete(key);
+                    }
                 }
-            }
+                break;
+            default:
+                for (key in obj) {
+                    if (checkField(obj, key, filter, settings)) {
+                        delete obj[key];
+                    }
+                }
         }
     }
     return obj;
@@ -891,7 +1048,7 @@ function remove(obj, filter, settings) {
 /**
  * Empty the given value according to the following rules:
  * 
- *   * for array: removes all elements from the value
+ *   * for array, `Map` or `Set`: removes all elements from the value
  *   * for object: removes all own fields from the value
  *   * for string: returns empty string
  *   * for number: returns `0`
@@ -900,15 +1057,19 @@ function remove(obj, filter, settings) {
  * @param {Any} value
  *      Value to be processed.
  * @return {Any}
- *      Processed value (for array or object) or empty value corresponding to the given value.
+ *      Processed value (for array, object, `Map` or `Set`) or empty value corresponding to the given value.
  * @alias module:adam.empty
  */
 function empty(value) {
-    var sField;
+    var sField, sType;
     switch (getType(value)) {
         case "object":
-            if (getClass(value) === "Array") {
+            sType = getClass(value);
+            if (sType === "Array") {
                 value.length = 0;
+            }
+            else if (sType === "Map" || sType === "Set") {
+                value.clear();
             }
             else {
                 for (sField in value) {
@@ -931,8 +1092,8 @@ function empty(value) {
 /**
  * Reverse or negate the given value according to the following rules:
  * 
- *   * for array: reverses order of its elements
- *   * for object: swaps fields with their values (i.e. for `{a: "b", c: "d"}` returns `{b: "a", d: "c"}`)
+ *   * for array or set: creates a copy and reverses order of elements in it
+ *   * for object or map: creates a copy where fields are  swapped with their values (i.e. for `{a: "b", c: "d"}` returns `{b: "a", d: "c"}`)
  *   * for string: reverses order of its characters
  *   * for number: returns negated value (i.e. `- value`)
  *   * for boolean: returns negated value (i.e. `! value`)
@@ -945,18 +1106,30 @@ function empty(value) {
  * @alias module:adam.reverse
  */
 function reverse(value) {
-    var cache, sField;
+    var cache, item, nI, nL, sField;
     switch (getType(value)) {
         case "object":
-            if (getClass(value) === "Array") {
-                value = value.reverse();
-            }
-            else {
-                cache = {};
-                for (sField in value) {
-                    cache[ value[sField] ] = sField;
-                }
-                value = cache;
+            switch (getClass(value)) {
+                case "Array":
+                    value = value.slice(0).reverse();
+                    break;
+                case "Map":
+                    cache = Array.from(value.entries());
+                    value = new Map();
+                    for (nI = 0, nL = cache.length; nI < nL; nI++) {
+                        item = cache[nI];
+                        value.set(item[1], item[0]);
+                    }
+                    break;
+                case "Set":
+                    value = new Set( getKeys(value) );
+                    break;
+                default:
+                    cache = {};
+                    for (sField in value) {
+                        cache[ value[sField] ] = sField;
+                    }
+                    value = cache;
             }
             break;
         case "string":
@@ -985,11 +1158,13 @@ function reverse(value) {
  *    * `empty` - empty the value (see {@link module:adam.empty empty})
  *    * `function` - convert the value to function (using `Function(value)`)
  *    * `integer` - try to convert the value to an integer number (using `Math.round(Number(value)`)
+ *    * `map` - try to convert the value to Map (using `new Map(value)` or `new Map([[value, value]])`)
  *    * `number` - try to convert the value to number (using `Number(value)`)
  *    * `object` - convert the value to object (using `Object(value)`)
  *    * `promise` or `resolve` - convert the value to resolved promise (using `Promise.resolve(value)`)
  *    * `reject` - convert the value to rejected promise (using `Promise.reject(value)`)
  *    * `reverse` - reverse the value (see {@link module:adam.reverse reverse})
+ *    * `set` - try to convert the value to Set (using `new Set(value)` or `new Set([value])`)
  *    * `string` - convert the value to string (using `String(value)`)
  *    * otherwise - source value
  * @return {Any}
@@ -1017,6 +1192,14 @@ function transform(value, sAction) {
         case "integer":
             result = Math.round(Number(value));
             break;
+        case "map":
+            try {
+                result = new Map(value);
+            }
+            catch (e) {
+                result = new Map([[value, value]]);
+            }
+            break;
         case "number":
             result = Number(value);
             break;
@@ -1033,6 +1216,14 @@ function transform(value, sAction) {
         case "reverse":
             result = reverse(value);
             break;
+        case "set":
+            try {
+                result = new Set(value);
+            }
+            catch (e) {
+                result = new Set([value]);
+            }
+            break;
         case "string":
             result = String(value);
             break;
@@ -1043,12 +1234,12 @@ function transform(value, sAction) {
 }
 
 /**
- * Copy all or filtered fields from source object into target object, applying specified transformation if necessary.
+ * Copy all or filtered fields from source object/map/array/set into target object/map/array/set, applying specified transformation if necessary.
  * 
  * @param {Object} source
- *      Object whose fields will be copied.
+ *      Object/map/array/set whose fields will be copied.
  * @param {Object} target
- *      Object into which fields should be copied.
+ *      Object/map/array/set into which fields should be copied.
  * @param {Object} [settings]
  *     Operation settings. Keys are settings names, values are corresponding settings values.
  *     The following settings are supported:
@@ -1074,7 +1265,40 @@ function transform(value, sAction) {
 function copy(source, target, settings) {
     /*jshint laxbreak:true*/
     var bAll = true,
-        bFuncAction, action, filter, key;
+        sClass = getClass(source),
+        bMap = sClass === "Map",
+        bSet = sClass === "Set",
+        bFuncAction, action, filter, key, keyList, nI, nL;
+
+    function copyValue() {
+        var value;
+        if (bAll || checkField(source, key, filter, settings)) {
+            if (bMap) {
+                value = source.get(key);
+            }
+            else if (bSet) {
+                value = key;
+            }
+            else {
+                value = source[key];
+            }
+            if (action) {
+                value = bFuncAction
+                    ? action({source: source, target: target, field: key, value: value, settings: settings})
+                    : transform(value, action);
+            }
+            if (bMap) {
+                target.set(key, value);
+            }
+            else if (bSet) {
+                target.add(value);
+            }
+            else {
+                target[key] = value;
+            }
+        }
+    }
+
     if (! settings) {
         settings = {};
     }
@@ -1086,23 +1310,26 @@ function copy(source, target, settings) {
     if (typeof action === "function") {
         bFuncAction = true;
     }
-    for (key in source) {
-        if (bAll || checkField(source, key, filter, settings)) {
-            target[key] = action
-                            ? (bFuncAction
-                                ? action({source: source, target: target, field: key, value: source[key], settings: settings})
-                                : transform(source[key], action))
-                            : source[key];
+    if (bMap || bSet) {
+        keyList = getKeys(source);
+        for (nI = 0, nL = keyList.length; nI < nL; nI++) {
+            key = keyList[nI];
+            copyValue();
+        }
+    }
+    else {
+        for (key in source) {
+            copyValue();
         }
     }
     return target;
 }
 
 /**
- * Change all or filtered fields of object, applying specified action/transformation.
+ * Change all or filtered fields of object/map/array, applying specified action/transformation.
  * 
  * @param {Object} obj
- *      Object whose fields should be changed.
+ *      Object/map/array whose fields should be changed.
  * @param {Function | String} action
  *      An action/operation that should be applied to get new field value.
  *      See description of `transform` setting of {@link module:adam.copy copy}.
@@ -1130,11 +1357,11 @@ function change(obj, action, settings) {
 }
 
 /**
- * Create new object containing all or filtered fields of the source object/array,
+ * Create new object containing all or filtered fields of the source object/map/array/set,
  * applying specified action/transformation for field values.
  * 
  * @param {Array | Object} obj
- *      Array/object whose fields should be copied.
+ *      Object/map/array/set whose fields should be copied.
  * @param {Function | String} action
  *      An action/operation that should be applied to get field value that will be saved in created object.
  *      See description of `transform` setting of {@link module:adam.copy copy}.
@@ -1154,13 +1381,25 @@ function change(obj, action, settings) {
  */
 function map(obj, action, settings) {
     /*jshint laxbreak:true*/
+    var target;
+    switch (getClass(obj)) {
+        case "Array":
+            target = [];
+            break;
+        case "Map":
+            target = new Map();
+            break;
+        case "Set":
+            target = new Set();
+            break;
+        default:
+            target = {};
+    }
     settings = settings
                 ? copy(settings, {})
                 : {};
     settings.transform = action;
-    return copy(obj, 
-                getClass(obj) === "Array" ? [] : {}, 
-                settings);
+    return copy(obj, target, settings);
 }
 
 // Exports
@@ -1175,6 +1414,7 @@ module.exports = {
     getClass: getClass,
     getFields: getFields,
     getFreeField: getFreeField,
+    getKeys: getKeys,
     getPropertySymbols: getPropertySymbols,
     getSize: getSize,
     getType: getType,
@@ -1182,6 +1422,7 @@ module.exports = {
     getValues: getValues,
     isEmpty: isEmpty,
     isKindOf: isKindOf,
+    isMap: isMap,
     isSizeMore: isSizeMore,
     map: map,
     remove: remove,

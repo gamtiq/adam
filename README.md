@@ -1,6 +1,6 @@
 # adam <a name="start"></a>
 
-Functions to create, process and test objects.
+Functions to create, process and test objects/maps/arrays/sets.
 
 [![NPM version](https://badge.fury.io/js/adam.png)](http://badge.fury.io/js/adam)
 [![Build Status](https://secure.travis-ci.org/gamtiq/adam.png?branch=master)](http://travis-ci.org/gamtiq/adam)
@@ -90,6 +90,8 @@ adam.checkValue("73", [/^\d+$/, {inside: {a: 1, b: "43", c: null}}]);   // false
 adam.checkValue("73", [/^\d+$/, {inside: {a: 1, b: "43", c: null}}], {filterConnect: "or"});   // true
 
 adam.getFreeField({a5: 5, a2: 2, a7: 7, a3: 3}, {prefix: "a", startNum: 2});   // "a4"
+adam.getFreeField(new Map([["a", 3], ["key", 9], ["key-1", true]]), {prefix: "key-"});   // "key-0"
+adam.getFreeField(new Map([["a", 3], ["key", 9], ["key-1", true]]), {prefix: "key-", startNum: 1});   // "key-2"
 
 adam.getSize(obj);   // 5
 adam.getSize(obj, {filter: "even"});   // 2
@@ -107,9 +109,12 @@ adam.getFields(obj2, {filter: "number", limit: 2});   // ["b", "d"]
 adam.getFields(obj2, {filter: {field: "symbol"}})   // [s2, s1]
 adam.getFields(obj2, {filter: "number", limit: 7, pairs: true});   // [{key: "b", value: 2}, {key: "d", value: 0}, {key: "a", value: 1}]
 adam.getFields(obj2, {filter: "number", pairs: "list"});   // [["b", 2], ["d", 0], ["a", 1]]
+adam.getFields(new Map([[obj, 1], [obj2, false], ["c", 5]]), {filter: {field: "object"}});   // [obj, obj2]
+adam.getFields(new Map([["a", 1], ["b", false], ["c", 5]]), {filter: "number", pairs: "obj"});   // [{key: "a", value: 1}, {key: "c", value: 5}]
 
 adam.getValues(obj);   // [1, 2, 3, 4, 5]
 adam.getValues(obj, {filter: {field: /a|c/}});   // [1, 3]
+adam.getValues(new Map([[obj, "a"], [obj2, 2], ["obj3", 3]]), {filter: {field: "object"}});   // ["a", 2]
 adam.getValueKey(obj, 3);   // "c"
 
 adam.fromArray([{id: "a", value: 11}, {id: "b", value: 7}, {id: "c", value: 10}], "id");   // {a: {id: "a", value: 11}, b: {id: "b", value: 7}, c: {id: "c", value: 10}}
@@ -118,18 +123,22 @@ adam.select(["negative", "odd"], [null, 4, NaN, 7, false, -2, "", 0, -5, 3, null
 adam.select(["negative", "odd"], [null, 4, NaN, 8, false, 2, "", 0, 30, 4, false], {filterConnect: "or"});   // false
 adam.select(["negative", "odd"], [null, 4, NaN, 8, false, 2, "", 0, 30, 4, false], {filterConnect: "or", defaultValue: -3});   // -3
 adam.select([{field: /[c-g]/}, "odd"], {a: [3, 5, 2], b: 1, c: 0, d: "-7", e: 4, f: -2, g: -1, h: null, i: -7, j: true, k: -5});   // -1
+adam.select(["negative", "even"], new Set([null, 4, NaN, 8, -1, false, -2, "", 0, "beta", -30, 4, true]));   // -2
 
 adam.split(obj, ["a", "d"]);   // [{a: 1, d: 4}, {b: 2, c: 3, e: 5}]
 adam.split(obj, null, {filter: "odd"});   // [{a: 1, c: 3, e: 5}, {b: 2, d: 4}]
 adam.split(obj, null, {filter: ["even", /3/], filterConnect: "or"});   // [{b: 2, c: 3, d: 4}, {a: 1, e: 5}]
+adam.split(new Map([["a", false], [obj, 2], [false, obj2], [true, null]]), null, {filter: "true"});   // [Map{obj -> 2, false -> obj2}, Map{"a" -> false, true -> null}]
 
 adam.remove({a: 1, b: "2", c: 3}, "string");   // {a: 1, c: 3}
 adam.remove([1, 2, 3, 4, 5], "even");   // [1, 3, 5]
+adam.remove(new Set([1, 2, 3, 4, 5]), "odd");   // Set[2, 4]
 
 adam.empty({x: -1, y: 9});   // {}
 
 adam.reverse({a: "x", b: "files"});   // {x: "a", files: "b"}
 adam.reverse("eval");   // "lave"
+adam.reverse(new Map([[obj, 1], [obj2, 2]]));   // Map{1 -> obj, 2 -> obj2}
 
 adam.transform("7.381", "integer");   // 7
 
@@ -149,103 +158,7 @@ See `test/adam.js` for additional examples.
 
 ## API <a name="api"></a> [&#x2191;](#start)
 
-### change(obj: Object, action: Function | String, [settings: Object]): Object
-
-Change all or filtered fields of object, applying specified action/transformation.
-
-### checkField(obj: Object, field: String | Symbol, filter: Any, [settings: Object]): Boolean
-
-Check whether the field of given object corresponds to specified condition(s) or filter(s).
-
-### checkValue(value: Any, filter: Any, [settings: Object]): Boolean
-
-Check whether the value corresponds to specified condition(s) or filter(s).
-
-### copy(source: Object, target: Object, [settings: Object]): Object
-
-Copy all or filtered fields from source object into target object, applying specified transformation if necessary.
-
-### empty(value: Any): Any
-
-Empty the given value.
-
-### fromArray(list: Array, [keyField: Function | String], [settings: Object]): Object
-
-Create object (map) from list of objects.
-
-### getClass(value: Any): String
-
-Return class of given value (namely value of internal property `[[Class]]`).
-
-### getFields(obj: Object, [settings: Object]): Array
-
-Return list of all or filtered fields of specified object.
-
-### getFreeField(obj: Object, [settings: Object]): String
-
-Return name of first free (absent) field of specified object, that conforms to the following pattern: &lt;prefix&gt;&lt;number&gt;
-
-### getPropertySymbols(obj: Object): Array
-
-Return list of all symbol property keys for given object including keys from prototype chain.
-
-*This function is defined only when `Object.getOwnPropertySymbols` is available in JS engine.
-Otherwise the value of `getPropertySymbols` field is `undefined`.*
-
-### getSize(obj: Object, [settings: Object]): Integer
-
-Return number of all or filtered fields of specified object.
-
-### getType(value: Any): String
-
-Return type of given value.
-
-### getValueKey(obj: Object, value, [all: Boolean]): Array | String | null
-
-Return the name of field (or list of names) having the specified value in the given object.
-
-### getValues(obj: Object, [settings: Object]): Array
-
-Return list of all or filtered field values of specified object.
-
-### isEmpty(value: Any): Boolean
-
-Check whether given value is an empty value i.e. `null`, `undefined`, `0`, empty object, empty array or empty string.
-
-### isKindOf(value: Any, kind: String): Boolean
-
-Check whether given value has (or does not have) specified kind (type or class).
-
-### isSizeMore(obj: Object, qty: Number, [settings: Object]): Boolean
-
-Check whether number of all or filtered fields of specified object is more than the given value.
-
-### map(obj: Object, action: Function | String, [settings: Object]): Object
-
-Create new object containing all or filtered fields of the source object/array,
-applying specified action/transformation for field values.
-
-### remove(obj: Array | Object, filter: Any, [settings: Object]): Array | Object
-
-Remove filtered fields/elements from specified object/array.
-
-### reverse(value: Any): Any
-
-Reverse or negate the given value.
-
-### select(filter: Any, from: Any, [settings: Object]): Any
-
-Return the value of the first element/field in the passed array/object that satisfies the specified filter(s).
-
-### split(obj: Object, firstObjFields: Array | Object | null, [settings: Object]): Array
-
-Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.
-
-### transform(value: Any, action: String): Any
-
-Transform the given value applying the specified operation.
-
-See [`docs`](https://gamtiq.github.io/adam/) for details.
+See [`docs`](https://gamtiq.github.io/adam/module-adam.html).
 
 ## Related projects <a name="related"></a> [&#x2191;](#start)
 

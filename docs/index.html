@@ -30,7 +30,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/gamtiq/adam" target="_blank" id="github_link" >GitHub repo</a></h2><h3>Modules</h3><ul><li><a href="module-adam.html">adam</a><ul class='methods'><li data-type='method'><a href="module-adam.html#.change">change</a></li><li data-type='method'><a href="module-adam.html#.checkField">checkField</a></li><li data-type='method'><a href="module-adam.html#.checkValue">checkValue</a></li><li data-type='method'><a href="module-adam.html#.copy">copy</a></li><li data-type='method'><a href="module-adam.html#.empty">empty</a></li><li data-type='method'><a href="module-adam.html#.fromArray">fromArray</a></li><li data-type='method'><a href="module-adam.html#.getClass">getClass</a></li><li data-type='method'><a href="module-adam.html#.getFields">getFields</a></li><li data-type='method'><a href="module-adam.html#.getFreeField">getFreeField</a></li><li data-type='method'><a href="module-adam.html#.getPropertySymbols">getPropertySymbols</a></li><li data-type='method'><a href="module-adam.html#.getSize">getSize</a></li><li data-type='method'><a href="module-adam.html#.getType">getType</a></li><li data-type='method'><a href="module-adam.html#.getValueKey">getValueKey</a></li><li data-type='method'><a href="module-adam.html#.getValues">getValues</a></li><li data-type='method'><a href="module-adam.html#.isEmpty">isEmpty</a></li><li data-type='method'><a href="module-adam.html#.isKindOf">isKindOf</a></li><li data-type='method'><a href="module-adam.html#.isSizeMore">isSizeMore</a></li><li data-type='method'><a href="module-adam.html#.map">map</a></li><li data-type='method'><a href="module-adam.html#.remove">remove</a></li><li data-type='method'><a href="module-adam.html#.reverse">reverse</a></li><li data-type='method'><a href="module-adam.html#.select">select</a></li><li data-type='method'><a href="module-adam.html#.split">split</a></li><li data-type='method'><a href="module-adam.html#.transform">transform</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/gamtiq/adam" target="_blank" id="github_link" >GitHub repo</a></h2><h3>Modules</h3><ul><li><a href="module-adam.html">adam</a><ul class='methods'><li data-type='method'><a href="module-adam.html#.change">change</a></li><li data-type='method'><a href="module-adam.html#.checkField">checkField</a></li><li data-type='method'><a href="module-adam.html#.checkValue">checkValue</a></li><li data-type='method'><a href="module-adam.html#.copy">copy</a></li><li data-type='method'><a href="module-adam.html#.empty">empty</a></li><li data-type='method'><a href="module-adam.html#.fromArray">fromArray</a></li><li data-type='method'><a href="module-adam.html#.getClass">getClass</a></li><li data-type='method'><a href="module-adam.html#.getFields">getFields</a></li><li data-type='method'><a href="module-adam.html#.getFreeField">getFreeField</a></li><li data-type='method'><a href="module-adam.html#.getKeys">getKeys</a></li><li data-type='method'><a href="module-adam.html#.getPropertySymbols">getPropertySymbols</a></li><li data-type='method'><a href="module-adam.html#.getSize">getSize</a></li><li data-type='method'><a href="module-adam.html#.getType">getType</a></li><li data-type='method'><a href="module-adam.html#.getValueKey">getValueKey</a></li><li data-type='method'><a href="module-adam.html#.getValues">getValues</a></li><li data-type='method'><a href="module-adam.html#.isEmpty">isEmpty</a></li><li data-type='method'><a href="module-adam.html#.isKindOf">isKindOf</a></li><li data-type='method'><a href="module-adam.html#.isMap">isMap</a></li><li data-type='method'><a href="module-adam.html#.isSizeMore">isSizeMore</a></li><li data-type='method'><a href="module-adam.html#.map">map</a></li><li data-type='method'><a href="module-adam.html#.remove">remove</a></li><li data-type='method'><a href="module-adam.html#.reverse">reverse</a></li><li data-type='method'><a href="module-adam.html#.select">select</a></li><li data-type='method'><a href="module-adam.html#.split">split</a></li><li data-type='method'><a href="module-adam.html#.transform">transform</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -60,7 +60,7 @@
 
 
     <section class="readme usertext">
-        <article><h1>adam <a name="start"></a></h1><p>Functions to create, process and test objects.</p>
+        <article><h1>adam <a name="start"></a></h1><p>Functions to create, process and test objects/maps/arrays/sets.</p>
 <p><a href="http://badge.fury.io/js/adam"><img src="https://badge.fury.io/js/adam.png" alt="NPM version"></a>
 <a href="http://travis-ci.org/gamtiq/adam"><img src="https://secure.travis-ci.org/gamtiq/adam.png?branch=master" alt="Build Status"></a>
 <a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a></p>
@@ -113,6 +113,8 @@ adam.checkValue(&quot;73&quot;, [/^\d+$/, {inside: {a: 1, b: &quot;43&quot;, c: 
 adam.checkValue(&quot;73&quot;, [/^\d+$/, {inside: {a: 1, b: &quot;43&quot;, c: null}}], {filterConnect: &quot;or&quot;});   // true
 
 adam.getFreeField({a5: 5, a2: 2, a7: 7, a3: 3}, {prefix: &quot;a&quot;, startNum: 2});   // &quot;a4&quot;
+adam.getFreeField(new Map([[&quot;a&quot;, 3], [&quot;key&quot;, 9], [&quot;key-1&quot;, true]]), {prefix: &quot;key-&quot;});   // &quot;key-0&quot;
+adam.getFreeField(new Map([[&quot;a&quot;, 3], [&quot;key&quot;, 9], [&quot;key-1&quot;, true]]), {prefix: &quot;key-&quot;, startNum: 1});   // &quot;key-2&quot;
 
 adam.getSize(obj);   // 5
 adam.getSize(obj, {filter: &quot;even&quot;});   // 2
@@ -130,9 +132,12 @@ adam.getFields(obj2, {filter: &quot;number&quot;, limit: 2});   // [&quot;b&quot
 adam.getFields(obj2, {filter: {field: &quot;symbol&quot;}})   // [s2, s1]
 adam.getFields(obj2, {filter: &quot;number&quot;, limit: 7, pairs: true});   // [{key: &quot;b&quot;, value: 2}, {key: &quot;d&quot;, value: 0}, {key: &quot;a&quot;, value: 1}]
 adam.getFields(obj2, {filter: &quot;number&quot;, pairs: &quot;list&quot;});   // [[&quot;b&quot;, 2], [&quot;d&quot;, 0], [&quot;a&quot;, 1]]
+adam.getFields(new Map([[obj, 1], [obj2, false], [&quot;c&quot;, 5]]), {filter: {field: &quot;object&quot;}});   // [obj, obj2]
+adam.getFields(new Map([[&quot;a&quot;, 1], [&quot;b&quot;, false], [&quot;c&quot;, 5]]), {filter: &quot;number&quot;, pairs: &quot;obj&quot;});   // [{key: &quot;a&quot;, value: 1}, {key: &quot;c&quot;, value: 5}]
 
 adam.getValues(obj);   // [1, 2, 3, 4, 5]
 adam.getValues(obj, {filter: {field: /a|c/}});   // [1, 3]
+adam.getValues(new Map([[obj, &quot;a&quot;], [obj2, 2], [&quot;obj3&quot;, 3]]), {filter: {field: &quot;object&quot;}});   // [&quot;a&quot;, 2]
 adam.getValueKey(obj, 3);   // &quot;c&quot;
 
 adam.fromArray([{id: &quot;a&quot;, value: 11}, {id: &quot;b&quot;, value: 7}, {id: &quot;c&quot;, value: 10}], &quot;id&quot;);   // {a: {id: &quot;a&quot;, value: 11}, b: {id: &quot;b&quot;, value: 7}, c: {id: &quot;c&quot;, value: 10}}
@@ -141,18 +146,22 @@ adam.select([&quot;negative&quot;, &quot;odd&quot;], [null, 4, NaN, 7, false, -2
 adam.select([&quot;negative&quot;, &quot;odd&quot;], [null, 4, NaN, 8, false, 2, &quot;&quot;, 0, 30, 4, false], {filterConnect: &quot;or&quot;});   // false
 adam.select([&quot;negative&quot;, &quot;odd&quot;], [null, 4, NaN, 8, false, 2, &quot;&quot;, 0, 30, 4, false], {filterConnect: &quot;or&quot;, defaultValue: -3});   // -3
 adam.select([{field: /[c-g]/}, &quot;odd&quot;], {a: [3, 5, 2], b: 1, c: 0, d: &quot;-7&quot;, e: 4, f: -2, g: -1, h: null, i: -7, j: true, k: -5});   // -1
+adam.select([&quot;negative&quot;, &quot;even&quot;], new Set([null, 4, NaN, 8, -1, false, -2, &quot;&quot;, 0, &quot;beta&quot;, -30, 4, true]));   // -2
 
 adam.split(obj, [&quot;a&quot;, &quot;d&quot;]);   // [{a: 1, d: 4}, {b: 2, c: 3, e: 5}]
 adam.split(obj, null, {filter: &quot;odd&quot;});   // [{a: 1, c: 3, e: 5}, {b: 2, d: 4}]
 adam.split(obj, null, {filter: [&quot;even&quot;, /3/], filterConnect: &quot;or&quot;});   // [{b: 2, c: 3, d: 4}, {a: 1, e: 5}]
+adam.split(new Map([[&quot;a&quot;, false], [obj, 2], [false, obj2], [true, null]]), null, {filter: &quot;true&quot;});   // [Map{obj -> 2, false -> obj2}, Map{&quot;a&quot; -> false, true -> null}]
 
 adam.remove({a: 1, b: &quot;2&quot;, c: 3}, &quot;string&quot;);   // {a: 1, c: 3}
 adam.remove([1, 2, 3, 4, 5], &quot;even&quot;);   // [1, 3, 5]
+adam.remove(new Set([1, 2, 3, 4, 5]), &quot;odd&quot;);   // Set[2, 4]
 
 adam.empty({x: -1, y: 9});   // {}
 
 adam.reverse({a: &quot;x&quot;, b: &quot;files&quot;});   // {x: &quot;a&quot;, files: &quot;b&quot;}
 adam.reverse(&quot;eval&quot;);   // &quot;lave&quot;
+adam.reverse(new Map([[obj, 1], [obj2, 2]]));   // Map{1 -> obj, 2 -> obj2}
 
 adam.transform(&quot;7.381&quot;, &quot;integer&quot;);   // 7
 
@@ -166,33 +175,7 @@ adam.change([1, 2, 3, 4, 5], &quot;reverse&quot;, {filter: &quot;even&quot;});  
 
 adam.map(obj, &quot;reverse&quot;, {filter: &quot;odd&quot;});   // {a: -1, c: -3, e: -5}
 adam.map([&quot;1&quot;, &quot;2&quot;, &quot;3&quot;], &quot;number&quot;);   // [1, 2, 3]</code></pre><p>See <code>test/adam.js</code> for additional examples.</p>
-<h2>API <a name="api"></a> <a href="#start">&#x2191;</a></h2><h3>change(obj: Object, action: Function | String, [settings: Object]): Object</h3><p>Change all or filtered fields of object, applying specified action/transformation.</p>
-<h3>checkField(obj: Object, field: String | Symbol, filter: Any, [settings: Object]): Boolean</h3><p>Check whether the field of given object corresponds to specified condition(s) or filter(s).</p>
-<h3>checkValue(value: Any, filter: Any, [settings: Object]): Boolean</h3><p>Check whether the value corresponds to specified condition(s) or filter(s).</p>
-<h3>copy(source: Object, target: Object, [settings: Object]): Object</h3><p>Copy all or filtered fields from source object into target object, applying specified transformation if necessary.</p>
-<h3>empty(value: Any): Any</h3><p>Empty the given value.</p>
-<h3>fromArray(list: Array, [keyField: Function | String], [settings: Object]): Object</h3><p>Create object (map) from list of objects.</p>
-<h3>getClass(value: Any): String</h3><p>Return class of given value (namely value of internal property <code>[[Class]]</code>).</p>
-<h3>getFields(obj: Object, [settings: Object]): Array</h3><p>Return list of all or filtered fields of specified object.</p>
-<h3>getFreeField(obj: Object, [settings: Object]): String</h3><p>Return name of first free (absent) field of specified object, that conforms to the following pattern: &lt;prefix&gt;&lt;number&gt;</p>
-<h3>getPropertySymbols(obj: Object): Array</h3><p>Return list of all symbol property keys for given object including keys from prototype chain.</p>
-<p><em>This function is defined only when <code>Object.getOwnPropertySymbols</code> is available in JS engine.
-Otherwise the value of <code>getPropertySymbols</code> field is <code>undefined</code>.</em></p>
-<h3>getSize(obj: Object, [settings: Object]): Integer</h3><p>Return number of all or filtered fields of specified object.</p>
-<h3>getType(value: Any): String</h3><p>Return type of given value.</p>
-<h3>getValueKey(obj: Object, value, [all: Boolean]): Array | String | null</h3><p>Return the name of field (or list of names) having the specified value in the given object.</p>
-<h3>getValues(obj: Object, [settings: Object]): Array</h3><p>Return list of all or filtered field values of specified object.</p>
-<h3>isEmpty(value: Any): Boolean</h3><p>Check whether given value is an empty value i.e. <code>null</code>, <code>undefined</code>, <code>0</code>, empty object, empty array or empty string.</p>
-<h3>isKindOf(value: Any, kind: String): Boolean</h3><p>Check whether given value has (or does not have) specified kind (type or class).</p>
-<h3>isSizeMore(obj: Object, qty: Number, [settings: Object]): Boolean</h3><p>Check whether number of all or filtered fields of specified object is more than the given value.</p>
-<h3>map(obj: Object, action: Function | String, [settings: Object]): Object</h3><p>Create new object containing all or filtered fields of the source object/array,
-applying specified action/transformation for field values.</p>
-<h3>remove(obj: Array | Object, filter: Any, [settings: Object]): Array | Object</h3><p>Remove filtered fields/elements from specified object/array.</p>
-<h3>reverse(value: Any): Any</h3><p>Reverse or negate the given value.</p>
-<h3>select(filter: Any, from: Any, [settings: Object]): Any</h3><p>Return the value of the first element/field in the passed array/object that satisfies the specified filter(s).</p>
-<h3>split(obj: Object, firstObjFields: Array | Object | null, [settings: Object]): Array</h3><p>Divide given object into 2 parts: the first part includes specified fields, the second part includes all other fields.</p>
-<h3>transform(value: Any, action: String): Any</h3><p>Transform the given value applying the specified operation.</p>
-<p>See <a href="https://gamtiq.github.io/adam/"><code>docs</code></a> for details.</p>
+<h2>API <a name="api"></a> <a href="#start">&#x2191;</a></h2><p>See <a href="https://gamtiq.github.io/adam/module-adam.html"><code>docs</code></a>.</p>
 <h2>Related projects <a name="related"></a> <a href="#start">&#x2191;</a></h2><ul>
 <li><a href="https://github.com/gamtiq/eva">eva</a></li>
 <li><a href="https://github.com/gamtiq/mixing">mixing</a></li>
@@ -216,7 +199,7 @@ Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Jun 09 2020 20:43:00 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Jun 24 2020 20:37:30 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
